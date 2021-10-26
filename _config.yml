@@ -12,27 +12,27 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "contrast" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "정리가 재밌는 개발자 Blog"
+title                    : "정리왕이 되고싶은 서윤씨의 BLOG"
 title_separator          : "-"
-subtitle                 : "version 1.0" # site tagline that appears below site title in masthead
-name                     : "당현아(Dang Hyeona)"
-description              : "매일 반복하는 공부 습관"
-url                      : "https://eona1301.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+subtitle                 : "Bachelor of Science in Applied statistics" # site tagline that appears below site title in masthead
+name                     : "이서윤(Seoyun Lee)"
+description              : "매일 공부하고 매일 정리하겠어요."
+url                      : "https://seoyun2.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "https://github.com/eona1301/eona1301.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "https://github.com/seoyun2/seoyun2.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : "정리가 재밌는 개발자" # overrides the website title displayed in the masthead, use " " for no title
+masthead_title           : "정리왕 서윤씨" # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs              : # true, false (default)
 words_per_minute         : 200
 comments:
   provider               : "disqus" # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "custom"
   disqus:
-    shortname            : "eona1301-github-io" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+    shortname            : "seoyun2" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
@@ -85,54 +85,49 @@ social:
 
 # Analytics
 analytics:
-  provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
+  provider               : false # false (default), "google", "google-universal", "google-gtag", "custom"
   google:
-    tracking_id          : "G-9Y81M5MMM9"
+    tracking_id          : 
     anonymize_ip         : # true, false (default)
 
 
 # Site Author
 author:
-  name             : "Dang Hyeona"
-  avatar           : "image/profile/2020me.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "**1.0 ver Blog 종료!**<br>2020.07.01~2021.07.08<br><br>Velog로 이사했어요"
+  name             : "Seoyun Lee"
+  avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "매일 **공부**하고 매일 **정리**하기"
   location         : "Republic of Korea"
-  email            : #"eona1301@gmail.com"
+  email            : 
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: mailto:eona1301@email.com
+      url: mailto:96seoyun@gmail.com
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/eona1301"
+      url: "https://github.com/seoyun2"
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
-      url: "https://www.facebook.com/eona1301"
+      # url: "https://www.facebook.com/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://www.instagram.com/danghyeona/"
-    - label: "2.0 ver Blog"
-      icon: "fas fa-fw fa-link"
-      url: "https://velog.io/@eona1301"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      # url: "https://twitter.com/"
+      url: "https://www.instagram.com/seoyun._2/"
+
 
 # Site Footer
 footer:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: mailto:eona1301@email.com
+      url: mailto:96seoyun@gmail.com
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       # url:
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
-      url: "https://www.facebook.com/eona1301"
+      # url: 
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/eona1301"
+      url: "https://github.com/seoyun2"
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:
@@ -141,7 +136,7 @@ footer:
       # url:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://www.instagram.com/danghyeona/"
+      url: "https://www.instagram.com/seoyun._2/"
 
 
 # Reading Files
