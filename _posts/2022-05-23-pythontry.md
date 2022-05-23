@@ -1,7 +1,7 @@
 ---
-title: "[Python] 한눈에 보는 머신러닝"
+title: "[Python] 코드 시도"
 categories:
-  - Hands On ML
+  - Python
 tags:
   - machineLearning
   - statistics
