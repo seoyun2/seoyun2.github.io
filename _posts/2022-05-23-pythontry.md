@@ -29,6 +29,6 @@ grid_search = GridSearchCV(forest_reg, param_grid, cv = 5, scoring = 'neg_mean_s
 grid_search.fit(housing_prepared, housing_labels)
 ```
 
-```mysql
+```sql
 select * from city where CountryCode = 'KOR';
 ```
