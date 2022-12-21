@@ -29,7 +29,7 @@ use_math: true
 
 1. 33명의 성인 여성에 대한 나이와 혈압 사이의 관계
 
-<img width="1323" alt="02" src="https://user-images.githubusercontent.com/86525868/208841867-d61b649e-6e7e-4599-8e7a-6830188dc266.png">{: width="70%" height="70%"}{: .align-center}
+  <img width="1323" alt="02" src="https://user-images.githubusercontent.com/86525868/208841867-d61b649e-6e7e-4599-8e7a-6830188dc266.png">{: width="70%" height="70%"}{: .align-center}
 
   해석 : p-value가 충분히 작다는 가정하에 혈압은 81.54를 기준으로 나이가 들어갈수록 1.222씩 늘어난다. 
 
@@ -37,7 +37,7 @@ use_math: true
 
 2. 연속형 변수가 아닌 이진형 Binary 변수인 Cancer Diagnosis일 경우 
 
-<img width="1356" alt="03" src="https://user-images.githubusercontent.com/86525868/208841878-360bd924-3a25-4a0c-8e97-25ac5c9efac6.png">{: width="70%" height="70%"}{: .align-center}
+  <img width="1356" alt="03" src="https://user-images.githubusercontent.com/86525868/208841878-360bd924-3a25-4a0c-8e97-25ac5c9efac6.png">{: width="70%" height="70%"}{: .align-center}
 
   해석 : 현재 데이터에 선형회귀를 적용할 수 는 있지만 제대로된 추정이 아님 → **이진분류에 사용할 수 있는 로지스틱 사용**
 
@@ -51,11 +51,11 @@ use_math: true
 
 $y\in \{0,1\}$ 의 범위와 $\hat{y}\in\{-\infty, \infty\}$ 의 범위는 적절하지 않음 
 
-→ $y$를 확률로 바꾸어 $0\le p(y=1)\le 1$ ($y$가 1이 될 확률), $p(y=1) \in [0,1]$로 바꾸어 생각 
+  → $y$를 확률로 바꾸어 $0\le p(y=1)\le 1$ ($y$가 1이 될 확률), $p(y=1) \in [0,1]$로 바꾸어 생각 
 
-→ 하지만 선형 회귀선이 계속해서 늘어나면 확률이 갖지 못하는 값 (1보다 크고 0보다 작은 값)이 될 수 있기 때문에 이것도 적절하지 않음
+  → 하지만 선형 회귀선이 계속해서 늘어나면 확률이 갖지 못하는 값 (1보다 크고 0보다 작은 값)이 될 수 있기 때문에 이것도 적절하지 않음
 
-→ 해결 방법 : **Logistic Regression**
+  → 해결 방법 : **Logistic Regression**
 
 
 
@@ -91,7 +91,7 @@ $$
 
 <img width="538" alt="05" src="https://user-images.githubusercontent.com/86525868/208841887-699c20c9-70c2-474a-b635-4cc41c0a9abe.png">{: width="40%" height="40%"}{: .align-center}
 
-**하지만 여전히 범위에 대한 제약이 존재함 $0<odds<\infty$ ** → 비대칭성 Asymmetric 
+** 하지만 여전히 범위에 대한 제약이 존재함 $0<odds<\infty$ ** → 비대칭성 Asymmetric 
 
 → 해결방법 : **Odds에 $\log$를 취함**
 
@@ -107,25 +107,25 @@ $$
 
 1. Log Odds를 이용한 회귀분석식
 
-$$
-\log (Odds)=\log\Big(\frac{p}{1-p}\Big)=\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d
-$$
+  $$
+  \log (Odds)=\log\Big(\frac{p}{1-p}\Big)=\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d
+  $$
 
-    ↳ 회귀식의 형태를 유지해서 얻을 수 있는 장점 : 변수의 통계적 유의성 확인 가능 / 변수의 증감과 성공확률의 관계를 해석하고 이해할 수 있음
+  회귀식의 형태를 유지해서 얻을 수 있는 장점 : 변수의 통계적 유의성 확인 가능 / 변수의 증감과 성공확률의 관계를 해석하고 이해할 수 있음
 
 2. 양변에 지수를 취하면 
 
-$$
-\frac{p}{1-p}=e^{\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d}
-$$
+  $$
+  \frac{p}{1-p}=e^{\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d}
+  $$
 
 3. 성공확률에 대한 식으로 표현 → 시그모이드 함수
 
-$$
-p=\frac{1}{1+e^{-(\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d)}}=\sigma(x|\beta)
-$$
+  $$
+  p=\frac{1}{1+e^{-(\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d)}}=\sigma(x|\beta)
+  $$
 
-    ↳ $\sigma(x|\beta)$ : $\beta$ 라는 추정값을 전제하고 $x$ 라는 새로운 값이 주어졌을 때, 나타나는 성공확률
+  $\sigma(x|\beta)$ : $\beta$ 라는 추정값을 전제하고 $x$ 라는 새로운 값이 주어졌을 때, 나타나는 성공확률
 
 $$
 \ln\Big(\frac{p}{1-p}\Big) : \text{logit}\\
