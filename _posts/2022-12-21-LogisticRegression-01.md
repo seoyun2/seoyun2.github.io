@@ -91,7 +91,7 @@ $$
 
 <img width="538" alt="05" src="https://user-images.githubusercontent.com/86525868/208841887-699c20c9-70c2-474a-b635-4cc41c0a9abe.png">{: width="40%" height="40%"}{: .align-center}
 
-** 하지만 여전히 범위에 대한 제약이 존재함 $0<odds<\infty$ ** → 비대칭성 Asymmetric 
+**하지만 여전히 범위에 대한 제약이 존재함 $0<odds<\infty$** → 비대칭성 Asymmetric 
 
 → 해결방법 : **Odds에 $\log$를 취함**
 
@@ -107,25 +107,25 @@ $$
 
 1. Log Odds를 이용한 회귀분석식
 
-  $$
-  \log (Odds)=\log\Big(\frac{p}{1-p}\Big)=\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d
-  $$
+   $$
+   \log (Odds)=\log\Big(\frac{p}{1-p}\Big)=\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d
+   $$
 
-  회귀식의 형태를 유지해서 얻을 수 있는 장점 : 변수의 통계적 유의성 확인 가능 / 변수의 증감과 성공확률의 관계를 해석하고 이해할 수 있음
+   회귀식의 형태를 유지해서 얻을 수 있는 장점 : 변수의 통계적 유의성 확인 가능 / 변수의 증감과 성공확률의 관계를 해석하고 이해할 수 있음
 
 2. 양변에 지수를 취하면 
 
-  $$
-  \frac{p}{1-p}=e^{\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d}
-  $$
+   $$
+   \frac{p}{1-p}=e^{\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d}
+   $$
 
 3. 성공확률에 대한 식으로 표현 → 시그모이드 함수
 
-  $$
-  p=\frac{1}{1+e^{-(\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d)}}=\sigma(x|\beta)
-  $$
+   $$
+   p=\frac{1}{1+e^{-(\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d)}}=\sigma(x|\beta)
+   $$
 
-  $\sigma(x|\beta)$ : $\beta$ 라는 추정값을 전제하고 $x$ 라는 새로운 값이 주어졌을 때, 나타나는 성공확률
+   $\sigma(x\|\beta)$ : $\beta$ 라는 추정값을 전제하고 $x$ 라는 새로운 값이 주어졌을 때, 나타나는 성공확률
 
 $$
 \ln\Big(\frac{p}{1-p}\Big) : \text{logit}\\
@@ -247,6 +247,7 @@ gradient : 목적함수를 미지수에 대해 1차 미분한 값 → 최저점 
   $$
    w_{new}=w_{old}{\color{red}{-}}{\color{blue}{\alpha}} f'({\color{red}{w}}), \quad \text{where } 0<\alpha<1
    $$
+   
    $\color{blue}\alpha$는 얼마만큼 갈 것인가를 나타내고 $\color{red}-, w$는 어느방향으로 갈 것인가 
 
 3. 이동 후의 새로운 함수 값은 이동 전의 함수 값보다 작음
