@@ -19,7 +19,7 @@ use_math: true
 
 **다중 선형 회귀분석** : 수치형 설명변수 $X$와 종속변수 $Y$ 간의 관계를 선형으로 가정하고 이를 잘 표현할 수 있는 회귀계수를 추정
 
-<img width="457" alt="01" src="https://user-images.githubusercontent.com/86525868/208841857-59a2a2c7-4937-4fd9-859b-0f4bbf4035fa.png">{: width="70%" height="70%"}{: .align-center}
+<img width="457" alt="01" src="https://user-images.githubusercontent.com/86525868/208841857-59a2a2c7-4937-4fd9-859b-0f4bbf4035fa.png">{: width="40%" height="40%"}{: .align-center}
 
   $y$ 와 $\hat{y}$ 의 차이가 적게 되는 $\hat{\beta_i}=(X^T X)^{-1}X^TY$ 를 추정
 
@@ -47,7 +47,7 @@ use_math: true
 
 선형회귀분석의 우변의 범위에 대한 제한이 없기 때문에 종속변수(좌변) 역시 범위의 제한을 받지 않으므로 적절하지 않음
 
-<img width="448" alt="04" src="https://user-images.githubusercontent.com/86525868/208841885-b82bd1d9-e735-4511-bbab-8a6f3598d040.png">{: width="70%" height="70%"}{: .align-center}
+<img width="448" alt="04" src="https://user-images.githubusercontent.com/86525868/208841885-b82bd1d9-e735-4511-bbab-8a6f3598d040.png">{: width="40%" height="40%"}{: .align-center}
 
 $y\in \{0,1\}$ 의 범위와 $\hat{y}\in\{-\infty, \infty\}$ 의 범위는 적절하지 않음 
 
@@ -89,7 +89,7 @@ $$
 * $p$ 가 0에 가까우면 $\frac{p}{1-p}$ 는 0에 가까운 값을 가짐
 * $p$ 가 1에 가까우면 $\frac{p}{1-p}$ 는 무한대에 가까운 값을 가짐
 
-<img width="538" alt="05" src="https://user-images.githubusercontent.com/86525868/208841887-699c20c9-70c2-474a-b635-4cc41c0a9abe.png">{: width="70%" height="70%"}{: .align-center}
+<img width="538" alt="05" src="https://user-images.githubusercontent.com/86525868/208841887-699c20c9-70c2-474a-b635-4cc41c0a9abe.png">{: width="40%" height="40%"}{: .align-center}
 
 **하지만 여전히 범위에 대한 제약이 존재함 $0<odds<\infty$ ** → 비대칭성 Asymmetric 
 
@@ -101,7 +101,7 @@ $$
 
   ↳ 성공확률 $p$ 가 작으면 음수값을 갖고, 성공확률 $p$가 크면 양수값을 가짐
 
-<img width="538" alt="06" src="https://user-images.githubusercontent.com/86525868/208841888-a937464a-1c42-4c51-a530-c8447ea9f24d.png">{: width="70%" height="70%"}{: .align-center}
+<img width="538" alt="06" src="https://user-images.githubusercontent.com/86525868/208841888-a937464a-1c42-4c51-a530-c8447ea9f24d.png">{: width="40%" height="40%"}{: .align-center}
 
 ### 로지스틱 회귀분석의 식 
 
@@ -111,7 +111,7 @@ $$
 \log (Odds)=\log\Big(\frac{p}{1-p}\Big)=\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d
 $$
 
-  ↳ 회귀식의 형태를 유지해서 얻을 수 있는 장점 : 변수의 통계적 유의성 확인 가능 / 변수의 증감과 성공확률의 관계를 해석하고 이해할 수 있음
+    ↳ 회귀식의 형태를 유지해서 얻을 수 있는 장점 : 변수의 통계적 유의성 확인 가능 / 변수의 증감과 성공확률의 관계를 해석하고 이해할 수 있음
 
 2. 양변에 지수를 취하면 
 
@@ -125,8 +125,7 @@ $$
 p=\frac{1}{1+e^{-(\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d)}}=\sigma(x|\beta)
 $$
 
-  ↳ $\sigma(x|\beta)$ : $\beta$ 라는 추정값을 전제하고 $x$ 라는 새로운 값이 주어졌을 때, 나타나는 성공확률
-
+    ↳ $\sigma(x|\beta)$ : $\beta$ 라는 추정값을 전제하고 $x$ 라는 새로운 값이 주어졌을 때, 나타나는 성공확률
 
 $$
 \ln\Big(\frac{p}{1-p}\Big) : \text{logit}\\
@@ -221,7 +220,7 @@ Model A의 (로그)우도 함수가 Model B의 (로그)우도 함수보다 큼 �
 
 gradient : 목적함수를 미지수에 대해 1차 미분한 값 → 최저점 Global cost minimum $J_{min}(w)=0$ 
 
-![image](https://user-images.githubusercontent.com/86525868/208843074-094d8d49-2491-4814-8062-54efd05f6001.png){: width="70%" height="70%"}{: .align-center}
+![1_rCCH2J1JHTdknga6qFpwyA](https://user-images.githubusercontent.com/86525868/208846393-0205efcf-3646-4221-a5e3-76ff367bd20b.gif){: width="70%" height="70%"}{: .align-center}
 
 **비용함수를 현재의 가중치 값(w)에 대해 1차 미분을 수행한 뒤 아래의 절차를 따름**
 
@@ -285,7 +284,7 @@ $$
 
 ### 이진분류를 위한 cut-off 설정 
 
-<img width="528" alt="14" src="https://user-images.githubusercontent.com/86525868/208841911-67ddd35f-68a3-408d-93cd-03fd46bfcf5b.png">{: width="70%" height="70%"}{: .align-center}
+<img width="528" alt="14" src="https://user-images.githubusercontent.com/86525868/208841911-67ddd35f-68a3-408d-93cd-03fd46bfcf5b.png">{: width="40%" height="40%"}{: .align-center}
 
 일반적으로 0.5가 주로 사용되고 사전확률을 고려한 cut-off나 검증 데이터의 정확도를 최대화하는 cut-off 등이 사용될 수도 있음
 
