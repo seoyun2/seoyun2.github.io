@@ -19,7 +19,7 @@ use_math: true
 
 **다중 선형 회귀분석** : 수치형 설명변수 $X$와 종속변수 $Y$ 간의 관계를 선형으로 가정하고 이를 잘 표현할 수 있는 회귀계수를 추정
 
-<img width="457" alt="01" src="https://user-images.githubusercontent.com/86525868/208841857-59a2a2c7-4937-4fd9-859b-0f4bbf4035fa.png">
+<img width="457" alt="01" src="https://user-images.githubusercontent.com/86525868/208841857-59a2a2c7-4937-4fd9-859b-0f4bbf4035fa.png">{: width="70%" height="70%"}{: .align-center}
   $y$ 와 $\hat{y}$ 의 차이가 적게 되는 $\hat{\beta_i}=(X^T X)^{-1}X^TY$ 를 추정
 
 
@@ -28,7 +28,7 @@ use_math: true
 
 1. 33명의 성인 여성에 대한 나이와 혈압 사이의 관계
 
-<img width="1323" alt="02" src="https://user-images.githubusercontent.com/86525868/208841867-d61b649e-6e7e-4599-8e7a-6830188dc266.png">
+<img width="1323" alt="02" src="https://user-images.githubusercontent.com/86525868/208841867-d61b649e-6e7e-4599-8e7a-6830188dc266.png">{: width="70%" height="70%"}{: .align-center}
 
   해석 : p-value가 충분히 작다는 가정하에 혈압은 81.54를 기준으로 나이가 들어갈수록 1.222씩 늘어난다. 
 
@@ -36,7 +36,7 @@ use_math: true
 
 2. 연속형 변수가 아닌 이진형 Binary 변수인 Cancer Diagnosis일 경우 
 
-<img width="1356" alt="03" src="https://user-images.githubusercontent.com/86525868/208841878-360bd924-3a25-4a0c-8e97-25ac5c9efac6.png">
+<img width="1356" alt="03" src="https://user-images.githubusercontent.com/86525868/208841878-360bd924-3a25-4a0c-8e97-25ac5c9efac6.png">{: width="70%" height="70%"}{: .align-center}
 
   해석 : 현재 데이터에 선형회귀를 적용할 수 는 있지만 제대로된 추정이 아님 → **이진분류에 사용할 수 있는 로지스틱 사용**
 
@@ -46,9 +46,9 @@ use_math: true
 
 선형회귀분석의 우변의 범위에 대한 제한이 없기 때문에 종속변수(좌변) 역시 범위의 제한을 받지 않으므로 적절하지 않음
 
-<img width="448" alt="04" src="https://user-images.githubusercontent.com/86525868/208841885-b82bd1d9-e735-4511-bbab-8a6f3598d040.png">
+<img width="448" alt="04" src="https://user-images.githubusercontent.com/86525868/208841885-b82bd1d9-e735-4511-bbab-8a6f3598d040.png">{: width="70%" height="70%"}{: .align-center}
 
-$y\in \{0,1\}$ 의 범위와 $\hat{y}\in\{-\infin, \infin\}$ 의 범위는 적절하지 않음 
+$y\in \{0,1\}$ 의 범위와 $\hat{y}\in\{-\infty, \infty\}$ 의 범위는 적절하지 않음 
 
 → $y$를 확률로 바꾸어 $0\le p(y=1)\le 1$ ($y$가 1이 될 확률), $p(y=1) \in [0,1]$로 바꾸어 생각 
 
@@ -64,7 +64,7 @@ $y\in \{0,1\}$ 의 범위와 $\hat{y}\in\{-\infin, \infin\}$ 의 범위는 적�
 
 **속성** 
 
-1. 종속변수 $Y$ 자체를 그대로 사용하는 것이 아니라 $Y$에 대한 logit function를 회귀식의 종속변수로 사용 → 좌변의 범위를 $[-\infin, \infin]$ 로 맞추기위해 
+1. 종속변수 $Y$ 자체를 그대로 사용하는 것이 아니라 $Y$에 대한 logit function를 회귀식의 종속변수로 사용 → 좌변의 범위를 $[-\infty, \infty]$ 로 맞추기위해 
 2. logit function는 설명변수의 선형결합으로 표현될 수 있음 
 3. logit function의 값은 종속변수에 대한 성공 확률로 역산될 수 있으며, 이는 따라서 분류 문제에 적용할 수 있음
 
@@ -83,12 +83,12 @@ $$
 * 대한민국의 우승 odds는 $\frac{1}{250}$이므로 대한민국의 우승확률은 $\frac{1}{251}\fallingdotseq 0.00398 (0.398\%)$
 
 
-확률값이 0부터 1로 변화함에 따라 승산 odds는 0부터 무한대의 값을 가짐 $[0, \infin]$
+확률값이 0부터 1로 변화함에 따라 승산 odds는 0부터 무한대의 값을 가짐 $[0, \infty]$
 
 * $p$ 가 0에 가까우면 $\frac{p}{1-p}$ 는 0에 가까운 값을 가짐
 * $p$ 가 1에 가까우면 $\frac{p}{1-p}$ 는 무한대에 가까운 값을 가짐
 
-<img width="538" alt="05" src="https://user-images.githubusercontent.com/86525868/208841887-699c20c9-70c2-474a-b635-4cc41c0a9abe.png">
+<img width="538" alt="05" src="https://user-images.githubusercontent.com/86525868/208841887-699c20c9-70c2-474a-b635-4cc41c0a9abe.png">{: width="70%" height="70%"}{: .align-center}
 
 **하지만 여전히 범위에 대한 제약이 존재함 $0<odds<\infin$ ** → 비대칭성 Asymmetric 
 
@@ -99,7 +99,7 @@ $$
 $$
 ↳ 성공확률 $p$ 가 작으면 음수값을 갖고, 성공확률 $p$가 크면 양수값을 가짐
 
-<img width="538" alt="06" src="https://user-images.githubusercontent.com/86525868/208841888-a937464a-1c42-4c51-a530-c8447ea9f24d.png">
+<img width="538" alt="06" src="https://user-images.githubusercontent.com/86525868/208841888-a937464a-1c42-4c51-a530-c8447ea9f24d.png">{: width="70%" height="70%"}{: .align-center}
 
 ### 로지스틱 회귀분석의 식 
 
@@ -145,7 +145,7 @@ $$
 
 동일한 데이터셋에 대해 다음과 같이 두 가지 로지스틱 회귀분석 모형이 존재한다고 하면 어떤 모형이 현재 데이터를 더 잘 설명하는 모형인가?
 
-<img width="543" alt="07" src="https://user-images.githubusercontent.com/86525868/208841892-c6711895-4e02-495d-9b22-57c4ccce7636.png">
+<img width="543" alt="07" src="https://user-images.githubusercontent.com/86525868/208841892-c6711895-4e02-495d-9b22-57c4ccce7636.png">{: width="70%" height="70%"}{: .align-center}
 
   ↳ cut-off가 0.5라면 분류 정확도는 둘다 100% 이지만, 실제 정답이 1일 때 1 범주로 예측할 확률이 높고 정답이 0일 때도  0 범주로 예측할 확률이 높으므로 Model A가 더 우수한 모형
 
@@ -165,7 +165,7 @@ $$
 
 ### 우도함수 
 
-<img width="744" alt="08" src="https://user-images.githubusercontent.com/86525868/208841894-e2f9676c-d3e4-4f0e-aed7-124ae7e9033f.png">
+<img width="744" alt="08" src="https://user-images.githubusercontent.com/86525868/208841894-e2f9676c-d3e4-4f0e-aed7-124ae7e9033f.png">{: width="70%" height="70%"}{: .align-center}
 
 Model A의 (로그)우도 함수가 Model B의 (로그)우도 함수보다 큼 → Model A 가 Model B보다 데이터셋을 더 잘 설명하는 모델 
 
@@ -211,7 +211,7 @@ Model A의 (로그)우도 함수가 Model B의 (로그)우도 함수보다 큼 �
 
 ### 기울기 하강, Gradient descent algorithm
 
-<img width="534" alt="09" src="https://user-images.githubusercontent.com/86525868/208841897-208da8e9-7876-471e-9682-ce70e02405f7.png">
+<img width="534" alt="09" src="https://user-images.githubusercontent.com/86525868/208841897-208da8e9-7876-471e-9682-ce70e02405f7.png">{: width="70%" height="70%"}{: .align-center}
 
 파란색 선 : 미지수 w의 변화에 따른 목적함수 값의 변화 
 
@@ -221,7 +221,7 @@ Model A의 (로그)우도 함수가 Model B의 (로그)우도 함수보다 큼 �
 
 gradient : 목적함수를 미지수에 대해 1차 미분한 값 → 최저점 Global cost minimum $J_{min}(w)=0$ 
 
-![image](https://user-images.githubusercontent.com/86525868/208843074-094d8d49-2491-4814-8062-54efd05f6001.png)
+![image](https://user-images.githubusercontent.com/86525868/208843074-094d8d49-2491-4814-8062-54efd05f6001.png){: width="70%" height="70%"}{: .align-center}
 
 **비용함수를 현재의 가중치 값(w)에 대해 1차 미분을 수행한 뒤 아래의 절차를 따름**
 
@@ -260,13 +260,13 @@ gradient : 목적함수를 미지수에 대해 1차 미분한 값 → 최저점 
 
 설명 변수의 값들을 적절히 취합해서 시그모이드 Sigmoid 함수를 통해 출력값을 산출 
 
-<img width="523" alt="10" src="https://user-images.githubusercontent.com/86525868/208841899-d4c3900b-ccf4-4979-8df7-37bfefbaa0db.png">
+<img width="523" alt="10" src="https://user-images.githubusercontent.com/86525868/208841899-d4c3900b-ccf4-4979-8df7-37bfefbaa0db.png">{: width="70%" height="70%"}{: .align-center}
 
-<img width="688" alt="11" src="https://user-images.githubusercontent.com/86525868/208841901-6ffd7824-73d2-4d26-84a9-cf78ee8b12cf.png">
+<img width="688" alt="11" src="https://user-images.githubusercontent.com/86525868/208841901-6ffd7824-73d2-4d26-84a9-cf78ee8b12cf.png">{: width="70%" height="70%"}{: .align-center}
 
 ### Gradient Descent 에서 회귀계수가 업데이트 되는 원리 
 
-<img width="620" alt="12" src="https://user-images.githubusercontent.com/86525868/208841905-8f7069c9-cb60-4530-99b2-58616d4906d6.png">
+<img width="620" alt="12" src="https://user-images.githubusercontent.com/86525868/208841905-8f7069c9-cb60-4530-99b2-58616d4906d6.png">{: width="70%" height="70%"}{: .align-center}
 
 현재 모델이 얼마나 잘 맞추는지, 해당 회귀계수와 연결되어 있는 설명변수가 얼마나 값이 크냐 작냐에 따라 값이 업데이트 됨 
 
@@ -281,11 +281,11 @@ P(y=1)=\frac{1}{1+e^{-(\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\
 $$
 
 
-<img width="371" alt="13" src="https://user-images.githubusercontent.com/86525868/208841907-a2331cc9-060a-4d39-8701-a6b7bea281bf.png">
+<img width="371" alt="13" src="https://user-images.githubusercontent.com/86525868/208841907-a2331cc9-060a-4d39-8701-a6b7bea281bf.png">{: width="70%" height="70%"}{: .align-center}
 
 ### 이진분류를 위한 cut-off 설정 
 
-<img width="528" alt="14" src="https://user-images.githubusercontent.com/86525868/208841911-67ddd35f-68a3-408d-93cd-03fd46bfcf5b.png">
+<img width="528" alt="14" src="https://user-images.githubusercontent.com/86525868/208841911-67ddd35f-68a3-408d-93cd-03fd46bfcf5b.png">{: width="70%" height="70%"}{: .align-center}
 
 일반적으로 0.5가 주로 사용되고 사전확률을 고려한 cut-off나 검증 데이터의 정확도를 최대화하는 cut-off 등이 사용될 수도 있음
 
@@ -335,7 +335,7 @@ $$
 p=\frac{1}{1+e^{-(\hat{\beta_0}+\hat{\beta_1}x_1+\hat{\beta_2}x_2 +\cdots+\hat{\beta_d}x_d)}}
 $$
 
-<img width="504" alt="15" src="https://user-images.githubusercontent.com/86525868/208841913-96eef6f3-7683-4bff-ad4f-44a7f9227218.png">
+<img width="504" alt="15" src="https://user-images.githubusercontent.com/86525868/208841913-96eef6f3-7683-4bff-ad4f-44a7f9227218.png">{: width="70%" height="70%"}{: .align-center}
 
 1. 회귀계수, Coefficient 
 
@@ -367,17 +367,17 @@ $$
 
 로지스틱 회귀분석은 d차원의 데이터를 구분하는 (d-1)차원의 초평면을 찾는 것으로 이해할 수 있음 
 
-<img width="520" alt="16" src="https://user-images.githubusercontent.com/86525868/208841916-69195b77-578a-4082-9eca-b24ef31ed9a8.png">
+<img width="520" alt="16" src="https://user-images.githubusercontent.com/86525868/208841916-69195b77-578a-4082-9eca-b24ef31ed9a8.png">{: width="70%" height="70%"}{: .align-center}
 
 ### 신용카드 연체 예측
 
-<img width="483" alt="17" src="https://user-images.githubusercontent.com/86525868/208841920-7b396538-ec60-41b2-8f6a-c25c0fa6febb.png">
+<img width="483" alt="17" src="https://user-images.githubusercontent.com/86525868/208841920-7b396538-ec60-41b2-8f6a-c25c0fa6febb.png">{: width="70%" height="70%"}{: .align-center}
 
 대출 금액(Balance)에 따른 연체 여부를 예측하는 것은 가능해 보이나, 수입(Income)에 따른 연체 여부를 예측하는 것은 불가능해 보임 → `Balance`는 유효한 변수라는 것을 알 수 있음 
 
 **단변량 로지스틱 회귀분석**
 
-<img width="558" alt="18" src="https://user-images.githubusercontent.com/86525868/208841924-3bad0eee-1c21-426f-adec-9a009f4b385b.png">
+<img width="558" alt="18" src="https://user-images.githubusercontent.com/86525868/208841924-3bad0eee-1c21-426f-adec-9a009f4b385b.png">{: width="70%" height="70%"}{: .align-center}
 
 `balance` 변수를 가지고 단변량 로지스틱 회귀분석을 시행하면 
 
@@ -387,7 +387,7 @@ $$
 
 **다변량 로지스틱 회귀분석**
 
-<img width="543" alt="19" src="https://user-images.githubusercontent.com/86525868/208841928-472df43f-8632-40b1-a6df-1ff40ac25d50.png">
+<img width="543" alt="19" src="https://user-images.githubusercontent.com/86525868/208841928-472df43f-8632-40b1-a6df-1ff40ac25d50.png">{: width="70%" height="70%"}{: .align-center}
 
 1. `student[Yes]`일 경우에 coefficient가 음수라는 것은 학생이 아닐 경우 보다 연체를 일으킬 확률이 낮아진다는 것 
 2. `income`의 p-value는 0.05보다 큰 값이므로 유의미한 변수가 아님
@@ -400,7 +400,7 @@ $$
 
 **기준이 되는 범주를 설정하고 이 범주 대비 다른 범주가 발생할 로그 승산을 회귀식으로 추정**
 
-<img width="360" alt="20" src="https://user-images.githubusercontent.com/86525868/208841930-3a65328b-d8ff-46a0-b199-3f289168599a.png">
+<img width="360" alt="20" src="https://user-images.githubusercontent.com/86525868/208841930-3a65328b-d8ff-46a0-b199-3f289168599a.png">{: width="70%" height="70%"}{: .align-center}
 
 ### 예시
 
@@ -422,20 +422,20 @@ $$
 
 각 범주에 속할 확률의 합은 항상 1이므로 나머지 K번째 범주에 대한 확률은 자동으로 산출 됨 
 
-<img width="566" alt="21" src="https://user-images.githubusercontent.com/86525868/208841932-5f60ff66-c3d4-4143-bcb0-7bc54612ba5f.png">
+<img width="566" alt="21" src="https://user-images.githubusercontent.com/86525868/208841932-5f60ff66-c3d4-4143-bcb0-7bc54612ba5f.png">{: width="70%" height="70%"}{: .align-center}
 
 ### 와인의 화학적 성분 비율을 통해 포도 품종 맞추기 
 
-<img width="778" alt="22" src="https://user-images.githubusercontent.com/86525868/208841934-808190d8-ba92-47e9-baf1-e5e566bf5113.png">
+<img width="778" alt="22" src="https://user-images.githubusercontent.com/86525868/208841934-808190d8-ba92-47e9-baf1-e5e566bf5113.png">{: width="70%" height="70%"}{: .align-center}
 
 1. 12번째 변수는 3가지의 포도 품종이 비슷한 분포를 띄고 있기 때문에 유의미한 변수가 아닐 것 
 2. 8번째 변수는 초록색 포도품종을 구분하는데 도움이 되지만 노랑색, 파란색의 포도품종을 구분하는데는 도움이 되지 않을 것 
 
-<img width="655" alt="23" src="https://user-images.githubusercontent.com/86525868/208841937-8d6fb572-b14e-4b3d-bcd6-bc8e7e225548.png">
+<img width="655" alt="23" src="https://user-images.githubusercontent.com/86525868/208841937-8d6fb572-b14e-4b3d-bcd6-bc8e7e225548.png">{: width="70%" height="70%"}{: .align-center}
 
 1. 5번째 그래프에서 PCA0, PCA1 첫 두개의 주성분만 사용해도 어느정도 잘 구분되는 것을 볼 수 있음
 
-<img width="483" alt="24" src="https://user-images.githubusercontent.com/86525868/208841942-a76c28b8-ae79-47ae-a018-8a5382df8ae7.png">
+<img width="483" alt="24" src="https://user-images.githubusercontent.com/86525868/208841942-a76c28b8-ae79-47ae-a018-8a5382df8ae7.png">{: width="70%" height="70%"}{: .align-center}
 
 1. `Total.phenols, Flavanolds` 는 3가지 품종을 나누는데 중요한 역할을 할 것 
 
