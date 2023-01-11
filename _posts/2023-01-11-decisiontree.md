@@ -13,11 +13,11 @@ toc_icon: "bookmark"
 use_math: true
 ---
 
-# Chapter 4. # 의사결정나무
+# Chapter 4. 의사결정나무
 
 **여러 가지 머신러닝 알고리즘이 필요한 이유?** → 특정 알고리즘이 모든 상황에서 다른 알고리즘보다 우월하다는 결론을 내릴 수 없음 
 
-![1](https://user-images.githubusercontent.com/86525868/211734327-606770cc-e303-42d5-9dc7-27bf8472fb68.png){: .align-center}
+![1](https://user-images.githubusercontent.com/86525868/211734327-606770cc-e303-42d5-9dc7-27bf8472fb68.png){: width="70%" height="70%"}{: .align-center}
 
 
 ## 목적
@@ -28,7 +28,7 @@ use_math: true
 
   예시 : 만일 내일 날씨가 맑고 습도가 70% 이하이면 아이는 밖에 나가서 놀 것이다. or 만일 내일 비가 오고 바람이 불면 아이가 밖에 나가 놀지 않을 것이다.
 
-![2](https://user-images.githubusercontent.com/86525868/211734350-1c61f305-ee83-4ad4-9b58-366db1b9f9bf.png){: .align-center}
+![2](https://user-images.githubusercontent.com/86525868/211734350-1c61f305-ee83-4ad4-9b58-366db1b9f9bf.png){: width="50%" height="50%"}{: .align-center}
 
 
 ## 용어 
@@ -75,7 +75,7 @@ use_math: true
 * 분기에 의해 새로 생성된 자식 노드의 **동질성이 최소화** 되도록 분기점 선택 
 * 불순도를 측정하는 기준으로는 범주형 변수에 대해서는 지니계수, 수치형 변수에 대해서는 분산을 이용 
 
-![3](https://user-images.githubusercontent.com/86525868/211734360-4d1efa6d-76da-4cfe-b19e-1db1434d51e5.png){: .align-center}
+![3](https://user-images.githubusercontent.com/86525868/211734360-4d1efa6d-76da-4cfe-b19e-1db1434d51e5.png){: width="50%" height="50%"}{: .align-center}
 
 
 #### 가지치기 : Pruning 
@@ -117,7 +117,7 @@ $$
 
 - $p_k$ = A영역에 속한 객체들 중 k 범주에 속하는 레코드의 비율 
 
-  ![6](https://user-images.githubusercontent.com/86525868/211734376-be6ce1a5-d6d9-4953-b07e-1e6b28b74484.png){: .align-center}
+  ![6](https://user-images.githubusercontent.com/86525868/211734376-be6ce1a5-d6d9-4953-b07e-1e6b28b74484.png){: width="70%" height="70%"}{: .align-center}
 
 
   → $0.4688$은 초록색 박스 안에 데이터가 혼재되어 있는 정도 
@@ -138,7 +138,7 @@ $$
 
 * $R_i$ = 분할 전 레코드 중 분할 후 $i$영역에 속하는 레코드의 비율 
 
-  ![7](https://user-images.githubusercontent.com/86525868/211734382-2bb002ba-ca3f-4fbf-8282-56436ef6e3e9.png){: .align-center}
+  ![7](https://user-images.githubusercontent.com/86525868/211734382-2bb002ba-ca3f-4fbf-8282-56436ef6e3e9.png){: width="90%" height="90%"}{: .align-center}
 
 
 → **분기 후의 정보 획득**(빨간색 점선으로 얻을 수 있는 효과) : $0.4688-0.3438=0,1250$ 
@@ -153,10 +153,10 @@ $$
 D_i=-2\sum_kn_{ik}\log(p_{ik})
 $$
 
-![8](https://user-images.githubusercontent.com/86525868/211734390-230e9311-97ac-4b01-ad13-a9aaf9981312.png){: .align-center}
+![8](https://user-images.githubusercontent.com/86525868/211734390-230e9311-97ac-4b01-ad13-a9aaf9981312.png){: width="70%" height="70%"}{: .align-center}
 
 
-![9](https://user-images.githubusercontent.com/86525868/211734396-be4a7a7a-9f9c-47a0-a13b-6a3ef564772f.png){: .align-center}
+![9](https://user-images.githubusercontent.com/86525868/211734396-be4a7a7a-9f9c-47a0-a13b-6a3ef564772f.png){: width="70%" height="70%"}{: .align-center}
 
 
 → 분기 후의 정보 획득 = $21.17-16.62=4.55$
@@ -165,7 +165,7 @@ $$
 
 #### - 한 변수(Lot Size)를 기준으로 하여 정렬 
 
-![10](https://user-images.githubusercontent.com/86525868/211734402-0aa795e2-a94b-42b6-90df-eb0e12d52b79.png){: .align-center}
+![10](https://user-images.githubusercontent.com/86525868/211734402-0aa795e2-a94b-42b6-90df-eb0e12d52b79.png){: width="70%" height="70%"}{: .align-center}
 
 
 #### - 순차적으로 가능한 분기점에 대한 정보 획득 계산 
@@ -198,19 +198,19 @@ $$
 
 모든 말단 노드에는 한 범주의 객체들만 존재 → 순도 100%, Training error = 0
 
-![16](https://user-images.githubusercontent.com/86525868/211734477-17426c8b-b835-46fb-852c-508706acba92.png){: .align-center}
+![16](https://user-images.githubusercontent.com/86525868/211734477-17426c8b-b835-46fb-852c-508706acba92.png){: width="50%" height="50%"}{: .align-center}
 
 #### - 의사결정나무를 통한 분류 예측 
 
 해당 객체가 속하는 말단 노드에 속한 학습 객체들의 비율을 통해 판정 (일반적으로 0.5를 분류 기준값, cut-off로 사용)
 
-![17](https://user-images.githubusercontent.com/86525868/211734483-8aeb3994-1366-47d2-809e-c37f8771bec7.png){: .align-center}
+![17](https://user-images.githubusercontent.com/86525868/211734483-8aeb3994-1366-47d2-809e-c37f8771bec7.png){: width="50%" height="50%"}{: .align-center}
 
 #### - 과적합 문제 
 
 재귀적 분기는 모든 말단 노드의 순도가 100%일 때 종료됨
 
-![18](https://user-images.githubusercontent.com/86525868/211734489-ff406e06-edbb-4cc8-95e8-a0f7fe756fdc.png){: .align-center}
+![18](https://user-images.githubusercontent.com/86525868/211734489-ff406e06-edbb-4cc8-95e8-a0f7fe756fdc.png){: width="50%" height="50%"}{: .align-center}
 
 * depth가 일정 깊이까지는 깊어질 수록 노이즈에 영향을 받지 않는 일반적인 패턴 $f(x)$ 를 찾게 됨 → **데스트 데이터도 에러 감소**
 * depth가 일정 깊이 이상으로 깊어지면 노이즈를 패턴으로 인식 → **테스트 데이터 에러는 증가**
@@ -270,7 +270,7 @@ $$
 
 고객의 인구통계학적 정보와 은행 이용 행태를 바탕으로 개인신용대출을 이용할 고객 판별 
 
-![22](https://user-images.githubusercontent.com/86525868/211734510-ef225049-fae0-4d31-86d5-68908421cf30.png){: .align-center}
+![22](https://user-images.githubusercontent.com/86525868/211734510-ef225049-fae0-4d31-86d5-68908421cf30.png){: width="50%" height="50%"}{: .align-center}
 
 ![23](https://user-images.githubusercontent.com/86525868/211734518-20de09c6-2f5a-48d4-93a5-f3963502baeb.png){: .align-center}
 
@@ -288,7 +288,7 @@ or
 
 전체 영역을 Split Point를 기준으로 영역을 나누고 각 구간의 존재하는 $y$값들의 평균으로 예측 
 
-![24](https://user-images.githubusercontent.com/86525868/211734524-6e05ead0-b8c3-4a3b-a8e9-09ecca1a8583.png){: .align-center}
+![24](https://user-images.githubusercontent.com/86525868/211734524-6e05ead0-b8c3-4a3b-a8e9-09ecca1a8583.png){: width="50%" height="50%"}{: .align-center}
 
 ↳ split point = 5.5 → if $y\lt5.5, y=4$, if $y\gt5.5, y=8$
 
@@ -309,7 +309,7 @@ $$
 
 ### 토요타 코롤라 중고차 가격 예측 문제 
 
-![26](https://user-images.githubusercontent.com/86525868/211734535-36061d58-dc6e-4f95-8479-9aa9aebec33f.png){: .align-center}
+![26](https://user-images.githubusercontent.com/86525868/211734535-36061d58-dc6e-4f95-8479-9aa9aebec33f.png){: width="70%" height="70%"}{: .align-center}
 
 * 5번째 말단 노드 : $52.5 \le$ 사용기간 $\le 58.5$ and 마력 $\le 93.5$ 일 경우, 10.468 Euro에 팔림
 
