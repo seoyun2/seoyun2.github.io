@@ -25,7 +25,7 @@ use_math: true
 
 동등한 설명력을 갖기 위해서는 변수가 증가할 때 필요한 개체의 수는 기하급수적으로 증가
 
-![1](https://user-images.githubusercontent.com/86525868/213905886-8b70dce5-f25b-4722-ae01-4e885eb16e61.png)
+![1](https://user-images.githubusercontent.com/86525868/213905886-8b70dce5-f25b-4722-ae01-4e885eb16e61.png){: width="70%" height="70%"}{: .align-center}
 
 **차원의 저주 (Curse of Dimensionality)** : 데이터의 차원이 높아짐에 따라 생기는 문제점 
 
@@ -41,7 +41,7 @@ use_math: true
 
 * 정량적 분석을 통한 차원 감소 
 
-  ![2](https://user-images.githubusercontent.com/86525868/213905888-5872a81f-4aa7-4296-9353-c5afda4ef15a.png)
+  ![2](https://user-images.githubusercontent.com/86525868/213905888-5872a81f-4aa7-4296-9353-c5afda4ef15a.png){: width="40%" height="40%"}{: .align-center}
 
 ↳ 변수가 일정 수준 이상으로 커질 때는 예측에 필요한 변수들이 대부분으로 성능이 향상하지만 일정수준 이상으로 변수가 증가하면 변수 추가에 따른 이득보다 손해가 더 커짐 
 
@@ -76,14 +76,14 @@ use_math: true
 * 축소된 차원의 적합성을 검증하는데 있어 예측 모델을 적용
 * 동일한 데이터라도 적용되는 예측 모델에 따라 축소된 차원의 결과가 달라질 수 있음
 
-![3](https://user-images.githubusercontent.com/86525868/213905889-24c4a774-f1ca-48af-9830-926976b16b38.png)
+![3](https://user-images.githubusercontent.com/86525868/213905889-24c4a774-f1ca-48af-9830-926976b16b38.png){: .align-center}
 
 ##### 비교사적적 차원 축소 : Unsupervised dimensionality reduction
 
 * 축소된 차원의 적합성을 검증하는데 있어 예측 모델의 적용하지 않음
 * 특정 기법에 따른 차원축소 결과는 동일함
 
-![4](https://user-images.githubusercontent.com/86525868/213905890-5243180b-55b9-4cc6-95c4-c4ef3caff186.png)
+![4](https://user-images.githubusercontent.com/86525868/213905890-5243180b-55b9-4cc6-95c4-c4ef3caff186.png){: .align-center}
 
 #### 차원축소 기법 
 
@@ -100,7 +100,7 @@ use_math: true
 
 ##### 변수 선택 vs 변수 추출
 
-![5](https://user-images.githubusercontent.com/86525868/213905892-77b7bed5-b579-4e56-bf8a-ad8f7a64262e.png)
+![5](https://user-images.githubusercontent.com/86525868/213905892-77b7bed5-b579-4e56-bf8a-ad8f7a64262e.png){: width="70%" height="70%"}{: .align-center}
 
 ### 변수 선택 기법 
 
@@ -110,7 +110,7 @@ use_math: true
 
   ↳ 예 : 3개의 변수가 존재하는 경우 
 
-![6](https://user-images.githubusercontent.com/86525868/213905893-bc5dcf5e-d33b-45eb-9dac-4112577ef8a7.png)
+![6](https://user-images.githubusercontent.com/86525868/213905893-bc5dcf5e-d33b-45eb-9dac-4112577ef8a7.png){: width="70%" height="70%"}{: .align-center}
 
 변수 선택을 위한 모델 평가 기준 
 
@@ -127,7 +127,7 @@ $AIC$는 낮을수록 좋은 지표 → 같은 오류값(Sum of Squared Error)�
 
 **하지만, 현실적으로 전역 탐색이 융효한 변수 선택 기법이 아닌 이유** : 1초에 10,000개의 모델을 평가할 수 있는 컴퓨터를 활용할 경우 변수 선택에 소요되는 시간을 감당할 수 없음
 
-![7](https://user-images.githubusercontent.com/86525868/213905894-8c154485-1f4b-400a-b542-736cbd510370.png)
+![7](https://user-images.githubusercontent.com/86525868/213905894-8c154485-1f4b-400a-b542-736cbd510370.png){: .align-center}
 
 #### 2. 전진 선택법 : Forward Selection 
 
@@ -135,13 +135,13 @@ $AIC$는 낮을수록 좋은 지표 → 같은 오류값(Sum of Squared Error)�
 
 한번 선택된 변수는 제거되지 않음
 
-![8](https://user-images.githubusercontent.com/86525868/213905895-2b5646f7-5ca2-48a9-8c17-938d715baa7c.png)
+![8](https://user-images.githubusercontent.com/86525868/213905895-2b5646f7-5ca2-48a9-8c17-938d715baa7c.png){: .align-center}
 
 종료시점 : 모든 조합에 대해서 더이상 추가적인 변수를 투입해도 성능 향상이 일어나지 않을 때 
 
 ##### 예시 
 
-![9](https://user-images.githubusercontent.com/86525868/213905896-faec261e-db8d-4f12-82f7-cb640874b20b.png)
+![9](https://user-images.githubusercontent.com/86525868/213905896-faec261e-db8d-4f12-82f7-cb640874b20b.png){: .align-center}
 
 $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상이 일어나지 않음 → $x_4$까지 변수 추가 
 
@@ -151,11 +151,11 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 
 한번 제거된 변수를 다시 선택될 가능성이 없음
 
-![10](https://user-images.githubusercontent.com/86525868/213905897-20ec172d-9a46-4be7-bd58-cf035966b7da.png)
+![10](https://user-images.githubusercontent.com/86525868/213905897-20ec172d-9a46-4be7-bd58-cf035966b7da.png){: .align-center}
 
 ##### 예시
 
-![11](https://user-images.githubusercontent.com/86525868/213905898-fff3d8ac-e566-4d11-8e70-2f3b0f0b497c.png)
+![11](https://user-images.githubusercontent.com/86525868/213905898-fff3d8ac-e566-4d11-8e70-2f3b0f0b497c.png){: .align-center}
 
 한 변수만 제거된 모델을 모두 평가하여 성능 저하가 발생하지 않는 변수 $x_3, x_8$ 제거 → 이후에는 어떠한 변수를 제거하더라도 유의미한 성능 감소 발생 
 
@@ -169,7 +169,7 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 
 선택된 변수의 총 수는 증가와 감소가 번갈아가며 일어날 수 있음 
 
-![12](https://user-images.githubusercontent.com/86525868/213905900-ef63b812-8c19-4253-a817-9a870cf4c7be.png)
+![12](https://user-images.githubusercontent.com/86525868/213905900-ef63b812-8c19-4253-a817-9a870cf4c7be.png){: .align-center}
 
 ### 유전 알고리즘
 
@@ -179,7 +179,7 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 
 * 전진 선택 / 후진소거 / 단계적 선택 : 전역탐색에 비해서는 매우 효율적이나 최적 변수 집합을 찾을 가능성이 낮아짐
 
-  ![13](https://user-images.githubusercontent.com/86525868/213905901-149fb000-46d1-4473-b65b-ed5a2f4a39ec.png)
+  ![13](https://user-images.githubusercontent.com/86525868/213905901-149fb000-46d1-4473-b65b-ed5a2f4a39ec.png){: width="40%" height="40%"}{: .align-center}
 
 **유전 알고리즘** 
 
@@ -201,7 +201,7 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 
 ##### 변수 선택을 위한 유전 알고리즘 절차 
 
-![14](https://user-images.githubusercontent.com/86525868/213905902-72b84225-4550-411b-8506-052c405039d4.png)
+![14](https://user-images.githubusercontent.com/86525868/213905902-72b84225-4550-411b-8506-052c405039d4.png){: width="70%" height="70%"}{: .align-center}
 
 ##### 1단계 : 초기화 
 
@@ -213,7 +213,7 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 
 변수 선택에서는 이진 인코딩을 사용 
 
-![15](https://user-images.githubusercontent.com/86525868/213905903-34e2e6eb-7261-4029-886e-8a45b3cc4fe1.png)
+![15](https://user-images.githubusercontent.com/86525868/213905903-34e2e6eb-7261-4029-886e-8a45b3cc4fe1.png){: .align-center}
 
 ↳ 1일 경우 : 해당 변수 사용 / 0일 경우 : 해당 변수 미사용
 
@@ -225,7 +225,7 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 * 돌연변이율 (Mutation rate) : 각 유전자마다 적용되는 돌연변이율
 * 종료 조건 (Stopping criteria) : 적합도 함수가 일정 수준 이상 개선되지 않을 때, 최대 세대 수까지 진행되었을 때 $\cdots$
 
-![18](https://user-images.githubusercontent.com/86525868/213905906-1c14c992-2110-4ae5-8ce4-9b2fa9e60330.png)
+![18](https://user-images.githubusercontent.com/86525868/213905906-1c14c992-2110-4ae5-8ce4-9b2fa9e60330.png){: width="40%" height="40%"}{: .align-center}
 
 ↳ best 결과와 평균결과 비교 → 세대가 거듭될수록 자연선택설에 의해서 우수한 것들만 남아 개선하다보면 평균결과와 best결과의 차이가 거의 없어짐 
 
@@ -237,13 +237,13 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 
 **예시 : population size = 8, cut-off=0.5**
 
-![16](https://user-images.githubusercontent.com/86525868/213905904-1577e8ff-5422-43a0-890c-58c772977d7d.png)
+![16](https://user-images.githubusercontent.com/86525868/213905904-1577e8ff-5422-43a0-890c-58c772977d7d.png){: width="60%" height="60%"}{: .align-center}
 
 ##### 2단계 : 모델 학습
 
 **각 염색체에 담긴 정보(해당 변수의 모델링 사용 유무)를 활용하여 염색체 수만큼 모델을 학습**
 
-![17](https://user-images.githubusercontent.com/86525868/213905905-534f1f48-17fa-4efb-adac-33510bd47fef.png)
+![17](https://user-images.githubusercontent.com/86525868/213905905-534f1f48-17fa-4efb-adac-33510bd47fef.png){: width="60%" height="60%"}{: .align-center}
 
 **각 염색체의 정보를 사용하여 학습된 모형의 적합도 평가**
 
@@ -260,7 +260,7 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 
 **각 염색체의 정보를 사용하여 학습된 모형의 적합도 평가**
 
-![19](https://user-images.githubusercontent.com/86525868/213905907-adebc2bd-536f-488d-9bb6-c1bd04ce81e0.png)
+![19](https://user-images.githubusercontent.com/86525868/213905907-adebc2bd-536f-488d-9bb6-c1bd04ce81e0.png){: width="40%" height="40%"}{: .align-center}
 
 ##### 4단계 : 부모 염색체 선택
 
@@ -273,7 +273,7 @@ $x_4$변수를 추가하고 난 뒤에 변수가 추가 됐을 때 성능 향상
 
 **1. 확정적 선택 (N=50%)**
 
-![20](https://user-images.githubusercontent.com/86525868/213905908-ea3267a5-ca42-440a-b2e3-4d1f94c5bf3c.png)
+![20](https://user-images.githubusercontent.com/86525868/213905908-ea3267a5-ca42-440a-b2e3-4d1f94c5bf3c.png){: width="60%" height="60%"}{: .align-center}
 
 Adjusted $R^2$가 0.5를 넘는 염색체 (1, 2, 4, 8번염색체)만 다음 세대를 생성하는 부모 염색체의 역할을 수행
 
@@ -281,11 +281,11 @@ Adjusted $R^2$가 0.5를 넘는 염색체 (1, 2, 4, 8번염색체)만 다음 세
 
 첫 번째 부모 염색체 쌍을 선택하기 위해 난수 생성  (**생성된 난수 : 0.881, 0.499**)
 
-![21](https://user-images.githubusercontent.com/86525868/213905909-85d3ec39-29d2-4b74-ab4d-fde2bd841e29.png)
+![21](https://user-images.githubusercontent.com/86525868/213905909-85d3ec39-29d2-4b74-ab4d-fde2bd841e29.png){: .align-center}
 
 생성된 난수가 누적 적합도 값(Weight) 어디에 해당하는 지 확인 후, 부모 염색체 쌍으로 선택 
 
-![22](https://user-images.githubusercontent.com/86525868/213905910-6e877931-4996-48d3-a2ba-1f1c7e9aa44e.png)
+![22](https://user-images.githubusercontent.com/86525868/213905910-6e877931-4996-48d3-a2ba-1f1c7e9aa44e.png){: .align-center}
 
 ##### 5단계 : 교배 및 돌연변이
 
@@ -297,11 +297,11 @@ Adjusted $R^2$가 0.5를 넘는 염색체 (1, 2, 4, 8번염색체)만 다음 세
 
 **예시 : 교배지점 1개**
 
-![23](https://user-images.githubusercontent.com/86525868/213905911-21326186-71a5-47a3-92dd-d8bfe4d8f33b.png)
+![23](https://user-images.githubusercontent.com/86525868/213905911-21326186-71a5-47a3-92dd-d8bfe4d8f33b.png){: width="40%" height="40%"}{: .align-center}
 
 **예시 : 교배지점 10개**
 
-![24](https://user-images.githubusercontent.com/86525868/213905913-2a329fe1-0052-4cf8-a90c-bfe8598be972.png)
+![24](https://user-images.githubusercontent.com/86525868/213905913-2a329fe1-0052-4cf8-a90c-bfe8598be972.png){: width="40%" height="40%"}{: .align-center}
 
 ↳ 난수 생성 후, cut-off 넘는 변수들을 교환하여 자식 염색체 생성 
 
@@ -313,5 +313,5 @@ Adjusted $R^2$가 0.5를 넘는 염색체 (1, 2, 4, 8번염색체)만 다음 세
 
 너무 높은 돌연변이율은 유전 알고리즘의 수렴속도를 늦춤 (주로 0.01 이하 값 사용)
 
-![25](https://user-images.githubusercontent.com/86525868/213905914-feb866ac-147b-4122-9521-09bc2d3c8a40.png)
+![25](https://user-images.githubusercontent.com/86525868/213905914-feb866ac-147b-4122-9521-09bc2d3c8a40.png){: width="40%" height="40%"}{: .align-center}
 
