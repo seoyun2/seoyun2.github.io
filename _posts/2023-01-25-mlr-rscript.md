@@ -1,5 +1,5 @@
 ---
-title: "[R] Multiple Linear Regression"
+title: "R : Multiple Linear Regression"
 categories:
   - R
   - R studio
