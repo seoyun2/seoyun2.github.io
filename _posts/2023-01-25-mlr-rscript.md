@@ -1,5 +1,5 @@
 ---
-title: "R : Multiple Linear Regression"
+title: "[R] Multiple Linear Regression"
 categories:
   - R
   - R studio
@@ -14,7 +14,7 @@ toc_icon: "bookmark"
 use_math: true
 ---
 
-# R : Multiple Linear Regression 
+# Multiple Linear Regression Practice with R
 ``` r
 # Performance evaluation function for regression 
 perf_eval_reg <- function(tgt_y, pre_y){
