@@ -20,6 +20,8 @@ use_math: true
 💡 Toyota Corolla dataset, Boston Housing dataset 
 {: .notice--info}
 
+**1. Toyota corolla**
+
 ``` r
 # Performance evaluation function for regression 
 perf_eval_reg <- function(tgt_y, pre_y){
