@@ -15,6 +15,11 @@ use_math: true
 ---
 
 # Multiple Linear Regression Practice with R
+
+
+💡 Toyota Corolla dataset, Boston Housing dataset 
+{: .notice--info}
+
 ``` r
 # Performance evaluation function for regression 
 perf_eval_reg <- function(tgt_y, pre_y){
