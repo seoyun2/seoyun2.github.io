@@ -1,5 +1,5 @@
 ---
-title: "[R] Multiple Linear Regression"
+title: "[R] 1. Multiple Linear Regression"
 categories:
   - R
   - R studio
@@ -15,10 +15,6 @@ use_math: true
 ---
 
 # Multiple Linear Regression Practice with R
-
-
-💡 Toyota Corolla dataset, Boston Housing dataset 
-{: .notice--info}
 
 **1. Toyota corolla**
 
