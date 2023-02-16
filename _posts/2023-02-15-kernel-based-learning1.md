@@ -122,7 +122,7 @@ $$
   \min\frac{1}{2}||w||^2
   $$
   
-  $margin = \frac{2}{||w||^2}$ 을 최대화 하는 것은 $margin$의 역수 $\frac{1}{2}||w||^2$를 최소화 하는 것과 같음
+  $margin=\frac{2}{||w||^2}$ 을 최대화 하는 것은 $margin$의 역수 $\frac{1}{2}||w||^2$를 최소화 하는 것과 같음
 
 * **제약식** 
 
@@ -135,8 +135,9 @@ $$
 ![image-20230215013951163](https://user-images.githubusercontent.com/86525868/218806461-86793c3b-4bf6-439f-8aad-31123eee9ad5.png){: width="40%" height="40%"}{: .align-center}
 
 * **Lagrangian Problem** 
+
   $$
-  \min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}||\mathbf w ||^2-\sum_{i=1}^N \alpha i\big(y_i(\mathbf w^T \mathbf x_i+b)-1\big)$, 	$s.t. \quad \alpha_i \ge0
+  \min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}||\mathbf w ||^2-\sum_{i=1}^N \alpha i\big(y_i(\mathbf w^T \mathbf x_i+b)-1\big)\\s.t. \quad \alpha_i \ge0
   $$
 
 * **KKT**
@@ -151,12 +152,13 @@ $$
   \min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}||\mathbf w||^2-\sum_{i=1}^N\alpha_i\big(y_i(\mathbf w_T\mathbf x_i+b)-1\big) \quad s.t. \ \alpha_i\ge0\\
   \max L_D(\alpha_i)=\sum_{i=1}^N\alpha_i-\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\mathbf x_i\mathbf x_j \quad s.t\ \sum_{i=1}^N\alpha_iy_i=0 \ \text{and}\ \alpha_i \ge0
   $$
-   $\mathbf w, b$에 대한 primal 식의 최소화 문제가 $\alpha$에 대한 최대화 문제로 바뀌면서 최적해를 갖는 $\alpha$ 찾기
+  
+  $\mathbf w, b$에 대한 primal 식의 최소화 문제가 $\alpha$에 대한 최대화 문제로 바뀌면서 최적해를 갖는 $\alpha$ 찾기
 
 * **Fimal Decision**
   
   $$
-  f(\mathbf x_{new})=sign\Big(\sum_{i=1}^N\alpha_iy_i\mathbf x_i^T\mathbf x_{new}+b)
+  f(\mathbf x_{new})=sign\Big(\sum_{i=1}^N\alpha_iy_i\mathbf x_i^T\mathbf x_{new}+b\Big)
   $$
 
 * **From KKT condition**
@@ -180,7 +182,7 @@ $$
 
 #### 정리 
 
-1. 왜 SVM의 목적함수가 $\frac{1}{2}||\mathbf w||^2$인가? → **margin을 최대화하기 위해서**
+1. 왜 SVM의 목적함수가 $\frac{1}{2}\||\mathbf w\||^2$인가? → **margin을 최대화하기 위해서**
 2. 각각의 제약식이 의미하는 것은? → **점들이 margin 위, margin 밖 공간에 위치하도록 정의하기 위해서**
 3. primal 문제에서 미지수를 1차 미분해서 최적화 조건을 만들고 그 최적화 조건을 통해 듀얼 문제를 만드는 이유는? → **오목한 형태의 Multiplier와 $\alpha$에 대한 이차함수의 형태로 항상 최적해가 만들어지기 때문에** 
 
