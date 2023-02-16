@@ -119,10 +119,10 @@ $$
 * **목적함수** 
 
   $$
-  \min\frac{1}{2}||w||^2
+  \min\frac{1}{2}||\mathbf w||^2
   $$
   
-  $margin=\frac{2}{\lVertw\lVert^2}$ 을 최대화 하는 것은 $margin$의 역수 $\frac{1}{2}\lVertw\lVert^2$를 최소화 하는 것과 같음
+  $margin=\frac{2}{\lVert \mathbf w\lVert^2}$ 을 최대화 하는 것은 $margin$의 역수 $\frac{1}{2}\lVert \mathbf w\lVert^2$를 최소화 하는 것과 같음
 
 * **제약식** 
 
