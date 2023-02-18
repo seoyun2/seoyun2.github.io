@@ -18,6 +18,10 @@ toc_icon: "bookmark"
 use_math: true
 ---
 
+💡 시계열 데이터 분석 기초 <br>
+**강필성** 교수님의 강의를 보고 정리하였습니다.
+{: .notice--info}
+
 # Chapter 5. 주요 변수 선택 기법 
 ## 차원축소 : Dimensionality Reduction 
 
