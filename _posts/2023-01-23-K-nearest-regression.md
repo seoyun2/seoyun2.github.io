@@ -15,11 +15,12 @@ toc_icon: "bookmark"
 use_math: true
 ---
 
-💡 시계열 데이터 분석 기초 <br>
+# Chapter 6. k-인접 이웃 기법 
+
+💡 Data business <br>
 **강필성** 교수님의 강의를 보고 정리하였습니다.
 {: .notice--info}
 
-# Chapter 6. k-인접 이웃 기법 
 ## K-인접 이웃 기법 : K-Nearest Neighbor Learning
 
 **Model-based Learning**
