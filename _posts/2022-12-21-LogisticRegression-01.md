@@ -13,13 +13,13 @@ toc_icon: "bookmark"
 use_math: true
 ---
 
-💡 시계열 데이터 분석 기초 <br>
-**강필성** 교수님의 강의를 보고 정리하였습니다.
-{: .notice--info}
+
 
 # 로지스틱 회귀분석 : Logisitc Linear Regression
 
-
+💡 Data business <br>
+**강필성** 교수님의 강의를 보고 정리하였습니다.
+{: .notice--info}
 
 **다중 선형 회귀분석** : 수치형 설명변수 $X$와 종속변수 $Y$ 간의 관계를 선형으로 가정하고 이를 잘 표현할 수 있는 회귀계수를 추정
 
