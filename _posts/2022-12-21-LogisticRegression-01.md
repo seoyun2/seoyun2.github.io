@@ -13,6 +13,10 @@ toc_icon: "bookmark"
 use_math: true
 ---
 
+💡 시계열 데이터 분석 기초 <br>
+**강필성** 교수님의 강의를 보고 정리하였습니다.
+{: .notice--info}
+
 # 로지스틱 회귀분석 : Logisitc Linear Regression
 
 
