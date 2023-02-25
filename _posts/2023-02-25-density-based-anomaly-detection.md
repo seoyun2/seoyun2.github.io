@@ -1,5 +1,5 @@
 ---
-title: "[Data Science] 2. Anomaly Detection"
+title: "[Data Science] 2. Density Based Anomaly Detection"
 categories:
   - Data Science
   - Anomaly Detection
@@ -191,7 +191,7 @@ $$
   p(m|\mathbf x_i, \lambda )=\frac{w_mg(\mathbf x_i|\boldsymbol{\mu}_m,\boldsymbol{\Sigma}_m)}{\sum_{k=1}^M w_k g(\mathbf x_t|\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)}
   $$
 
-* **Maximization** : $p(m\left\vert\mathbf x_i, \lambda)$ 고정
+* **Maximization** : $p(m\vert\mathbf x_i, \lambda)$ 고정
 
   $$
   w_m^{(new)}=\frac{1}{N}\sum_{i=1}^Np(m|\mathbf x_i, \lambda)\\
