@@ -40,7 +40,7 @@ use_math: true
 
 대부분의 데이터가 한 범주에 속하며 극소수의 데이터만 다른 범주에 속하는 문제 (ex, 제조업 공정에서의 불량 탐지, 신용카드 사기 거래, 통신망의 불법적인 사용 등)
 
-![1](https://user-images.githubusercontent.com/86525868/221347025-16c35dd9-ae2d-499e-9c76-d34bd4f07b02.png)
+![1](https://user-images.githubusercontent.com/86525868/221347025-16c35dd9-ae2d-499e-9c76-d34bd4f07b02.png){: .align-center}
 
 ### 일반화(Generalization)와 특수화(Specialization)
 
@@ -50,17 +50,16 @@ use_math: true
 
 **일반화**에 치중할 경우 이상치 데이터 판별이 어렵게 되고 **특수화**에 치중할 경우 과적합의 위험에 빠질 수 있음
 
-![2](https://user-images.githubusercontent.com/86525868/221347027-d07d5d22-6f1d-4d56-b3ab-65cd4b2aa608.png)
+![2](https://user-images.githubusercontent.com/86525868/221347027-d07d5d22-6f1d-4d56-b3ab-65cd4b2aa608.png){: width="50%" height="50%"}{: .align-center}
 
 ### 접근 방법
 
 주어진 데이터에는 다수의 정상 데이터와 매우 적은 수의 비정상 데이터가 혼재되어 있음 
 
 **이상치 탐지**는 다수(정상 데이터)만을 사용 
+![3](https://user-images.githubusercontent.com/86525868/221347029-a6b71d5f-855e-4299-9241-15a89d6d0516.png){: .align-center}
 
-![3](https://user-images.githubusercontent.com/86525868/221347029-a6b71d5f-855e-4299-9241-15a89d6d0516.png)
-
-![4](https://user-images.githubusercontent.com/86525868/221347031-8ae452ff-28ed-4588-9acb-29e84b90adb3.png)
+![4](https://user-images.githubusercontent.com/86525868/221347031-8ae452ff-28ed-4588-9acb-29e84b90adb3.png){: width="70%" height="70%"}{: .align-center}
 
 ### 평가 지표 
 
@@ -68,7 +67,7 @@ use_math: true
 
 실제 데이터에서는 이러한 cut-off에 따라 정오 행렬이 달라지기 때문에 **cut-off에 영향을 받지않는 성능 평가 지표 필요**
 
-![5](https://user-images.githubusercontent.com/86525868/221347032-7fa05d12-7feb-4f3f-bfbf-ed058e295834.png)
+![5](https://user-images.githubusercontent.com/86525868/221347032-7fa05d12-7feb-4f3f-bfbf-ed058e295834.png){: width="70%" height="70%"}{: .align-center}
 
 * **False Regection Rate (FRR)** : 원래는 정상이나 이상치 탐지 모델에 의해 이상치로 잘못 판별된 비율
 
@@ -84,7 +83,7 @@ use_math: true
 
 **이상치 탐지 방법론 평가 지표 그래프**
 
-![6](https://user-images.githubusercontent.com/86525868/221347033-70d680ee-53b0-4bd3-9cdb-a2fe49b96f45.png)
+![6](https://user-images.githubusercontent.com/86525868/221347033-70d680ee-53b0-4bd3-9cdb-a2fe49b96f45.png){: width="40%" height="40%"}{: .align-center}
 
 * **Integrated Error** : FRR - FAR 그래프 밑면의 넓이 = $1-AUROC$
 
@@ -101,7 +100,7 @@ use_math: true
 1. 생성되는 매커니즘이 다른 데이터 
 2. 이상치 데이터가 가진 실제 밀도는 매우 낮음 → 밀도 기반 이상치 탐지 기법의 접근 방식 
 
-![7](https://user-images.githubusercontent.com/86525868/221347034-56666ea2-bf81-4390-9d6e-a9431a0d3a98.png)
+![7](https://user-images.githubusercontent.com/86525868/221347034-56666ea2-bf81-4390-9d6e-a9431a0d3a98.png){: .align-center}
 
 **Low Density Regions**는 현재 데이터의 평균과 분산으로 구성된 가오시안 분포에서는 생성될 수 없는 (매우 낮은 확률) 데이터 → **정상이 아닐 것으로 판단**
 
@@ -111,7 +110,7 @@ use_math: true
 * Mixture of Gaussian Density Estimation
 * Kernel Density Estimation 
 
-![8](https://user-images.githubusercontent.com/86525868/221347035-c4cc14f3-d4e0-4025-94d7-62e81b546886.png)
+![8](https://user-images.githubusercontent.com/86525868/221347035-c4cc14f3-d4e0-4025-94d7-62e81b546886.png){: .align-center}
 
 ### Gaussian Density Estimation 
 
@@ -150,7 +149,7 @@ $$
 
   하지만 $x \in R^d$일 경우 공분산 행렬은 $d\times d$로 역행렬을 계산하기 어렵거나 존재하지 않을 수 있음
 
-![9](https://user-images.githubusercontent.com/86525868/221347036-ba6c0abd-1cce-4430-8a45-fc4bcd63ab2f.png)
+![9](https://user-images.githubusercontent.com/86525868/221347036-ba6c0abd-1cce-4430-8a45-fc4bcd63ab2f.png){: .align-center}
 
 ### Mixture of Gaussian (MoG) Density Estimation 
 
@@ -158,7 +157,7 @@ $$
 
 **MoG**는 데이터가 여러 개의 가우시안 분포의 혼합으로 이루어져 있음을 허용하고 이 가우시안 분포들의 선형 결합으로 전체 데이터 분포 표현 
 
-![10](https://user-images.githubusercontent.com/86525868/221347037-babf0a37-90fa-46c5-bfca-61e716178e86.png)
+![10](https://user-images.githubusercontent.com/86525868/221347037-babf0a37-90fa-46c5-bfca-61e716178e86.png){: width="40%" height="40%"}{: .align-center}
 
 * 하나의 객체가 정상 영역에 속할 확률 
 
@@ -182,7 +181,7 @@ $$
 
   ↳ 객체별 가우시안 분포 확률, 개별 가우시안 분포의 평균, 공분산행렬, 결합가중치의 변화가 없을때까지 반복 
 
-![11](https://user-images.githubusercontent.com/86525868/221347040-23921d49-f0b9-4191-9529-ee4204e5e4ad.png)
+![11](https://user-images.githubusercontent.com/86525868/221347040-23921d49-f0b9-4191-9529-ee4204e5e4ad.png){: .align-center}
 
 ![img](https://upload.wikimedia.org/wikipedia/commons/a/a7/Em_old_faithful.gif)
 
@@ -192,7 +191,7 @@ $$
   p(m|\mathbf x_i, \lambda )=\frac{w_mg(\mathbf x_i|\boldsymbol{\mu}_m,\boldsymbol{\Sigma}_m)}{\sum_{k=1}^M w_k g(\mathbf x_t|\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)}
   $$
 
-* **Maximization** : $p(m|\mathbf x_i, \lambda)$ 고정
+* **Maximization** : $p(m\left\vert\mathbf x_i, \lambda)$ 고정
 
   $$
   w_m^{(new)}=\frac{1}{N}\sum_{i=1}^Np(m|\mathbf x_i, \lambda)\\
@@ -202,7 +201,7 @@ $$
 
 **공분산 행렬 형태에 따른 MoG 모양**
 
-![12](https://user-images.githubusercontent.com/86525868/221347041-07e17d3b-b3ef-49dd-b17f-db783b44ac8b.png)
+![12](https://user-images.githubusercontent.com/86525868/221347041-07e17d3b-b3ef-49dd-b17f-db783b44ac8b.png){: .align-center}
 
 ↳ 변수(d)가 매우 크면 Diogonal을 사용하는 것이 안전(full의 역행렬이 생성되지 않아 새로운 데이터가 들어왔을 때, 이상치 스코어 산출이 안될 수 있음)
 
@@ -265,7 +264,7 @@ $$
 
 위의 식에서 $V$를 고정시키고 $k$를 찾으면 **커널 밀도 추정** / 위의 식에서 $k$를 고정시키고 $V$를 찾으면 **K-nn**
 
-![13](https://user-images.githubusercontent.com/86525868/221347043-181f0010-248d-4641-a01f-379ff4fd7ca5.png)
+![13](https://user-images.githubusercontent.com/86525868/221347043-181f0010-248d-4641-a01f-379ff4fd7ca5.png){: width="60%" height="60%"}{: .align-center}
 
 $p(x)=\frac{k}{NV}$로 정의되고 $N=20, \ R=2\times 2$인 정사각형이라고 가정
 
@@ -275,7 +274,7 @@ $R=2\times 2$라는 사각형을 어느 영역에 위치시켰을 때 그 안에
 
 $k$개의 객체를 포함하는 영역 $x$를 중심으로 각 면의 길이가 $h$인 Hypercube 정의 (볼륨 $V$는 $h^d$로 정의)
 
-![14](https://user-images.githubusercontent.com/86525868/221347044-27070de5-b93f-4970-bd9a-e3d6d64af34f.png)
+![14](https://user-images.githubusercontent.com/86525868/221347044-27070de5-b93f-4970-bd9a-e3d6d64af34f.png){: width="40%" height="40%"}{: .align-center}
 
 * **kernel function**
  
@@ -285,7 +284,7 @@ $k$개의 객체를 포함하는 영역 $x$를 중심으로 각 면의 길이가
   p(x)=\frac{1}{Nh^d}\sum_{i=1}^N K\Big(\frac{\mathbf x^i-\mathbf x}{h}\Big)
   $$
     
-  ![15](https://user-images.githubusercontent.com/86525868/221347046-98124ae4-f02a-43f8-ab7e-bc5b2ab05aa4.png)
+  ![15](https://user-images.githubusercontent.com/86525868/221347046-98124ae4-f02a-43f8-ab7e-bc5b2ab05aa4.png){: width="40%" height="40%"}{: .align-center}
 
   * $k(u)$의 단점 
 
@@ -297,11 +296,11 @@ $k$개의 객체를 포함하는 영역 $x$를 중심으로 각 면의 길이가
 
   $k(u)$의 단점을 보완하기 위해 전체 영역에 대한 확률밀도 함수를 1로 표현하면서 smooth한 함수를 사용 
 
-  ![16](https://user-images.githubusercontent.com/86525868/221347047-2934ce94-8531-4983-a28e-eee081d9a8ce.png)
+  ![16](https://user-images.githubusercontent.com/86525868/221347047-2934ce94-8531-4983-a28e-eee081d9a8ce.png){: .align-center}
 
 * **Smoothing parameter(bandwidth) h**
 
-  ![17](https://user-images.githubusercontent.com/86525868/221347049-4cf1efc9-3ed8-4177-ba5a-93b3c917f412.png)
+  ![17](https://user-images.githubusercontent.com/86525868/221347049-4cf1efc9-3ed8-4177-ba5a-93b3c917f412.png){: width="40%" height="40%"}{: .align-center}
 
   hypercube의 길이인 $h$가 작은 값이면 뾰족한 (spiky) 한 분포를 추정하게 되고 큰 값이면 완만한 분포를 추정 
 
@@ -309,7 +308,7 @@ $k$개의 객체를 포함하는 영역 $x$를 중심으로 각 면의 길이가
 
 특정 분포를 가정하지 않고 이상치 스코어를 산출할 때, 주변부 데이터의 밀도를 고려
 
-![18](https://user-images.githubusercontent.com/86525868/221347050-3a87c1da-10bb-4aed-aa7c-9251af686464.png)
+![18](https://user-images.githubusercontent.com/86525868/221347050-3a87c1da-10bb-4aed-aa7c-9251af686464.png){: width="60%" height="60%"}{: .align-center}
 
 Parzen Window Density Estimation에서는 $k_1 \gt k_2$이기 때문에 $p(x_1)\gt p(x_2)$가 됨 (생성확률이 $x_1$이 더 크기 때문에 anomaly score score은 $x_1$이 작음)
 
@@ -326,7 +325,7 @@ LOF score은 주변부 밀도가 높을 때는 중심부에서 조금만 떨어�
 * $D$에 속하는 개체 중 $p$를 제외하고 최대 $k-1$개의 개체 $o’$에 대해서 $𝑑(𝑝,𝑜’) < 𝑑(𝑝,𝑜)$를 만족
 * 이는 단순히 동률을 고려한 $k$번째 이웃까지의 거리로 생각할 수 있음
 
-![19](https://user-images.githubusercontent.com/86525868/221347052-03604768-0884-4382-9874-cff22a4f6861.png)
+![19](https://user-images.githubusercontent.com/86525868/221347052-03604768-0884-4382-9874-cff22a4f6861.png){: .align-center}
 
 #### Definition 2 : k-distance neighborhood of an object p
 
@@ -338,7 +337,7 @@ LOF score은 주변부 밀도가 높을 때는 중심부에서 조금만 떨어�
  
   $p$는 제외한 $q$라는 점들로 구성되어 있고 $p$에서부터 $q$까지의 거리가 $p$의 $k-distance$보다 작거나 같은 점들의 집합 
 
-![20](https://user-images.githubusercontent.com/86525868/221347053-c70c0590-27af-41fe-a5a4-e21c6394a4b4.png)
+![20](https://user-images.githubusercontent.com/86525868/221347053-c70c0590-27af-41fe-a5a4-e21c6394a4b4.png){: .align-center}
 
 #### Definition 3 : reachability distance 
 
@@ -346,7 +345,7 @@ $$
 reachability- distance_k(p, o)=\max\{k-distance(o), d(p, o)\}
 $$
 
-![21](https://user-images.githubusercontent.com/86525868/221347054-9b4b32b6-30ea-4170-b1ce-c91f869dfa2e.png)
+![21](https://user-images.githubusercontent.com/86525868/221347054-9b4b32b6-30ea-4170-b1ce-c91f869dfa2e.png){: .align-center}
 
 $reachability - distance_3(C, A)$의 경우 $d(C, A)$보다 $3-distance(A)$가 더 크기 때문에 $reachability - distance_3(C, A)=3-distance(A)$
 
@@ -356,7 +355,7 @@ $$
 lrd_k(p)=\frac{|N_k(p)|}{\sum_{o\in N_k(p)}reachability -distance_k(p, o)}
 $$
 
-![22](https://user-images.githubusercontent.com/86525868/221347055-a8d1a53b-4a98-4cc3-9937-e9f3aeb97a8f.png)
+![22](https://user-images.githubusercontent.com/86525868/221347055-a8d1a53b-4a98-4cc3-9937-e9f3aeb97a8f.png){: .align-center}
 
 * Case 1 : $p$가 $\textcolor{blue}{o}$의 $N_k(p)$에 속함 → $p$는 주변부에 밀도가 높고 집단의 중심부에 위치 → 분모가 작음 → $lrd_k(p)$값 큼
 * Case 2 : $p$가 $\textcolor{blue}{o}$의 $N_k(p)$에 속하지 않음 → $p$가 두 개의 높은 밀도를 갖는 군집 사이의 밀도가 낮은 공간에 위치 → 분모가 큼 → $lrd_k(p)$값 작음
@@ -367,7 +366,7 @@ $$
 LOF_k(p)=\frac{\sum_{o\in N_k(p)\frac{lrd_k(o)}{lrd_k(p)}}}{|N_k(p|}=\frac{\frac{1}{lrd_k(p)}\sum_{o\in N_k(p)}lrd_k(o)}{|N_k(p)|}
 $$
 
-![23](https://user-images.githubusercontent.com/86525868/221347056-d484eaa2-43dc-4099-a7e3-c88be7df1d34.png)
+![23](https://user-images.githubusercontent.com/86525868/221347056-d484eaa2-43dc-4099-a7e3-c88be7df1d34.png){: .align-center}
 
 Parzen Window의 경우에는 중심부 영역의 밀도가 case 1에서는 $\frac{5}{NV}$, case 3에서는 $\frac{1}{NV}$로 차이가 나지만 LOF의 관점에서는 anomaly score가 case 1과 case 2에서 비슷하고 case 2의 anomaly score는 높게 나타남 
 
