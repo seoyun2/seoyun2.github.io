@@ -183,7 +183,7 @@ $$
 
 ![11](https://user-images.githubusercontent.com/86525868/221347040-23921d49-f0b9-4191-9529-ee4204e5e4ad.png){: .align-center}
 
-![img](https://upload.wikimedia.org/wikipedia/commons/a/a7/Em_old_faithful.gif)
+![img](https://upload.wikimedia.org/wikipedia/commons/a/a7/Em_old_faithful.gif){: .align-center}
 
 * **Expectation** : 각각의 객체들이 $\lambda$라는 개별 파라미터들에 의해 $m$번째 가우시안에 속할 확률
 
