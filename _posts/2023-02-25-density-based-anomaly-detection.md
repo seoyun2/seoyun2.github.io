@@ -357,8 +357,8 @@ $$
 
 ![22](https://user-images.githubusercontent.com/86525868/221347055-a8d1a53b-4a98-4cc3-9937-e9f3aeb97a8f.png){: .align-center}
 
-* Case 1 : $p$가 $\textcolor{blue}{o}$의 $N_k(p)$에 속함 → $p$는 주변부에 밀도가 높고 집단의 중심부에 위치 → 분모가 작음 → $lrd_k(p)$값 큼
-* Case 2 : $p$가 $\textcolor{blue}{o}$의 $N_k(p)$에 속하지 않음 → $p$가 두 개의 높은 밀도를 갖는 군집 사이의 밀도가 낮은 공간에 위치 → 분모가 큼 → $lrd_k(p)$값 작음
+* Case 1 : $p$가 $\color{blue}{o}$의 $N_k(p)$에 속함 → $p$는 주변부에 밀도가 높고 집단의 중심부에 위치 → 분모가 작음 → $lrd_k(p)$값 큼
+* Case 2 : $p$가 $\color{blue}{o}$의 $N_k(p)$에 속하지 않음 → $p$가 두 개의 높은 밀도를 갖는 군집 사이의 밀도가 낮은 공간에 위치 → 분모가 큼 → $lrd_k(p)$값 작음
 
 #### Definition 5 : local outlier factor of an object p
 
