@@ -208,7 +208,7 @@ $$
   s.t. \quad y_i(\mathbf w^T\mathbf x_i+b)\ge1-\xi_i, \xi_j\ge0, \forall i
   $$
   
-  ![12](https://user-images.githubusercontent.com/86525868/221480473-7cdbf05b-dc6e-45df-8458-438919a3a8b1.png){: .align-center}
+  ![12](https://user-images.githubusercontent.com/86525868/221480473-7cdbf05b-dc6e-45df-8458-438919a3a8b1.png){: width="40%" height="40%"}{: .align-center}
 
 * **Lagrangian Problem**
 
@@ -258,7 +258,7 @@ $$
   * **Large C** : 페널티를 줄이는 방향으로 학습이 되므로 마진 폭이 좁고 $\alpha_i=C$ 인 서포트 벡터의 수가 상대적으로 적음
   * **Small C** : 페널티를 받더라도 마진을 넓게 잡도록 학습이 되므로 $\alpha_i=C$ 인 서포트 벡터의 수가 상대적으로 많음
 
-  ![15](https://user-images.githubusercontent.com/86525868/221480497-4420b744-974c-4523-a4c6-adfb40c14191.png){: .align-center}
+  ![15](https://user-images.githubusercontent.com/86525868/221480497-4420b744-974c-4523-a4c6-adfb40c14191.png){: width="60%" height="60%"}{: .align-center}
 
 #### 선형 모델의 한계 
 
@@ -370,17 +370,17 @@ $$
 
 #### 커널 형태에 따른 분류 경계면
 
-![18](https://user-images.githubusercontent.com/86525868/221480501-28beb28b-11f4-4769-84d8-48e88472bbbb.png){: .align-center}
+![18](https://user-images.githubusercontent.com/86525868/221480501-28beb28b-11f4-4769-84d8-48e88472bbbb.png){: width="60%" height="60%"}{: .align-center}
 
 거듭제곱이 올라갈수록 차원도 늘어나기 때문에 조금 더 유연한 분류를 할 가능성이 올라감 
 
 #### 오분류 페널티에 따른 분류 경계면 (Linear Kernel)
 
-![19](https://user-images.githubusercontent.com/86525868/221480502-55c622cd-07ca-4ece-a6d0-ae655359a737.png){: .align-center}
+![19](https://user-images.githubusercontent.com/86525868/221480502-55c622cd-07ca-4ece-a6d0-ae655359a737.png){: width="40%" height="40%"}{: .align-center}
 
 #### 커널 파라미터와 오분류 페널티에 따른 분류 경계면 (RBF Kernel)
 
-![20](https://user-images.githubusercontent.com/86525868/221480504-9e801847-f417-4031-adda-05d2c0e1f324.png){: .align-center}
+![20](https://user-images.githubusercontent.com/86525868/221480504-9e801847-f417-4031-adda-05d2c0e1f324.png){: width="40%" height="40%"}{: .align-center}
 
 #### 새로운 데이터 적용 
 
