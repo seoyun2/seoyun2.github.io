@@ -141,7 +141,7 @@ $$
 * **Lagrangian Problem** 
 
   $$
-  \min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}||\mathbf w ||^2-\sum_{i=1}^N \alpha i\big(y_i(\mathbf w^T \mathbf x_i+b)-1\big)\\s.t. \quad \alpha_i \ge0
+  \min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}||\mathbf w ||^2-\sum_{i=1}^N \alpha_i\big(y_i(\mathbf w^T \mathbf x_i+b)-1\big)\\s.t. \quad \alpha_i \ge0
   $$
 
 * **KKT**
