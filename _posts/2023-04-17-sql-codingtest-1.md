@@ -7,7 +7,7 @@ categories:
 tags:
   - sql
   - haker rank 
-  coding test
+  - coding test
 toc: true
 toc_sticky: true
 toc_label: "On This Page"
