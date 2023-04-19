@@ -48,7 +48,7 @@ SELECT DISTINCT CITY FROM STATION WHERE MOD(ID, 2) = 0
 
 Find the difference between the total number of **CITY** entries in the table and the number of distinct **CITY** entries in the table.
 
-```SQL
+```sql
 SELECT COUNT(CITY) - COUNT(DISTINCT CITY) FROM STATION
 ```
 
@@ -56,7 +56,7 @@ SELECT COUNT(CITY) - COUNT(DISTINCT CITY) FROM STATION
 
 Query the two cities in **STATION** with the shortest and longest *CITY* names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
 
-```SQL
+```sql
 (SELECT CITY, LENGTH(CITY) 
 	FROM STATION
 	WHERE LENGTH(CITY) = (SELECT MIN(LENGTH(CITY)) FROM STATION)
@@ -76,7 +76,7 @@ UNION
 
 Query the list of *CITY* names starting with vowels (i.e., `a`, `e`, `i`, `o`, or `u`) from **STATION**. Your result *cannot* contain duplicates.
 
-```SQL
+```sql
 SELECT DISTINCT CITY FROM STATION 
 	WHERE LEFT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
 ```
@@ -85,7 +85,7 @@ SELECT DISTINCT CITY FROM STATION
 
 Query the list of *CITY* names ending with vowels (a, e, i, o, u) from **STATION**. Your result *cannot* contain duplicates.
 
-```SQL
+```sql
 SELECT DISTINCT CITY 
     FROM STATION 
     WHERE RIGHT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
@@ -95,7 +95,7 @@ SELECT DISTINCT CITY
 
 Query the list of *CITY* names from **STATION** which have vowels (i.e., *a*, *e*, *i*, *o*, and *u*) as both their first *and* last characters. Your result cannot contain duplicates.
 
-```SQL
+```sql
 SELECT DISTINCT CITY 
     FROM STATION 
     WHERE LEFT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U') AND RIGHT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
@@ -105,7 +105,7 @@ SELECT DISTINCT CITY
 
 Query the list of *CITY* names from **STATION** that *do not start* with vowels. Your result cannot contain duplicates.
 
-```SQL
+```sql
 SELECT DISTINCT CITY 
     FROM STATION 
     WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
@@ -115,7 +115,7 @@ SELECT DISTINCT CITY
 
 Query the list of *CITY* names from **STATION** that *do not end* with vowels. Your result cannot contain duplicates.
 
-```SQL
+```sql
 SELECT DISTINCT CITY 
     FROM STATION 
     WHERE RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
@@ -125,7 +125,7 @@ SELECT DISTINCT CITY
 
 Query the list of *CITY* names from **STATION** that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
 
-```SQL
+```sql
 SELECT DISTINCT CITY 
     FROM STATION 
     WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U') OR RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
@@ -135,7 +135,7 @@ SELECT DISTINCT CITY
 
 Query the list of *CITY* names from **STATION** that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
 
-```SQL
+```sql
 SELECT DISTINCT CITY 
     FROM STATION 
     WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U') AND RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
@@ -145,22 +145,20 @@ SELECT DISTINCT CITY
 
 Query the *Name* of any student in **STUDENTS** who scored higher than *Marks*. Order your output by the *last three characters* of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending *ID*.
 
-```SQL
+```sql
 SELECT NAME 
     FROM STUDENTS 
     WHERE MARKS > 75
     ORDER BY RIGHT(NAME, 3), ID ASC
 ```
 
-<img width="379" alt="스크린샷 2023-04-05 10 25 25" src="https://user-images.githubusercontent.com/86525868/232437818-97c0043b-e995-4529-92e7-71eb8d1c4bc2.png">
-
-{: width="40%" height="40%"}{: .align-center}
+<img width="379" alt="스크린샷 2023-04-05 10 25 25" src="https://user-images.githubusercontent.com/86525868/232437818-97c0043b-e995-4529-92e7-71eb8d1c4bc2.png">{: width="40%" height="40%"}{: .align-center}
 
 ##### Revising Aggregations
 
 Query the total population of all cities in **CITY** where *District* is **California**.
 
-```SQL
+```sql
 SELECT SUM(POPULATION)
     FROM CITY 
     GROUP BY DISTRICT 
@@ -182,7 +180,7 @@ Samantha was tasked with calculating the average monthly salaries for all employ
 
 Write a query calculating the amount of error (i.e.: $actual - miscalculated$ average monthly salaries), and round it up to the next integer.
 
-```SQL
+```sql
 SELECT CEIL(AVG(SALARY) - AVG(REPLACE(CAST(SALARY AS CHAR),'0' , '')))
     FROM EMPLOYEES
 ```
@@ -246,7 +244,7 @@ SELECT TRUNCATE(MAX(LAT_N), 4)
 
 Query the *Western Longitude* (*LONG_W*) for the largest *Northern Latitude* (*LAT_N*) in **STATION** that is less than $137.2345$. Round your answer to 4 decimal places.
 
-```SQL
+```sql
 SELECT ROUND(LONG_W, 4)
     FROM STATION
     WHERE LAT_N < 137.2345 AND LAT_N = (SELECT MAX(LAT_N)
@@ -264,7 +262,7 @@ SELECT ROUND(LONG_W, 4)
 
 Query the smallest *Northern Latitude* (*LAT_N*) from **STATION** that is greater than $38.7780$. Round your answer to 1 decimal places.
 
-```SQL
+```sql
 SELECT ROUND(LAT_N, 4)
     FROM STATION 
     WHERE LAT_N > 38.7780
@@ -295,7 +293,7 @@ Consider $P_1(a, b)$ and $P_2(c, d)$ to be two points on a *2D* plane.
 
 Query the [Manhattan Distance](https://xlinux.nist.gov/dads/HTML/manhattanDistance.html) between points $P_1$ and $P_2$and round it to a scale of decimal places.
 
-```SQL
+```sql
 SELECT ROUND(ABS(MAX(LAT_N)-MIN(LAT_N))+ABS(MAX(LONG_W)-MIN(LONG_W)), 4)
     FROM STATION 
 ```
