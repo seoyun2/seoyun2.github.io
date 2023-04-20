@@ -1,9 +1,9 @@
 ---
 title: "[DataScience] 2. Density Based Anomaly Detection"
 categories:
-  - Data Science
-  - Anomaly Detection
-  - Gaussian & MoG
+  - DataScience
+  - AnomalyDetection
+  - GaussianandMoG
   - LOF
   - Parzen Window
 tags:
