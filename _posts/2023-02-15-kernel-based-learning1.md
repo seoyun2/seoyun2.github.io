@@ -1,8 +1,8 @@
 ---
 title: "[DataScience] 1. Kernel Based Learning"
 categories:
-  - Data Analysis
-  - Kernel Based Learning
+  - DataAnalysis
+  - KernelBasedLearning
   - SVM
 tags:
   - Data Analysis
