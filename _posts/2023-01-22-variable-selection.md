@@ -1,5 +1,5 @@
 ---
-title: "[Data Analysis] 5. Variable Selection"
+title: "[DataAnalysis] 5. Variable Selection"
 categories:
   - Data Analysis
   - Variable Selection
