@@ -1,8 +1,8 @@
 ---
 title: "[Data Analysis] 2. Logistic Regression"
 categories:
-  - Data Analysis
-  - Logisitc Regression
+  - DataAnalysis
+  - LogisitcRegression
 tags:
   - Data Analysis
   - Logisitc Regression
