@@ -1,5 +1,5 @@
 ---
-title: "[Data Analysis] 4. Decision Tree"
+title: "[DataAnalysis] 4. Decision Tree"
 categories:
   - Data Analysis
   - Decision Tree
