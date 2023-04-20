@@ -1,8 +1,8 @@
 ---
 title: "[DataAnalysis] 4. Decision Tree"
 categories:
-  - Data Analysis
-  - Decision Tree
+  - DataAnalysis
+  - DecisionTree
 tags:
   - Data Analysis
   - Decision Tree
