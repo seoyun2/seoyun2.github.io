@@ -2,8 +2,7 @@
 title: "[R] 3. Decision Tree with Confusion Matrix"
 categories:
   - R
-  - R studio
-  - Decision Tree
+  - DecisionTree
   - CART
 tags:
   - Decision Tree
