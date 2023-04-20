@@ -1,8 +1,8 @@
 ---
 title: "[DataAnalysis] 5. Variable Selection"
 categories:
-  - Data Analysis
-  - Variable Selection
+  - DataAnalysis
+  - VariableSelection
 tags:
   - Data Analysis
   - Variable Selection
