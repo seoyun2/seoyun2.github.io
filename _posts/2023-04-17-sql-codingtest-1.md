@@ -1,5 +1,5 @@
 ---
-title: "[SQL HakerRank] Easy"
+title: "[SQLHakerRank] Easy"
 categories:
   - sql
   - haker rank
