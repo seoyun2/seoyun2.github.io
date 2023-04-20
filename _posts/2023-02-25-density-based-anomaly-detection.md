@@ -1,5 +1,5 @@
 ---
-title: "[Data Science] 2. Density Based Anomaly Detection"
+title: "[DataScience] 2. Density Based Anomaly Detection"
 categories:
   - Data Science
   - Anomaly Detection
