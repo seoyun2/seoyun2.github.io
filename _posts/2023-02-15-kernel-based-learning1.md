@@ -1,5 +1,5 @@
 ---
-title: "[Data Science] 1. Kernel Based Learning"
+title: "[DataScience] 1. Kernel Based Learning"
 categories:
   - Data Analysis
   - Kernel Based Learning
