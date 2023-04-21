@@ -7,7 +7,7 @@
      position: relative;
      margin-bottom: 1em;
      background: $base07;
-     color: $base05;
+     color: $base00;
      font-family: $monospace;
      font-size: $type-size-6;
      line-height: 1.8;
@@ -35,8 +35,8 @@
        &.rouge-gutter {
          padding-right: 1em;
          width: 1em;
-         color: $base04;
-         border-right: 1px solid $base04;
+         color: $base03;
+         border-right: 1px solid $base03;
          text-align: right;
        }
    
@@ -62,7 +62,7 @@
    .highlight {
      .c {
        /* Comment */
-       color: $base04;
+       color: $base02;
      }
      .err {
        /* Error */
@@ -78,31 +78,31 @@
      }
      .n {
        /* Name */
-       color: $base05;
+       color: $base00;
      }
      .o {
        /* Operator */
-       color: $base0c;
+       color: $base03;
      }
      .p {
        /* Punctuation */
-       color: $base05;
+       color: $base00;
      }
      .cm {
        /* Comment.Multiline */
-       color: $base04;
+       color: $base03;
      }
      .cp {
        /* Comment.Preproc */
-       color: $base04;
+       color: $base03;
      }
      .c1 {
        /* Comment.Single */
-       color: $base04;
+       color: $base03;
      }
      .cs {
        /* Comment.Special */
-       color: $base04;
+       color: $base03;
      }
      .gd {
        /* Generic.Deleted */
@@ -123,7 +123,7 @@
      }
      .gp {
        /* Generic.Prompt */
-       color: $base04;
+       color: $base03;
        font-weight: bold;
      }
      .gs {
@@ -132,7 +132,7 @@
      }
      .gu {
        /* Generic.Subheading */
-       color: $base0c;
+       color: $base03;
        font-weight: bold;
      }
      .kc {
@@ -145,7 +145,7 @@
      }
      .kn {
        /* Keyword.Namespace */
-       color: $base0c;
+       color: $base03;
      }
      .kp {
        /* Keyword.Pseudo */
@@ -177,7 +177,7 @@
      }
      .nb {
        /* Name.Builtin */
-       color: $base05;
+       color: $base00;
      }
      .nc {
        /* Name.Class */
@@ -189,11 +189,11 @@
      }
      .nd {
        /* Name.Decorator */
-       color: $base0c;
+       color: $base03;
      }
      .ni {
        /* Name.Entity */
-       color: $base05;
+       color: $base00;
      }
      .ne {
        /* Name.Exception */
@@ -205,7 +205,7 @@
      }
      .nl {
        /* Name.Label */
-       color: $base05;
+       color: $base00;
      }
      .nn {
        /* Name.Namespace */
@@ -217,11 +217,11 @@
      }
      .py {
        /* Name.Property */
-       color: $base05;
+       color: $base00;
      }
      .nt {
        /* Name.Tag */
-       color: $base0c;
+       color: $base03;
      }
      .nv {
        /* Name.Variable */
@@ -229,11 +229,11 @@
      }
      .ow {
        /* Operator.Word */
-       color: $base0c;
+       color: $base03;
      }
      .w {
        /* Text.Whitespace */
-       color: $base05;
+       color: $base00;
      }
      .mf {
        /* Literal.Number.Float */
@@ -257,11 +257,11 @@
      }
      .sc {
        /* Literal.String.Char */
-       color: $base05;
+       color: $base00;
      }
      .sd {
        /* Literal.String.Doc */
-       color: $base04;
+       color: $base03;
      }
      .s2 {
        /* Literal.String.Double */
@@ -297,7 +297,7 @@
      }
      .bp {
        /* Name.Builtin.Pseudo */
-       color: $base05;
+       color: $base00;
      }
      .vc {
        /* Name.Variable.Class */
