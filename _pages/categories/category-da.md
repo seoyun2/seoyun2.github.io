@@ -1,5 +1,5 @@
 ---
-title: "데이터 분석"
+title: "Data Analysis"
 layout: archive
 permalink: categories/da
 author_profile: true
