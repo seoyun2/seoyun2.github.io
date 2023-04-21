@@ -1,11 +1,7 @@
 ---
 title: "[DataScience] 2. 이상치 탐지(Density Based Anomaly Detection)"
 categories:
-  - DataScience
-  - AnomalyDetection
-  - GaussianandMoG
-  - LOF
-  - Parzen Window
+  - ds
 tags:
   - Data Analysis
   - Anomaly Detection
