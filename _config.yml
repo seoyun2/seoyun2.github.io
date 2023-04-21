@@ -184,6 +184,9 @@ lsi: false
 excerpt_separator: "\n\n"
 incremental: false
 
+# Pygments
+pygments:
+  style: trac
 
 # Markdown Processing
 kramdown:
