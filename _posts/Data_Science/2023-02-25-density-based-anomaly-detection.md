@@ -1,5 +1,5 @@
 ---
-title: "[DataScience] 2. 이상치 탐지(Density Based Anomaly Detection)"
+title: "[Data Science] 2. 이상치 탐지(Density Based Anomaly Detection)"
 categories:
   - ds
 tags:
