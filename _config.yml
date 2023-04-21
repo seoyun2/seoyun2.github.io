@@ -179,14 +179,12 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 # Conversion
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
 incremental: false
 
-# Pygments
-pygments:
-  style: trac
+
 
 # Markdown Processing
 kramdown:
