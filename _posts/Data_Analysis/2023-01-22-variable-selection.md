@@ -1,5 +1,5 @@
 ---
-title: "[DataAnalysis] 5. Variable Selection"
+title: "[Data Analysis] 5. Variable Selection"
 categories:
   - da
 tags:
