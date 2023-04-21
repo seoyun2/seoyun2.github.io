@@ -1,9 +1,7 @@
 ---
 title: "[SQL HakerRank] Easy"
 categories:
-  - sql
   - hakerrank
-  - codingtest
 tags:
   - sql
   - haker rank 
