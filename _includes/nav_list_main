@@ -22,11 +22,18 @@
                         <li><a href="/categories/da" class="">Data Analysis ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul
+            </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Ds" %}
+                    {% if category[0] == "ds" %}
                         <li><a href="/categories/ds" class="">Data Science ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "kaggle" %}
+                        <li><a href="/categories/kaggle" class="">Kaggle ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
