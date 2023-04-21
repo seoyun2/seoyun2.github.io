@@ -1,5 +1,5 @@
 ---
-title: "[DataScience] 1. 커널 기반 학습(Kernel Based Learning)"
+title: "[Data Science] 1. 커널 기반 학습(Kernel Based Learning)"
 categories:
   - ds
 tags:
