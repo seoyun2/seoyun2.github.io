@@ -6,8 +6,8 @@
    figure.highlight {
      position: relative;
      margin-bottom: 1em;
-     background: $base00;
-     color: $base05;
+     background: $base04;
+     color: $base01;
      font-family: $monospace;
      font-size: $type-size-6;
      line-height: 1.8;
@@ -35,7 +35,7 @@
        &.rouge-gutter {
          padding-right: 1em;
          width: 1em;
-         color: $base04;
+         color: $base00;
          border-right: 1px solid $base04;
          text-align: right;
        }
@@ -62,7 +62,7 @@
    .highlight {
      .c {
        /* Comment */
-       color: $base04;
+       color: $base00;
      }
      .err {
        /* Error */
@@ -78,7 +78,7 @@
      }
      .n {
        /* Name */
-       color: $base05;
+       color: $base01;
      }
      .o {
        /* Operator */
@@ -86,23 +86,23 @@
      }
      .p {
        /* Punctuation */
-       color: $base05;
+       color: $base01;
      }
      .cm {
        /* Comment.Multiline */
-       color: $base04;
+       color: $base00;
      }
      .cp {
        /* Comment.Preproc */
-       color: $base04;
+       color: $base00;
      }
      .c1 {
        /* Comment.Single */
-       color: $base04;
+       color: $base00;
      }
      .cs {
        /* Comment.Special */
-       color: $base04;
+       color: $base00;
      }
      .gd {
        /* Generic.Deleted */
@@ -114,7 +114,7 @@
      }
      .gh {
        /* Generic.Heading */
-       color: $base05;
+       color: $base01;
        font-weight: bold;
      }
      .gi {
@@ -123,7 +123,7 @@
      }
      .gp {
        /* Generic.Prompt */
-       color: $base04;
+       color: $base00;
        font-weight: bold;
      }
      .gs {
@@ -177,7 +177,7 @@
      }
      .nb {
        /* Name.Builtin */
-       color: $base05;
+       color: $base01;
      }
      .nc {
        /* Name.Class */
@@ -193,7 +193,7 @@
      }
      .ni {
        /* Name.Entity */
-       color: $base05;
+       color: $base01;
      }
      .ne {
        /* Name.Exception */
@@ -205,7 +205,7 @@
      }
      .nl {
        /* Name.Label */
-       color: $base05;
+       color: $base01;
      }
      .nn {
        /* Name.Namespace */
@@ -217,7 +217,7 @@
      }
      .py {
        /* Name.Property */
-       color: $base05;
+       color: $base01;
      }
      .nt {
        /* Name.Tag */
@@ -233,7 +233,7 @@
      }
      .w {
        /* Text.Whitespace */
-       color: $base05;
+       color: $base01;
      }
      .mf {
        /* Literal.Number.Float */
@@ -257,11 +257,11 @@
      }
      .sc {
        /* Literal.String.Char */
-       color: $base05;
+       color: $base01;
      }
      .sd {
        /* Literal.String.Doc */
-       color: $base04;
+       color: $base00;
      }
      .s2 {
        /* Literal.String.Double */
@@ -297,7 +297,7 @@
      }
      .bp {
        /* Name.Builtin.Pseudo */
-       color: $base05;
+       color: $base01;
      }
      .vc {
        /* Name.Variable.Class */
