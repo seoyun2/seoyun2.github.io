@@ -1,324 +1,125 @@
-/* ==========================================================================
-   Syntax highlighting
-   ========================================================================== */
+.highlight {
+  padding: 0;
+  margin: 1em 0;
+  overflow: auto;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
 
-   div.highlighter-rouge,
-   figure.highlight {
-     position: relative;
-     margin-bottom: 1em;
-     background: $base06;
-     color: $base01;
-     font-family: $monospace;
-     font-size: $type-size-6;
-     line-height: 1.8;
-     border-radius: $border-radius;
-   
-     > pre,
-     pre.highlight {
-       margin: 0;
-       padding: 1em;
-     }
-   }
-   
-   .highlight table {
-     margin-bottom: 0;
-     font-size: 1em;
-     border: 0;
-   
-     td {
-       padding: 0;
-       width: calc(100% - 1em);
-       border: 0;
-   
-       /* line numbers*/
-       &.gutter,
-       &.rouge-gutter {
-         padding-right: 1em;
-         width: 1em;
-         color: $base00;
-         border-right: 1px solid $base04;
-         text-align: right;
-       }
-   
-       /* code */
-       &.code,
-       &.rouge-code {
-         padding-left: 1em;
-       }
-     }
-   
-     pre {
-       margin: 0;
-     }
-   }
-   
-   .highlight pre {
-     width: 100%;
-   }
-   
-   .highlight .hll {
-     background-color: $base06;
-   }
-   .highlight {
-     .c {
-       /* Comment */
-       color: $base00;
-     }
-     .err {
-       /* Error */
-       color: $base08;
-     }
-     .k {
-       /* Keyword */
-       color: $base0e;
-     }
-     .l {
-       /* Literal */
-       color: $base09;
-     }
-     .n {
-       /* Name */
-       color: $base01;
-     }
-     .o {
-       /* Operator */
-       color: $base0c;
-     }
-     .p {
-       /* Punctuation */
-       color: $base01;
-     }
-     .cm {
-       /* Comment.Multiline */
-       color: $base00;
-     }
-     .cp {
-       /* Comment.Preproc */
-       color: $base00;
-     }
-     .c1 {
-       /* Comment.Single */
-       color: $base00;
-     }
-     .cs {
-       /* Comment.Special */
-       color: $base00;
-     }
-     .gd {
-       /* Generic.Deleted */
-       color: $base08;
-     }
-     .ge {
-       /* Generic.Emph */
-       font-style: italic;
-     }
-     .gh {
-       /* Generic.Heading */
-       color: $base01;
-       font-weight: bold;
-     }
-     .gi {
-       /* Generic.Inserted */
-       color: $base0b;
-     }
-     .gp {
-       /* Generic.Prompt */
-       color: $base00;
-       font-weight: bold;
-     }
-     .gs {
-       /* Generic.Strong */
-       font-weight: bold;
-     }
-     .gu {
-       /* Generic.Subheading */
-       color: $base0c;
-       font-weight: bold;
-     }
-     .kc {
-       /* Keyword.Constant */
-       color: $base0e;
-     }
-     .kd {
-       /* Keyword.Declaration */
-       color: $base0e;
-     }
-     .kn {
-       /* Keyword.Namespace */
-       color: $base0c;
-     }
-     .kp {
-       /* Keyword.Pseudo */
-       color: $base0e;
-     }
-     .kr {
-       /* Keyword.Reserved */
-       color: $base0e;
-     }
-     .kt {
-       /* Keyword.Type */
-       color: $base0a;
-     }
-     .ld {
-       /* Literal.Date */
-       color: $base0b;
-     }
-     .m {
-       /* Literal.Number */
-       color: $base09;
-     }
-     .s {
-       /* Literal.String */
-       color: $base0b;
-     }
-     .na {
-       /* Name.Attribute */
-       color: $base0d;
-     }
-     .nb {
-       /* Name.Builtin */
-       color: $base01;
-     }
-     .nc {
-       /* Name.Class */
-       color: $base0a;
-     }
-     .no {
-       /* Name.Constant */
-       color: $base08;
-     }
-     .nd {
-       /* Name.Decorator */
-       color: $base0c;
-     }
-     .ni {
-       /* Name.Entity */
-       color: $base01;
-     }
-     .ne {
-       /* Name.Exception */
-       color: $base08;
-     }
-     .nf {
-       /* Name.Function */
-       color: $base0d;
-     }
-     .nl {
-       /* Name.Label */
-       color: $base01;
-     }
-     .nn {
-       /* Name.Namespace */
-       color: $base0a;
-     }
-     .nx {
-       /* Name.Other */
-       color: $base0d;
-     }
-     .py {
-       /* Name.Property */
-       color: $base01;
-     }
-     .nt {
-       /* Name.Tag */
-       color: $base0c;
-     }
-     .nv {
-       /* Name.Variable */
-       color: $base08;
-     }
-     .ow {
-       /* Operator.Word */
-       color: $base0c;
-     }
-     .w {
-       /* Text.Whitespace */
-       color: $base01;
-     }
-     .mf {
-       /* Literal.Number.Float */
-       color: $base09;
-     }
-     .mh {
-       /* Literal.Number.Hex */
-       color: $base09;
-     }
-     .mi {
-       /* Literal.Number.Integer */
-       color: $base09;
-     }
-     .mo {
-       /* Literal.Number.Oct */
-       color: $base09;
-     }
-     .sb {
-       /* Literal.String.Backtick */
-       color: $base0b;
-     }
-     .sc {
-       /* Literal.String.Char */
-       color: $base01;
-     }
-     .sd {
-       /* Literal.String.Doc */
-       color: $base00;
-     }
-     .s2 {
-       /* Literal.String.Double */
-       color: $base0b;
-     }
-     .se {
-       /* Literal.String.Escape */
-       color: $base09;
-     }
-     .sh {
-       /* Literal.String.Heredoc */
-       color: $base0b;
-     }
-     .si {
-       /* Literal.String.Interpol */
-       color: $base09;
-     }
-     .sx {
-       /* Literal.String.Other */
-       color: $base0b;
-     }
-     .sr {
-       /* Literal.String.Regex */
-       color: $base0b;
-     }
-     .s1 {
-       /* Literal.String.Single */
-       color: $base0b;
-     }
-     .ss {
-       /* Literal.String.Symbol */
-       color: $base0b;
-     }
-     .bp {
-       /* Name.Builtin.Pseudo */
-       color: $base01;
-     }
-     .vc {
-       /* Name.Variable.Class */
-       color: $base08;
-     }
-     .vg {
-       /* Name.Variable.Global */
-       color: $base08;
-     }
-     .vi {
-       /* Name.Variable.Instance */
-       color: $base08;
-     }
-     .il {
-       /* Literal.Number.Integer.Long */
-       color: $base09;
-     }
-   }
-   
-   .gist {
-     th, td {
-       border-bottom: 0;
-     }
-   }
+  pre {
+    margin: 0;
+    padding: 0;
+    font-size: $code-font-size;
+    line-height: $code-line-height;
+    font-family: $code-font-family;
+  }
+
+  code {
+    font-size: $code-font-size;
+    line-height: $code-line-height;
+    font-family: $code-font-family;
+    white-space: pre;
+  }
+
+  /* 코드 블록 테마 시작 */
+  .language-bash,
+  .language-shell,
+  .language-sh,
+  .language-zsh {
+    background-color: $code-bg-color;
+    color: $code-color;
+    &.line-numbers {
+      .line-numbers-rows {
+        border-right-color: $code-border-color;
+      }
+    }
+  }
+
+  .language-c,
+  .language-cpp,
+  .language-csharp,
+  .language-java,
+  .language-objectivec,
+  .language-php,
+  .language-swift {
+    background-color: $code-bg-color;
+    color: $code-color;
+    &.line-numbers {
+      .line-numbers-rows {
+        border-right-color: $code-border-color;
+      }
+    }
+    .token.boolean,
+    .token.keyword,
+    .token.number,
+    .token.operator,
+    .token.regex,
+    .token.string {
+      color: $code-highlight-color;
+    }
+  }
+
+  .language-css,
+  .language-sass,
+  .language-scss,
+  .language-less {
+    background-color: $code-bg-color;
+    color: $code-color;
+    &.line-numbers {
+      .line-numbers-rows {
+        border-right-color: $code-border-color;
+      }
+    }
+    .token.atrule,
+    .token.attr-name,
+    .token.attr-value,
+    .token.builtin,
+    .token.constant,
+    .token.entity,
+    .token.function,
+    .token.id,
+    .token.keyword,
+    .token.operator,
+    .token.property,
+    .token.pseudo-class,
+    .token.pseudo-element,
+    .token.selector,
+    .token.string {
+      color: $code-highlight-color;
+    }
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+      color: $code-comment-color;
+    }
+  }
+
+  .language-go,
+  .language-rust {
+    background-color: $code-bg-color;
+    color: $code-color;
+    &.line-numbers {
+      .line-numbers-rows {
+        border-right-color: $code-border-color;
+      }
+    }
+    .token.boolean,
+    .token.keyword,
+    .token.number,
+    .token.operator,
+    .token.regexp,
+    .token.string {
+      color: $code-highlight-color;
+    }
+    .token.comment {
+      color: $code-comment-color;
+    }
+  }
+
+  .language-groovy {
+    background-color: $code-bg-color;
+    color: $code-color;
+    &.line-numbers {
+      .line-numbers-rows {
+        border-right-color: $code-border-color;
+     
