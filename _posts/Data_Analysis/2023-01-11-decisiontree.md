@@ -1,5 +1,5 @@
 ---
-title: "[DataAnalysis] 4. Decision Tree"
+title: "[Data Analysis] 4. Decision Tree"
 categories:
   - da
 tags:
