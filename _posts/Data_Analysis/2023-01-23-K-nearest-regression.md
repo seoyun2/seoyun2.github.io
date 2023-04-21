@@ -1,5 +1,5 @@
 ---
-title: "[DataAnalysis] 6. K-Nearest Neighbor Learning"
+title: "[Data Analysis] 6. K-Nearest Neighbor Learning"
 categories:
   - da
 tags:
