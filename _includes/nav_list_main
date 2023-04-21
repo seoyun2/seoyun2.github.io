@@ -55,8 +55,8 @@
             <span class="nav__sub-title">ETC</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "cs231" %}
-                        <li><a href="/categories/cs231" class="">CS231 ({{category[1].size}})</a></li>
+                    {% if category[0] == "cs231n" %}
+                        <li><a href="/categories/cs231n" class="">CS231N ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
