@@ -1,7 +1,7 @@
 ---
-title: "[SQL HakerRank] Easy"
+title: "[SQL Hackerrank] Easy"
 categories:
-  - hakerrank
+  - hackerrank
 tags:
   - sql
   - haker rank 
