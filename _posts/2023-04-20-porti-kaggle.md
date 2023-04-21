@@ -108,14 +108,6 @@ import warnings
 warnings.filterwarnings('ignore')
 ```
 
-
-```python
-print(os.getcwd())
-```
-
-<pre>
-/Users/seoyun/Desktop/Jupyter_yoon/porto-seguro-safe-driver-prediction
-</pre>
 ## Loading data
 
 
