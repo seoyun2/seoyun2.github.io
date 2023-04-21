@@ -1,8 +1,7 @@
 ---
 title: "[DataAnalysis] 6. K-Nearest Neighbor Learning"
 categories:
-  - DataAnalysis
-  - K-NearestNeighborLearning
+  - da
 tags:
   - Data Analysis
   - K-Nearest Neighbor Learning
