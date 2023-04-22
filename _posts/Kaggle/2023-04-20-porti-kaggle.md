@@ -88,7 +88,7 @@ use_math: true
 
 💡 Kaggle <br>
 [Porti Segure's Sage Driver Prediction](https://www.kaggle.com/c/porto-seguro-safe-driver-prediction) <br>
-{: .notice--info}
+{: .notice}
 
 <br>
 
