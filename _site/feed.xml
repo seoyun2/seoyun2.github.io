@@ -5,32 +5,17 @@
     <description>매일 공부하고 매일 정리하겠어요.</description>
     <link>http://localhost:4000</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-	<lastBuildDate>Thu, 20 Apr 2023 00:00:00 +0900</lastBuildDate>
+	<lastBuildDate>Sat, 22 Apr 2023 17:03:42 +0900</lastBuildDate>
 	
 	<item>
-		<title>[Kaggle] Porti Seguro&apos;s Safe Driver Prediction</title>
+		<title></title>
         
         
-            <description>&lt;head&gt;
-  &lt;style&gt;
-    table.dataframe {
-      white-space: normal;
-      width: 100%;
-      height: 240px;
-      display: block;
-      overflow: auto;
-      font-family: Arial, sans-serif;
-      font-size: 0.9rem;
-      line-height: 20px;
-      text-align: center;
-      border: 0px !important;
-    }
-&lt;/style&gt;&lt;/head&gt;
-</description>
+            <description></description>
         
-        <pubDate>Thu, 20 Apr 2023 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/kaggle/porti-kaggle/</link>
-        <guid isPermaLink="true">http://localhost:4000/kaggle/porti-kaggle/</guid>
+        <pubDate>Sat, 22 Apr 2023 17:03:42 +0900</pubDate>
+        <link>http://localhost:4000/2023-04-20-porti-kaggle/</link>
+        <guid isPermaLink="true">http://localhost:4000/2023-04-20-porti-kaggle/</guid>
       </item>
     
 	<item>
