@@ -143,9 +143,9 @@ var store = [{
         "url": "http://localhost:4000/hackerrank/sql-codingtest-1/",
         "teaser": null
       },{
-        "title": null,
-        "excerpt":"Porti Seguro’s Safe Driver Prediction Porti Segure’s Sage Driver Prediction 데이터 설명 유사한 그룹에 속하는 특징들은 특징 이름에 해당하는 태그로 표시됩니다 (예 : ind, reg, car, calc). 이진 특징은 postfix “bin”으로 표시되며 범주형 특징은 “cat”으로 표시됩니다. 이러한 표기가 없는 특징은 연속형 또는 서수형입니다. 값 -1은 관찰에서 특징이 누락되었음을 나타냅니다. 타겟...","categories": [],
-        "tags": null,
-        "url": "http://localhost:4000/2023-04-20-porti-kaggle/",
+        "title": "[Kaggle] Porti Seguro's Safe Driver Prediction",
+        "excerpt":"Porti Seguro’s Safe Driver Prediction Porti Segure’s Sage Driver Prediction 데이터 설명 유사한 그룹에 속하는 특징들은 특징 이름에 해당하는 태그로 표시됩니다 (예 : ind, reg, car, calc). 이진 특징은 postfix “bin”으로 표시되며 범주형 특징은 “cat”으로 표시됩니다. 이러한 표기가 없는 특징은 연속형 또는 서수형입니다. 값 -1은 관찰에서 특징이 누락되었음을 나타냅니다. 타겟...","categories": ["kaggle"],
+        "tags": ["kaggle"],
+        "url": "http://localhost:4000/kaggle/porti-kaggle/",
         "teaser": null
       }]
