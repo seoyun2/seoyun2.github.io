@@ -1,0 +1,1322 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Data Science] 1. 커널 기반 학습(Kernel Based Learning) - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="1.  Kernel Based Learning">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[Data Science] 1. 커널 기반 학습(Kernel Based Learning)">
+<meta property="og:url" content="http://localhost:4000/ds/kernel-based-learning1/">
+
+
+  <meta property="og:description" content="1.  Kernel Based Learning">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-02-15T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/ds/kernel-based-learning1/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Data Science] 1. 커널 기반 학습(Kernel Based Learning)">
+    <meta itemprop="description" content="1.  Kernel Based Learning">
+    <meta itemprop="datePublished" content="2023-02-15T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[Data Science] 1. 커널 기반 학습(Kernel Based Learning)
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#1--kernel-based-learning">1.  Kernel Based Learning</a>
+    <ul>
+      <li><a href="#이론적-배경">이론적 배경</a>
+        <ul>
+          <li><a href="#shatter">SHATTER</a></li>
+          <li><a href="#vc-dimension">VC dimension</a></li>
+          <li><a href="#구조적-위험-최소화-접근법-structural-risk-minimization">구조적 위험 최소화 접근법, Structural Risk Minimization</a></li>
+          <li><a href="#support-vector-machine">Support Vector Machine</a></li>
+          <li><a href="#이범주-분류-분제">이범주 분류 분제</a></li>
+          <li><a href="#좋은-경계면">좋은 경계면</a></li>
+          <li><a href="#svm의-종류">SVM의 종류</a>
+            <ul>
+              <li><a href="#svm-case-1--linear--hard-margin">SVM Case 1 : Linear &amp; Hard Margin</a></li>
+              <li><a href="#정리">정리</a></li>
+            </ul>
+          </li>
+          <li><a href="#svm-case-2--linear--soft-marging">SVM Case 2 : Linear &amp; Soft Marging</a>
+            <ul>
+              <li><a href="#선형-모델의-한계">선형 모델의 한계</a></li>
+            </ul>
+          </li>
+          <li><a href="#svm-case-3--nonlinear--soft-margin">SVM Case 3 : Nonlinear &amp; Soft Margin</a>
+            <ul>
+              <li><a href="#커널-트릭-아이디어의-시작점">커널 트릭 아이디어의 시작점</a></li>
+              <li><a href="#대표적인-커널-함수">대표적인 커널 함수</a>
+                <ul>
+                  <li><a href="#guassian-rbf-커널">Guassian (RBF) 커널</a></li>
+                </ul>
+              </li>
+              <li><a href="#커널-형태에-따른-분류-경계면">커널 형태에 따른 분류 경계면</a></li>
+              <li><a href="#오분류-페널티에-따른-분류-경계면-linear-kernel">오분류 페널티에 따른 분류 경계면 (Linear Kernel)</a></li>
+              <li><a href="#커널-파라미터와-오분류-페널티에-따른-분류-경계면-rbf-kernel">커널 파라미터와 오분류 페널티에 따른 분류 경계면 (RBF Kernel)</a></li>
+              <li><a href="#새로운-데이터-적용">새로운 데이터 적용</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="1--kernel-based-learning">1.  Kernel Based Learning</h1>
+
+<p class="notice--info">💡 Data Science <br />
+<strong>강필성</strong> 교수님의 강의를 보고 정리하였습니다.</p>
+
+<h2 id="이론적-배경">이론적 배경</h2>
+
+<h3 id="shatter">SHATTER</h3>
+
+<p>함수 $F$는 n개의 point를 <strong>shatter</strong>할 수 있다 → 함수 $F$에 의해 n개의 point는 임의의 +1, -1을 Target value로 하는 분류 경계면의 생성(Binominal Classification)이 가능하다.</p>
+
+<p><img width="519" alt="image-20230213153858657" src="https://user-images.githubusercontent.com/86525868/218806402-a7c1dcd4-fa0a-4d7b-a0cd-2e00ca81c7fd.png" class="align-center" /></p>
+
+<p>↳ 예시에서는 점이 3개 이므로 생성 가능한 경계면은 8가지 ($2^3$)</p>
+
+<p>선형분류기는 d차원에서 ($d+2$)개의 점을 shatter하는 것은 불가능</p>
+
+<p>원점을 지나는 원형 분류기(원 안에 있으면 파란색, 원 밖에 있으면 빨간색으로 분류)는 2차원에서 2개의 점도 shatter 할 수 없지만</p>
+
+<p><img width="40%" alt="image-20230213155609050" src="https://user-images.githubusercontent.com/86525868/219056426-3f3307c8-58e3-4f2e-84f7-a2939827a2ee.png" height="40%" class="align-center" /></p>
+
+<p>원점을 지나는 조건을 삭제하면 원 형태의 분류 경계면은 2차원에서 3개의 점을 shatter할 수 있음</p>
+
+<p><img width="40%" alt="image-20230213155818115" src="https://user-images.githubusercontent.com/86525868/219056442-a7bd93e0-5619-450d-8c63-059e8e54b025.png" height="40%" class="align-center" /></p>
+
+<h3 id="vc-dimension">VC dimension</h3>
+
+<ul>
+  <li>어떤 함수의 Capacity(복잡한 경계면이나 회귀식을 추정하는 능력)를 측정하는 지표</li>
+  <li>함수 $H$에 의해 최대로 shattered 될 수 있는 points의 수 = <strong>VC dimension</strong>
+    <ul>
+      <li>위의 예시에서 선형 분류기의 VC dimension은 2차원에서 3</li>
+      <li>원점을 중심으로하는 원 분류기의 VC dimension은 2차원에서 1</li>
+      <li>원점 위치에 제약이 없는 원 분류기의 VC dimension은 2차원에서 3</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="구조적-위험-최소화-접근법-structural-risk-minimization">구조적 위험 최소화 접근법, Structural Risk Minimization</h3>
+
+<ul>
+  <li>예측 모델의 정확도가 높다고해서 반드시 좋은 것만은 아님</li>
+  <li>동일한 정확도라면 상대적으로 복잡도가 낮은 모델이 선호되어야 함</li>
+</ul>
+
+<p><img width="40%" alt="image-20230213160546309" src="https://user-images.githubusercontent.com/86525868/218806437-b3c4a35e-aa50-48ea-8d6f-28d69adf0b53.png" height="40%" class="align-center" /></p>
+
+\[R_{emp}[f]=\frac{1}{n}\sum_{i=1}^nL(f(x_i), y)\\
+R[f]\le R_{emp}[f]+\sqrt{\frac{f\big(\ln \frac{2n}{h}+1\big)-\ln\big(\frac{\delta}{4}\big)}{n}}\]
+
+<ul>
+  <li>인공신경망, 의사결정나무, 선형/로지스틱 회귀분석은 경험적 위험 $R_{emp}[f]$만을 최소화하는 것을 목적으로 함
+    <ul>
+      <li>딥러닝의 가중치에 L2-norm 또는 L1-norm 형태의 페널티를 부여하는 것은 모델의 구조적 복잡도를 낮추기 위한 일환</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/218806441-6322f533-0c18-4078-be06-1f80f0bdecea.png" alt="image-20230215012818340" width="40%" height="40%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p>구조적 위험 최소화 접근법에 따르면 내가 가진 데이터보다 최적화 시켜야 하는 파라미터 수가 많으면 에러율이 증가해야 하는데 Wide Resnet 모델은 복잡도가 증가해도 테스트 데이터에 대한 성능이 낮아지지 않음</p>
+
+    <p>(모델의 복잡도를 제어하는 방식의 SVM / 내부적으로 모델의 복잡도를 키운 뒤 데이터 내부의 내제적인 관계를 학습히는 것이 딥러닝)</p>
+  </li>
+</ul>
+
+<h3 id="support-vector-machine">Support Vector Machine</h3>
+
+<p>서포트 백터 머신은 구조상 선형 분류기에 속함 (구조는 선형 분류기이지만 커널 트릿 기법을 통해 분류 경계면이 비선형으로 보임)</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/218806449-91576868-0642-4bba-af35-529a27080264.png" alt="image-20230215013224235" width="70%" height="70%" class="align-center" /></p>
+
+<p>해당하는 입력 공간에서 직선 식을 만들고 분류를 진행 → 데이터를 통해 상수항 $b$와 가중치 $w$를 최적화하고 가장 분류를 잘하는 분류 경계면 찾기</p>
+
+<h3 id="이범주-분류-분제">이범주 분류 분제</h3>
+
+<p><strong>학습 데이터</strong> : $S=\Big((x_i, y_i), \cdots, (x_n, y_n)\Big)\in X \times {-1, +1}$ → 로지스틱에서는 ${0, 1}$ 로 승산을 의미하지만 SVM은 {-1, +1} 로 표시</p>
+
+<p><strong>문제</strong> : 일반화 오류를 가장 낮출 수 있는 모델 $H$를 찾기</p>
+
+<h3 id="좋은-경계면">좋은 경계면</h3>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/218806455-ef12d118-2015-4281-8a62-56b5b20776e6.png" alt="image-20230215013812348" width="40%" height="40%" class="align-center" /></p>
+
+<p>분류 경계면 A, B를 기준으로 위아래, 양옆으로 처음 데이터 포인트를 만나는 지점까지의 등간격 공간(Margin)을 생성 → <strong>마진을 최대화 하는 분류 경계면이 좋은 분류 경계면</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/218806461-86793c3b-4bf6-439f-8aad-31123eee9ad5.png" alt="image-20230215013951163" width="40%" height="40%" class="align-center" /></p>
+
+\[margin =\frac{1}{\lVert w\lVert^2}\]
+
+<p><strong>마진 최대화가 구조적 위험 최소화로 어떻게 연결 되는가</strong></p>
+
+\[h \le \min \Big(\Big[\frac{R^2}{\Delta^2}\Big], D\Big)+1\\ \\
+\text{h : VC dimension, D : dimension}\]
+
+<p>마진 최대화 → VC deminsion의 최소화 (복잡도 최소화) → Capacity 항 최소화</p>
+
+\[R[f]\le R_{emp}[f]+\sqrt{\frac{f\big(\ln \frac{2n}{h}+1\big)-\ln\big(\frac{\delta}{4}\big)}{n}}\]
+
+<p><img src="https://user-images.githubusercontent.com/86525868/218806465-cc4f7b24-73e1-43ba-aa76-f681c260a2bc.png" alt="image-20230215014848886" width="40%" height="40%" class="align-center" /></p>
+
+<p>마진이 더 넓은 분류 경계면은 왼쪽 → 데이터를 분류할 수 있는 경계면의 수 감소 →  VC deminsion 감소</p>
+
+<h3 id="svm의-종류">SVM의 종류</h3>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/218806468-a4e713e0-a7c2-4c52-82a2-4c9d81ce0b01.png" alt="image-20230215015001590" class="align-center" /></p>
+
+<h4 id="svm-case-1--linear--hard-margin">SVM Case 1 : Linear &amp; Hard Margin</h4>
+
+<p>선형 분류가 가능하면서 hard margin인 경우</p>
+
+<ul>
+  <li>
+    <p><strong>목적함수</strong></p>
+
+\[\min\frac{1}{2}\lVert\mathbf w\lVert^2\]
+
+    <p>$margin=\frac{2}{\lVert \mathbf w\lVert^2}$ 을 최대화 하는 것은 $margin$의 역수 $\frac{1}{2}\lVert \mathbf w\lVert^2$를 최소화 하는 것과 같음</p>
+  </li>
+  <li>
+    <p><strong>제약식</strong></p>
+
+\[s.t. \quad y_i(\mathbf w^T\mathbf x_i +b)\ge1\]
+
+    <p>분류 경계면 등간격으로 마진 생성 → 마진 사이에는 실제 데이터가 없어야하고 특정한 범주에 데이터 포인트들은 자기 쪽 마진을 결정하는 경계면 보다 물러나 있어야 함</p>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/218806461-86793c3b-4bf6-439f-8aad-31123eee9ad5.png" alt="image-20230215013951163" width="40%" height="40%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p><strong>Lagrangian Problem</strong></p>
+
+\[\min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}\lVert\mathbf w \lVert^2-\sum_{i=1}^N \alpha_i\big(y_i(\mathbf w^T \mathbf x_i+b)-1\big)\\s.t. \quad \alpha_i \ge0\]
+  </li>
+  <li>
+    <p><strong>KKT</strong></p>
+
+\[\frac{\partial L_p}{\partial \mathbf w}=0 \Rightarrow \mathbf w=\sum_{i=1}^N \alpha_iy_i\mathbf x_i \quad \frac{\partial L_p}{\partial b}=0 \Rightarrow \sum_{i=1}^N \alpha_i y_i=0\]
+  </li>
+  <li>
+    <p><strong>From Primal to Dual</strong></p>
+
+\[\min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}\lVert\mathbf w\lVert^2-\sum_{i=1}^N\alpha_i\big(y_i(\mathbf w_T\mathbf x_i+b)-1\big) \quad s.t. \ \alpha_i\ge0\\
+\max L_D(\alpha_i)=\sum_{i=1}^N\alpha_i-\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\mathbf x_i\mathbf x_j \quad s.t\ \sum_{i=1}^N\alpha_iy_i=0 \ \text{and}\ \alpha_i \ge0\]
+
+    <p>$\mathbf w, b$에 대한 primal 식의 최소화 문제가 $\alpha$에 대한 최대화 문제로 바뀌면서 최적해를 갖는 $\alpha$ 찾기</p>
+  </li>
+  <li>
+    <p><strong>Fimal Decision</strong></p>
+
+\[f(\mathbf x_{new})=sign\Big(\sum_{i=1}^N\alpha_iy_i\mathbf x_i^T\mathbf x_{new}+b\Big)\]
+  </li>
+  <li>
+    <p><strong>From KKT condition</strong></p>
+
+\[\alpha_i(y_i(\mathbf w^T\mathbf x_i+b)-1)=0\]
+
+    <p>최적해가 되려면 Lagrangian Multi ($\alpha_i$)나 제약식($y_i(\mathbf w^T\mathbf x_i+b)-1$) 둘 중에 하나만 0이 되어야 하고</p>
+
+    <p>$y_i(\mathbf w^T\mathbf x_i+b)-1\ge0$ 에서</p>
+
+    <ul>
+      <li>$\alpha_i=0$ 일 경우는 점이 마진 밖에 있다는 것을 의미 → $\mathbf w$를 결정하는데 영향을 미치지 못함</li>
+      <li>$\alpha_i \gt 0$인 경우에는 $y_i(\mathbf w^T\mathbf x_i+b)=1$는 마진 위에 존재하는 것을 의미 → 마진을 만들어내는(마진을 지지하는) 점들을 나타냄</li>
+    </ul>
+
+\[\mathbf w = \sum_{i=1}^N \alpha_i y_i \mathbf x_i=\sum_{i\in SV}^N\alpha_i y_i\mathbf x_i\]
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/219071098-57677663-0748-4807-81be-0dcc635bf5dd.png" alt="image-20230216001658223" width="40%" height="40%" class="align-center" /></p>
+
+<h4 id="정리">정리</h4>
+
+<ol>
+  <li>왜 SVM의 목적함수가 $\frac{1}{2}\lVert\mathbf w\lVert^2$인가? → <strong>margin을 최대화하기 위해서</strong></li>
+  <li>각각의 제약식이 의미하는 것은? → <strong>점들이 margin 위, margin 밖 공간에 위치하도록 정의하기 위해서</strong></li>
+  <li>primal 문제에서 미지수를 1차 미분해서 최적화 조건을 만들고 그 최적화 조건을 통해 듀얼 문제를 만드는 이유는? → <strong>오목한 형태의 Multiplier와 $\alpha$에 대한 이차함수의 형태로 항상 최적해가 만들어지기 때문에</strong></li>
+</ol>
+
+<h3 id="svm-case-2--linear--soft-marging">SVM Case 2 : Linear &amp; Soft Marging</h3>
+
+<p>데이터 상에 노이즈가 존재 → 해당하는 마진을 벗어나는 객체들에 대해 어쩔 수 없음을 이해하고 페널티를 부여하며 컨트롤</p>
+
+<ul>
+  <li>
+    <p><strong>목적함수</strong></p>
+
+\[\min \frac{1}{2}\lVert\mathbf w\lVert^2+C\sum_{i=1}^N\xi_i\]
+
+    <p><strong>마진</strong>($\frac{1}{2}\lVert\mathbf w\lVert^2$)을 <strong>최대화</strong>하지만 <strong>마진 외부의 점에 대한 페널티</strong>($C\sum_{i=1}^N\xi_i$)는 <strong>최소화</strong></p>
+  </li>
+  <li>
+    <p><strong>제약식</strong></p>
+
+\[s.t. \quad y_i(\mathbf w^T\mathbf x_i+b)\ge1-\xi_i, \xi_j\ge0, \forall i\]
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/221480473-7cdbf05b-dc6e-45df-8458-438919a3a8b1.png" alt="12" width="40%" height="40%" class="align-center" /></p>
+  </li>
+  <li>
+    <p><strong>Lagrangian Problem</strong></p>
+
+\[\min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}\lVert\mathbf w \lVert^2+C\sum_{i=1}^N \xi_i-\sum_{i=1}^N\alpha_i\big(y_i(\mathbf w^T\mathbf x_i+b)-1+\xi_i\big)-\sum_{i=1}^N\mu_i\xi_i\\
+s.t\quad \alpha_i\ge0,\ \mu_i\ge0\]
+  </li>
+  <li>
+    <p><strong>KKT Conditions</strong></p>
+
+\[\frac{\partial L_p}{\partial \mathbf w}=0 \Rightarrow \mathbf w=\sum_{i=1}^N \alpha_iy_i\mathbf x_i \quad \frac{\partial L_p}{\partial b}=0 \Rightarrow \sum_{i=1}^N \alpha_i y_i=0\\
+\frac{\partial L_p}{\partial \xi_i} \Rightarrow C-\alpha_i-\mu_i=0\]
+  </li>
+  <li>
+    <p><strong>From Primal to Dual</strong></p>
+
+\[\min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}\lVert\mathbf w\lVert^2+C\sum_{i=1}^N\xi_i-\sum_{i=1}^N\alpha_i\big(y_i(\mathbf w_T\mathbf x_i+b)-1+\xi_i\big)-\sum_{i=1}^N\mu_i\xi_i \quad \\ 
+s.t. \ \alpha_i\ge0\\
+\max L_D(\alpha_i)=\sum_{i=1}^N\alpha_i-\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\mathbf x_i^T\mathbf x_j \quad \\ 
+s.t\ \sum_{i=1}^N\alpha_iy_i=0 \ \text{and}\ 0\le\alpha_i \le C\]
+  </li>
+  <li>
+    <p><strong>서포트 백터란?</strong> : 실제 모델의 분류 경계면을 찾는데 필요한 관측치 → 마진 위 또는 바깥에 존재하는 점들로 구성</p>
+  </li>
+  <li>
+    <p><strong>최적해 조건</strong></p>
+
+\[\alpha_i\big(y_i(\mathbf w_T\mathbf x_i+b)-1+\xi_i\big)=0\]
+
+    <p>서포트 백터에 대해서만 $\alpha_i \ne 0$이 성립 &amp; $C-\alpha_i-\mu_i$ &amp; $\mu_i\xi_i=0$</p>
+
+    <ul>
+      <li>Case 1 : $\alpha_i =0$ → 서포트 벡터가 아닌 객체 $\mu_i=C, \xi_i=0$</li>
+      <li>Case 2 : $0 \lt\alpha_i\lt C$ → 마진 위에 위치하는 서포트 백터 $\mu_i\gt0, \xi_i=0, y_i(\mathbf w^T\mathbf x_i+b)-1=0$</li>
+      <li>Case 3 : $\alpha_i=C$ → 마진 밖에 존재하는 서포트 벡터 $\mu_i=0, \xi_i \gt0$</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/221480494-c558e3db-6820-4e90-ac97-518efc9445a0.png" alt="14" class="align-center" /></p>
+  </li>
+  <li>
+    <p><strong>오분류 비용 C</strong></p>
+
+\[\min \frac{1}{2}\lVert\mathbf w\lVert^2+C\sum_{i=1}^N\xi_i\]
+
+    <ul>
+      <li><strong>Large C</strong> : 페널티를 줄이는 방향으로 학습이 되므로 마진 폭이 좁고 $\alpha_i=C$ 인 서포트 벡터의 수가 상대적으로 적음</li>
+      <li><strong>Small C</strong> : 페널티를 받더라도 마진을 넓게 잡도록 학습이 되므로 $\alpha_i=C$ 인 서포트 벡터의 수가 상대적으로 많음</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/221480497-4420b744-974c-4523-a4c6-adfb40c14191.png" alt="15" width="60%" height="60%" class="align-center" /></p>
+  </li>
+</ul>
+
+<h4 id="선형-모델의-한계">선형 모델의 한계</h4>
+
+<p>분류 경계면이 비선형일 경우 이를 잘 찾아내지 못함 → <strong>원래 공간이 아닌 선형 분류가 가능한 더 고차원의 공간으로 데이터를 보내서 모델을 학습</strong></p>
+
+\[\Phi : (\mathbf x_1, \mathbf x_2) \rightarrow(\mathbf x_1^2, \mathbf x_2^2, \sqrt{2}\mathbf x_1, \sqrt{2}\mathbf x_2, \sqrt{2}\mathbf x_1\mathbf x_2, 1)\]
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221480498-876091ca-d9ee-42fd-8700-e05e8a0503f9.png" alt="16" class="align-center" /></p>
+
+<p>$\Phi$ 라는 매핑 함수를 통해 $\mathbf x_1, \mathbf x_2$ 2차원 데이터를 6차원 데이터로 차원 확장 → <strong>저차원 공간에서는 선형 분류가 불가능했지만 고차원으로 차원을 확장하면 선형분류가 가능해짐</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221480500-912fb34d-7fd1-42cd-ad23-ed9b965f2ce9.png" alt="17" class="align-center" /></p>
+
+<p><strong>목적</strong> : 마진을 최대화하고 일반화 성능확보, 유연성 확보하기 위해 고차원의 매핑을 통해 비선형 분류 경계면 생성</p>
+
+<h3 id="svm-case-3--nonlinear--soft-margin">SVM Case 3 : Nonlinear &amp; Soft Margin</h3>
+
+<ul>
+  <li>
+    <p><strong>목적 함수</strong></p>
+
+\[\min \frac{1}{2}\lVert\mathbf w\lVert^2+C\sum_{i=1}^N \xi_i\]
+  </li>
+  <li>
+    <p><strong>제약식</strong></p>
+
+\[s.t. \quad y_i(\mathbf w^T\Phi_i(\mathbf x_i)+b)\ge1-\xi_i, \xi_j\ge0, \forall i\]
+  </li>
+  <li>
+    <p><strong>Lagrangian Problem</strong></p>
+
+\[\min L_p(\mathbf w, b, \alpha_i)=\frac{1}{2}\lVert\mathbf w\lVert^2+C\sum_{i=1}^N\xi_i-\sum_{i=1}^N\alpha_i\big(y_i(\mathbf w_T\Phi(\mathbf x_i)+b)-1+\xi_i\big)-\sum_{i=1}^N\mu_i\xi_i \quad\]
+  </li>
+  <li>
+    <p><strong>KKT Condition</strong></p>
+
+\[\frac{\partial L_p}{\partial \mathbf w}=0 \Rightarrow \mathbf w=\sum_{i=1}^N \alpha_iy_i\Phi(\mathbf x_i) \quad \frac{\partial L_p}{\partial b}=0 \Rightarrow \sum_{i=1}^N \alpha_i y_i=0\\
+\frac{\partial L_p}{\partial \xi_i} \Rightarrow C-\alpha_i-\mu_i=0\]
+  </li>
+  <li>
+    <p><strong>Lagrangian Problem Dual</strong></p>
+
+\[\max L_D(\alpha_i)=\sum_{i=1}^N\alpha_i-\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\Phi(\mathbf x_i^T)\Phi(\mathbf x_j) \quad \\ 
+s.t\ \sum_{i=1}^N\alpha_iy_i=0 \ \text{and}\ 0\le\alpha_i \le C\]
+  </li>
+</ul>
+
+<h4 id="커널-트릭-아이디어의-시작점">커널 트릭 아이디어의 시작점</h4>
+
+\[\max L_D(\alpha_i)=\sum_{i=1}^N\alpha_i-\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j\Phi(\mathbf x_i^T)\Phi(\mathbf x_j) \quad\]
+
+<p>$\mathbf x$를 $\Phi(\mathbf x)$로 변환하는 매핑 함수 $\Phi$를 잘 찾아야 함</p>
+
+<p>만약, 두 데이터의 고차원 공간상에서의 내적을 계산하는(저차원 데이터로 내적을 계산하는) 함수가 있다면 명시적으로 $\Phi$라는 매핑 함수를 사용하지 말고 커널함수 $K$를 사용하여 값을 계산하자 !</p>
+
+<h4 id="대표적인-커널-함수">대표적인 커널 함수</h4>
+
+<ul>
+  <li>
+    <p><strong>Polynomial</strong></p>
+
+\[K(x, y)=(x\cdot y+c)^d, \ c\gt0\]
+  </li>
+  <li>
+    <p><strong>Gaussian (RBF)</strong></p>
+
+\[K(x, y)=\exp\Big(-\frac{\lVert x-y\lVert^2}{2\sigma^2}\Big),\ \sigma \ne0\]
+  </li>
+  <li>
+    <p><strong>Sigmoid</strong></p>
+
+\[K(x, y)=\tanh(\alpha(x\cdot y)+b), \ a, b \ge0\]
+  </li>
+</ul>
+
+<h5 id="guassian-rbf-커널">Guassian (RBF) 커널</h5>
+
+<p>이론적으로 무한개의 점을 Shatter 할 수 있음</p>
+
+<p>If $K(\mathbf x, \mathbf x’)$ is an inner product in some space $\mathcal Z$, we are good.</p>
+
+\[K(\mathbf x, \mathbf x')=\exp\Big(-\gamma\lVert\mathbf x-\mathbf x'\lVert^2\Big)\\
+K(x, x')=\exp(-(x-x')^2)=\exp(-x^2)\exp(-x'^2)\sum_{k=0}^\infty\frac{2^k(x)^k(x')^k}{k!}\]
+
+<p>$\sum\frac{2^k(x)^k(x’)^k}{k!}$은 테일러 전개로 무한개로 늘릴 수 있음 → 무한 차원으로 확장 가능하지만 VC dimension이 무한이라는 뜻은 아님(마진이 정해지면 마진의 크기에 따라 VC dimension이 제약됨)</p>
+
+\[K(x, y)=\exp \Big(-\frac{\lVert x_i-x_j\lVert^2}{2\sigma^2}\Big)\]
+
+<ul>
+  <li>위의 식에서 $\sigma$가 작다는 것은 두 객체 사이의 거리가 조금만 떨어져 있어도 차이를 0으로 만들 수 있음 → <strong>객체 데이터의 위치 변화에 민감하게 반응</strong></li>
+  <li>많은 소프트웨어에서는 $-\frac{1}{\sigma^2}$을 사용하기 까다롭기 때문에 $\gamma$를 사용</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221480507-b4977a7e-f285-4f33-982a-19bf6f552258.png" alt="21" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p>$\gamma$ 가 작다 → $\sigma$가 크다 → 변화에 둔감하다, <strong>마진이 큰 분류 경계면</strong></p>
+  </li>
+  <li>
+    <p>$\gamma$ 가 크다 → $\sigma$ 가 작다 → 마진에 민감하게 반응, <strong>$\sigma$가 작을 때는 분류경계면이 주어진 데이터 포인트 하나하나 감싸는 것 처럼 민감하게 반응</strong></p>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221480508-a022e866-1fed-47b6-a24f-48ecb08106c3.png" alt="22" class="align-center" /></p>
+
+<h4 id="커널-형태에-따른-분류-경계면">커널 형태에 따른 분류 경계면</h4>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221480501-28beb28b-11f4-4769-84d8-48e88472bbbb.png" alt="18" width="60%" height="60%" class="align-center" /></p>
+
+<p>거듭제곱이 올라갈수록 차원도 늘어나기 때문에 조금 더 유연한 분류를 할 가능성이 올라감</p>
+
+<h4 id="오분류-페널티에-따른-분류-경계면-linear-kernel">오분류 페널티에 따른 분류 경계면 (Linear Kernel)</h4>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221480502-55c622cd-07ca-4ece-a6d0-ae655359a737.png" alt="19" width="40%" height="40%" class="align-center" /></p>
+
+<h4 id="커널-파라미터와-오분류-페널티에-따른-분류-경계면-rbf-kernel">커널 파라미터와 오분류 페널티에 따른 분류 경계면 (RBF Kernel)</h4>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221480504-9e801847-f417-4031-adda-05d2c0e1f324.png" alt="20" width="40%" height="40%" class="align-center" /></p>
+
+<h4 id="새로운-데이터-적용">새로운 데이터 적용</h4>
+
+\[f(\mathbf x)=\text{sign}\Big(\sum_{i=1}^N\alpha_i y_i K(\mathbf x_i, \mathbf x)+b\Big)\]
+
+<p>새로운 데이터가 들어왔을 때 해당하는 서포트 벡터들과의 커널 함수 값을 계산해서 $\alpha$와 $\mathbf x$값을 모두 곱하고 $b$를 더해서 그 값의 부호가 이보다 크면 positive 범주, 부호가 이보다 작으면 negative 범주</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#data-analysis" class="page__taxonomy-item" rel="tag">Data Analysis</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#kernel-based-learning" class="page__taxonomy-item" rel="tag">Kernel Based Learning</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ds" class="page__taxonomy-item" rel="tag">ds</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-02-15T00:00:00+09:00">February 15, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BData+Science%5D+1.+%EC%BB%A4%EB%84%90+%EA%B8%B0%EB%B0%98+%ED%95%99%EC%8A%B5%28Kernel+Based+Learning%29%20http%3A%2F%2Flocalhost%3A4000%2Fds%2Fkernel-based-learning1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fds%2Fkernel-based-learning1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fds%2Fkernel-based-learning1%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/r/decisiontree/cart/decision-tree-r/" class="pagination--pager" title="[R] 3. Decision Tree with Confusion Matrix
+">이전</a>
+    
+    
+      <a href="/ds/density-based-anomaly-detection/" class="pagination--pager" title="[Data Science] 2. 이상치 탐지(Density Based Anomaly Detection)
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/ds/kernel-based-learning1/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/ds/kernel-based-learning1"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

@@ -1,0 +1,1138 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Data Analysis] 6. K-Nearest Neighbor Learning - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="Chapter 6. k-인접 이웃 기법">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[Data Analysis] 6. K-Nearest Neighbor Learning">
+<meta property="og:url" content="http://localhost:4000/da/K-nearest-regression/">
+
+
+  <meta property="og:description" content="Chapter 6. k-인접 이웃 기법">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-01-23T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/da/K-nearest-regression/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Data Analysis] 6. K-Nearest Neighbor Learning">
+    <meta itemprop="description" content="Chapter 6. k-인접 이웃 기법">
+    <meta itemprop="datePublished" content="2023-01-23T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[Data Analysis] 6. K-Nearest Neighbor Learning
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#chapter-6-k-인접-이웃-기법">Chapter 6. k-인접 이웃 기법</a>
+    <ul>
+      <li><a href="#k-인접-이웃-기법--k-nearest-neighbor-learning">K-인접 이웃 기법 : K-Nearest Neighbor Learning</a>
+        <ul>
+          <li><a href="#특징">특징</a></li>
+          <li><a href="#k-nearest-neighbor-classification">K-Nearest Neighbor Classification</a>
+            <ul>
+              <li><a href="#1-참조-데이터-준비">1. 참조 데이터 준비</a></li>
+              <li><a href="#2-유사도--거리-측정-지표-정의">2. 유사도 / 거리 측정 지표 정의</a></li>
+              <li><a href="#3-k의-후보-집합-생성">3. k의 후보 집합 생성</a></li>
+              <li><a href="#4-k개의-이웃들로부터-범주-정보를-취합하여-예측-수행">4. k개의 이웃들로부터 범주 정보를 취합하여 예측 수행</a></li>
+            </ul>
+          </li>
+          <li><a href="#k-nearest-neighbor-regression">K-Nearest Neighbor Regression</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="chapter-6-k-인접-이웃-기법">Chapter 6. k-인접 이웃 기법</h1>
+
+<p class="notice--info">💡 Data business <br />
+<strong>강필성</strong> 교수님의 강의를 보고 정리하였습니다.</p>
+
+<h2 id="k-인접-이웃-기법--k-nearest-neighbor-learning">K-인접 이웃 기법 : K-Nearest Neighbor Learning</h2>
+
+<p><strong>Model-based Learning</strong></p>
+
+<p>학습데이터로부터 설명변수 X와 종속변수 Y의 관계를 찾아내는 모델을 학습한 뒤, 새로운 객체의 설명변수 X를 학습된 모델에 투입하여 Y를 예측하는 방식 (Linear Regression, Logistic Regreesion, Decision Tree, Neural Network, $\cdots$)</p>
+
+<p><strong>Instance-based Learning</strong></p>
+
+<p><strong>별도의 모델을 학습하지 않고</strong> 새로운 객체의 설명변수 X와 <strong>유사한 학습 데이터 객체(이웃)</strong>들을 찾아서 이들의 종속변수 Y의 정보들을 이용하여 새로운 객체의 Y를 예측하는 방식</p>
+
+<h3 id="특징">특징</h3>
+
+<ol>
+  <li><strong>Instance-based Learning</strong> : 각각의 관측치만을 이용하여 새로운 데이터에 대한 예측을 시도</li>
+  <li><strong>Memory-based Learning</strong> : 모든 참조 데이터를 메모리에 저장한 후, 새로운 객체가 들어오면 이의 이웃을 탐색</li>
+  <li><strong>Lazy Learning</strong> : 모델을 별도로 학습하지 않고, 새로운 테스트 데이터가 투입되는 시점에서 비로소 작동하는 게으른 알고리즘으로 학습 데이터라는 용어가 아닌 참조 데이터라는 용어를 사용</li>
+</ol>
+
+<h3 id="k-nearest-neighbor-classification">K-Nearest Neighbor Classification</h3>
+
+<h4 id="1-참조-데이터-준비"><strong>1. 참조 데이터 준비</strong></h4>
+
+<ul>
+  <li>
+    <p>분류 목적 : 한 사람의 키, 몸무게, 체지방률을 이용해서 그 사람의 성별을 분류</p>
+  </li>
+  <li>입력 변수 X : 키, 몸무게, 체지방률</li>
+  <li>종속변수 Y : 성별 (M/F)</li>
+  <li>각 범주로부터 충분한 수의 데이터 수집</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059828-011c7d86-314e-4c60-938e-4de354567510.png" alt="1" width="50%" height="50%" class="align-center" /></p>
+
+<h4 id="2-유사도--거리-측정-지표-정의">2. 유사도 / 거리 측정 지표 정의</h4>
+
+<p><strong>유사한 객체 = 거리가 가까운 객체</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059838-e915ff43-4a0f-4989-aaf4-44de36543a5b.png" alt="2" class="align-center" /></p>
+
+<p><strong>고려 사항 : 정규화(Normalization) 또는 스케일링(Scaling)</strong></p>
+
+<ul>
+  <li>두 객체 사이의 거리를 계산할 때 정규화를 수행하지 않을 경우 측정 단위가 큰 변수가 측정 단위가 작은 변수보다 거리 계산에 더 큰 영향을 줌 → 예 : 은행 고객 데이터에서 두 개의 변수만 존재 (나이, 월 소득)</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059841-991ebcae-bebe-4890-a278-b938b45831c3.png" alt="3" width="70%" height="70%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p>[나이]와 [월 소득] 두 변수를 사용한 고객 A와 고객 B의 Euclidean Distance</p>
+
+\[\sqrt{(30-40)^2+(5,000,000-5,200,000)^2}=200,000\]
+  </li>
+  <li>
+    <p>[월 소득] 변수만 사용한 고객 A와 고객 B의 Euclidean Distance</p>
+
+\[\sqrt{(5,000,000-5,200,000)^2}=200,000\]
+  </li>
+  <li>
+    <p>정규화 and Min-Max Scaling</p>
+
+\[Normalization \ z=\frac{x-\bar{x}}{s} \quad , \quad Min-Max \ Scaling=\frac{x-\min(x)}{\max(x)-\min(x)}\]
+
+    <p>예 : 나이의 평균이 35, 표준편차가 2.5, 월 소득의 평균이 5,100,000원, 표준편차가 100,000원</p>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059842-bfbf94f2-f407-442a-a6b2-a41e6f516646.png" alt="4" width="70%" height="70%" class="align-center" /></p>
+
+<p>고객 A와 B의 Euclidean Distance를 측정할 때 정규화 후에는 [나이] 변수가 [월 소득] 변수보다 더 큰 영향을 미침</p>
+
+<ul>
+  <li>두 객체 사이의 거리를 계산할 때 정규화를 수행하지 않을 경우 측정 단위가 큰 변수가 측정 단위가 작은 변수보다 거리 계산에 더 큰 영향을 줌</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059844-7cf452a5-ba71-4644-81d5-9289e8cd1b72.png" alt="5" class="align-center" /></p>
+
+<h4 id="3-k의-후보-집합-생성">3. k의 후보 집합 생성</h4>
+
+<p>k 값의 변화에 따른 분류 경계면 예시</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059846-537f7860-b4b2-4209-9adc-1e8983c5f7a4.png" alt="6" width="40%" height="40%" class="align-center" /></p>
+
+<ul>
+  <li>k가 매우 작게 설정되면 분류 경계면이 노이즈에 민감하게 되어 과적합의 우려가 있음</li>
+  <li>k가 매우 크게 설정되면 적절한 지역적 구조를 파악하는 능력을 잃고 부적합의 경향성을 보임</li>
+  <li>적절한 k값을 찾아내는 것이 K-NN의 성능 최적화에 가장 중요한 요소이며, 일반적으로 충분한 범위의 k값들 중에서 검증 데이터 오류가 가장 낮은 값을 선택</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059851-68098311-9d35-4fbd-a857-7663b01ce436.png" alt="7" width="70%" height="70%" class="align-center" /></p>
+
+<p><strong>최적의 k값을 선택하는 기준</strong> : 설정된 k값의 탐색 범위에서 검증 데이터에 대한 오분류율이 가장 낮은 k값을 최종적으로 선택</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059859-c9047913-94b7-4370-bd52-14f5d8f207a0.png" alt="8" width="40%" height="40%" class="align-center" /></p>
+
+<h4 id="4-k개의-이웃들로부터-범주-정보를-취합하여-예측-수행">4. k개의 이웃들로부터 범주 정보를 취합하여 예측 수행</h4>
+
+<p>이웃들의 거리정보 반영 유무에 따라 다수결방식과 가중합 방식이 있음</p>
+
+<p><strong>다수결 방식</strong> : k개의 이웃들은 최종 예측에 동등한 영향력을 발휘</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059862-a4b5afce-452d-4a33-b3e2-a1bf0e645c73.png" alt="9" width="40%" height="40%" class="align-center" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Neighbor</th>
+      <th>거리</th>
+      <th>성별</th>
+      <th>1 / 거리</th>
+      <th>가중치</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>●</td>
+      <td>0.55</td>
+      <td>남성</td>
+      <td>1.80</td>
+      <td>0.367</td>
+    </tr>
+    <tr>
+      <td>●</td>
+      <td>0.83</td>
+      <td>남성</td>
+      <td>1.20</td>
+      <td>0.244</td>
+    </tr>
+    <tr>
+      <td>▲</td>
+      <td>1.19</td>
+      <td>여성</td>
+      <td>0.84</td>
+      <td>0.172</td>
+    </tr>
+    <tr>
+      <td>▲</td>
+      <td>1.46</td>
+      <td>여성</td>
+      <td>0.68</td>
+      <td>0.139</td>
+    </tr>
+    <tr>
+      <td>▲</td>
+      <td>2.62</td>
+      <td>여성</td>
+      <td>0.38</td>
+      <td>0.078</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>↳ 객체의 가중치는 거리의 역수에 비례한다고 가정</p>
+
+<p>남성일 확률 : $0.367 +0.244=0.611$ / 여성일 확률 : $0.192+0.139+0.078=0.389$ → <strong>가중합 방식에 의하면 새로운 객체는 남성으로 판별</strong></p>
+
+<h3 id="k-nearest-neighbor-regression">K-Nearest Neighbor Regression</h3>
+
+<p>이웃들의 거리정보 반영 유무에 따라 다수결 방식과 가중합 방식이 있음</p>
+
+<p>Step 4의 예측 결과물 산출 과정에서 연속형의 종속변수를 사용하므로 단순평균 혹은 가중합 평균을 사용</p>
+
+<p>대표적으로 추천 시스템과 협업 필터링에 사용</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/214059867-308cf682-4cbb-40a0-a08b-6a992953d686.png" alt="10" width="50%" height="50%" class="align-center" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>3-NN</th>
+      <th>거리</th>
+      <th>평점</th>
+      <th>1/거리</th>
+      <th>가중치</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Neighbor 1</td>
+      <td>1</td>
+      <td>10</td>
+      <td>1.00</td>
+      <td>0.46</td>
+    </tr>
+    <tr>
+      <td>Neighbor 2</td>
+      <td>1.5</td>
+      <td>9</td>
+      <td>1.67</td>
+      <td>0.31</td>
+    </tr>
+    <tr>
+      <td>Neighbor 3</td>
+      <td>2</td>
+      <td>8</td>
+      <td>0.50</td>
+      <td>0.23</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>↳ 세 명의 이웃이 영화 D에 대하여 각각 10점, 9점, 8점 부여 → 가중 평균을 적용할 경우 이서윤은 영화 D에 9.23점을 부여할 것으로 예상하고 이 영화를 추천</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#data-analysis" class="page__taxonomy-item" rel="tag">Data Analysis</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#k-nearest-neighbor-classification" class="page__taxonomy-item" rel="tag">K-Nearest Neighbor Classification</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#k-nearest-neighbor-learning" class="page__taxonomy-item" rel="tag">K-Nearest Neighbor Learning</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#k-nearest-neighbor-regression" class="page__taxonomy-item" rel="tag">K-Nearest Neighbor Regression</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#da" class="page__taxonomy-item" rel="tag">da</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-01-23T00:00:00+09:00">January 23, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BData+Analysis%5D+6.+K-Nearest+Neighbor+Learning%20http%3A%2F%2Flocalhost%3A4000%2Fda%2FK-nearest-regression%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fda%2FK-nearest-regression%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fda%2FK-nearest-regression%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/da/variable-selection/" class="pagination--pager" title="[Data Analysis] 5. Variable Selection
+">이전</a>
+    
+    
+      <a href="/r/multiplelinearregression/r-mlr/" class="pagination--pager" title="[R] 1. Multiple Linear Regression
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/da/K-nearest-regression/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/da/K-nearest-regression"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

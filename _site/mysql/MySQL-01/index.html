@@ -1,0 +1,1205 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[MySQL] MySQL 정리 1 - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="MySQL 소개">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[MySQL] MySQL 정리 1">
+<meta property="og:url" content="http://localhost:4000/mysql/MySQL-01/">
+
+
+  <meta property="og:description" content="MySQL 소개">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-23T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/mysql/MySQL-01/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[MySQL] MySQL 정리 1">
+    <meta itemprop="description" content="MySQL 소개">
+    <meta itemprop="datePublished" content="2022-05-23T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[MySQL] MySQL 정리 1
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#mysql-소개">MySQL 소개</a></li>
+  <li><a href="#sql의-분류">SQL의 분류</a>
+    <ul>
+      <li><a href="#dmldata-manipulation-language">DML(Data Manipulation Language)</a></li>
+      <li><a href="#ddldata-definition-language">DDL(Data Definition Language)</a></li>
+      <li><a href="#dcldata-control-language">DCL(Data Control Language)</a></li>
+    </ul>
+  </li>
+  <li><a href="#mysql-구문">MySQL 구문</a>
+    <ul>
+      <li><a href="#일반적인-형식">일반적인 형식</a></li>
+      <li><a href="#select-column_name-where-table_name">SELECT [column_name] WHERE [table_name]</a></li>
+      <li><a href="#where">WHERE</a></li>
+      <li><a href="#order-by">ORDER BY</a></li>
+      <li><a href="#limit">LIMIT</a></li>
+      <li><a href="#group-by">GROUP BY</a></li>
+      <li><a href="#having">HAVING</a></li>
+      <li><a href="#join">JOIN</a></li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="mysql-소개">MySQL 소개</h2>
+
+<ul>
+  <li>MySQL은 가장 널리 사용되고 있는 관계형 데이터베이스 관리 시스템 (RDBMS:Realational DBMS)</li>
+  <li>MySQL은 오픈 소스이며, 다중 사용자와 다중 스레드를 지원</li>
+  <li>C언어, C++, JAVA, PHP 등 여러 프로그래밍 언어를 위한 다양한 API를 제공</li>
+  <li>MySQL은 유닉스, 리눅스, 윈도우 등 다양한 운영체제에서 사용할 수 있으며, 특히 PHP와 함께 웹 개발에 자주 사용</li>
+  <li>MySQL은 오픈 소스 라이센스를 따르기는 하지만, 상업적으로 사용할 때는 상업용 라이센스 구입 필요</li>
+</ul>
+
+<h2 id="sql의-분류">SQL의 분류</h2>
+
+<h3 id="dmldata-manipulation-language">DML(Data Manipulation Language)</h3>
+
+<ul>
+  <li>데이터 조작 언어</li>
+  <li>데이터를 조작(선택, 삽입, 수정, 삭제)하는 데 사용되는 언어</li>
+  <li>DML 구문이 사용되는 대상은 테이블의 행</li>
+  <li>DML을 사용하기 위해서는 꼭 그 이전에 테이블이 정의되어 있어야 함</li>
+  <li>SQL 문 중 <code class="language-plaintext highlighter-rouge">SELECT, INSERT, UPDATE, DELETE</code>가 이 구문에 해당</li>
+  <li>트랜잭션(Transaction)이 발생하는 SQL도 이 DML에 속함
+    <ul>
+      <li>테이블의 데이터를 변경(입력, 수정, 삭제)할 때 실제 테이블에 완전히 적용하지 않고, 임시로 적용시키는것</li>
+      <li>취소 가능</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="ddldata-definition-language">DDL(Data Definition Language)</h3>
+
+<ul>
+  <li>데이터 정의 언어</li>
+  <li>데이터베이스, 테이블, 뷰, 인덱스 등의 데이터베이스 개체를 생성 / 삭제 / 변경하는 역할</li>
+  <li><code class="language-plaintext highlighter-rouge">Create, Drop, ALTER</code> 구문</li>
+  <li>DDL은 트랜잭션 발생시키지 않음</li>
+  <li>ROLLBACK이나 COMMIT 사용 불가</li>
+  <li>DDL문은 실행 즉시 MySQL에 적용</li>
+</ul>
+
+<h3 id="dcldata-control-language">DCL(Data Control Language)</h3>
+
+<ul>
+  <li>데이터 제어 언어</li>
+  <li>사용자에게 어떤 권한을 부여하거나 빼앗을때 주로 사용하는 구문</li>
+  <li><code class="language-plaintext highlighter-rouge">GRANT, REVOKE</code> 구문</li>
+</ul>
+
+<h2 id="mysql-구문">MySQL 구문</h2>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">SHOW DATABASES;</code></p>
+
+    <p>현재 서버에 어떤 DB가 있는지 보기</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">USE database_name;</code></p>
+
+    <p>사용할 데이터 베이스 지정</p>
+
+    <p>지정해 놓은 후 특별히 다시 <code class="language-plaintext highlighter-rouge">USE</code>문을 사용하지 않거나 다른 DB를 사용하겠다고 명시하지 않는 이상 모든 SQL문은 지정 DB에서 수행</p>
+
+    <p>Workbench에서 직접 선택해 사용 가능 [Navigator] → [SCHEMAS] → 데이터베이스 선택</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">SHOW TABLES</code></p>
+
+    <p>데이터 베이스의 테이블 이름 보기</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">SHOW TABLE STATUS</code></p>
+
+    <p>데이터베이스의 테이블 정보 조회</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DESCRIBE (DESC) table_name;</code></p>
+
+    <p>테이블에 무슨 열이 있는지 확인</p>
+  </li>
+</ul>
+
+<h3 id="일반적인-형식">일반적인 형식</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">select_expr</span>
+	<span class="k">FROM</span> <span class="n">table_references</span>
+	<span class="k">WHERE</span> <span class="n">where_condition</span>
+	<span class="k">GROUP</span> <span class="k">BY</span> <span class="p">[</span><span class="n">col_name</span> <span class="o">|</span> <span class="n">expr</span> <span class="o">|</span> <span class="k">position</span><span class="p">]</span>
+	<span class="k">HAVING</span> <span class="n">where_condition</span>
+	<span class="k">ORDER</span> <span class="k">BY</span> <span class="p">[</span><span class="n">col_name</span> <span class="o">|</span> <span class="n">expr</span> <span class="o">|</span> <span class="k">position</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="select-column_name-where-table_name">SELECT [column_name] WHERE [table_name]</h3>
+
+<ul>
+  <li>
+    <p>요구하는 데이터를 가져오는 구문 (일반적으로 가장 많이 사용되는 구문) → 원하는 정보 추출</p>
+  </li>
+  <li>
+    <p>여러 개의 열을 가져오고 싶을 때는 콤마로 구분 (전체 열 출력은 <code class="language-plaintext highlighter-rouge">*</code>)</p>
+  </li>
+  <li>
+    <p>열 이름의 순서를 출력하고 싶은 순서대로 배열 가능</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">Name</span><span class="p">,</span> <span class="n">CountryCode</span> <span class="k">FROM</span> <span class="n">city</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DISTINCT</code> : 중복된 것은 1개씩만 보여주면서 출력, 테이블의 크기가 클수록 효율적</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CountryCode</span> <span class="k">FROM</span> <span class="n">city</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="where">WHERE</h3>
+
+<ul>
+  <li>
+    <p>조회하는 결과에 특정한 조건으로 원하는 데이터만 보고 싶을 때 사용</p>
+  </li>
+  <li>
+    <p>조건이 없을 경우 테이블의 크기가 클수록 찾는 시간과 노력이 증가</p>
+  </li>
+  <li>
+    <p>관계 연산자 사용 가능 → 연산자의 조합으로 데이터를 효율적으로 추출</p>
+
+    <ul>
+      <li>OR 연산자, AND 연산자, 조건 연산자(=, &lt;, &gt;, &lt;=, &gt;=, &lt;&gt;, !=), 관계 연산자(NOT, AND, OR)</li>
+    </ul>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">BETWEEN</code> :  데이터가 숫자로 구성되어 있어 연속적인 값은 <code class="language-plaintext highlighter-rouge">BETWEEN ... AND</code> 사용 가능</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">WHERE</span> <span class="n">Population</span> <span class="k">BETWEEN</span> <span class="mi">7000000</span> <span class="k">AND</span> <span class="mi">8000000</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">IN</code> : 이산적인 값의 조건에서는 <code class="language-plaintext highlighter-rouge">IN()</code> 사용 가능</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">WHERE</span> <span class="n">Name</span> <span class="k">IN</span><span class="p">(</span><span class="s1">'Seoul'</span><span class="p">,</span> <span class="s1">'New York'</span><span class="p">,</span> <span class="s1">'Tokyo'</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">LIKE</code> : 문자열의 내용 검색 → <code class="language-plaintext highlighter-rouge">%</code> 무엇이든 매치 / <code class="language-plaintext highlighter-rouge">_</code> 한 글자 매치</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">WHERE</span> <span class="n">CountryCode</span> <span class="k">LIKE</span> <span class="s1">'KO_'</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">WHERE</span> <span class="n">Name</span> <span class="k">LIKE</span> <span class="s1">'Seo%'</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">WHERE</span> <span class="n">Name</span> <span class="k">LIKE</span> <span class="s1">'%ork'</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>서브 쿼리 : 쿼리문 안에 또 쿼리문이 들어 있는 것, 서브 쿼리의 결과가 둘 이상이면 에러 발생</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">WHERE</span> <span class="n">CountryCode</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">CountryCode</span>
+                                       	<span class="k">FROM</span> <span class="n">city</span>
+                                       	<span class="k">WHERE</span> <span class="n">Name</span> <span class="o">=</span> <span class="s1">'Seoul'</span><span class="p">);</span>
+<span class="o">#</span> <span class="n">CountryCode</span><span class="err">가</span> <span class="n">KOR</span><span class="err">인</span> <span class="err">결과</span> <span class="err">출력</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ANY</code> : 서브쿼리의 여러 개의 결과 중 한가지만 만족해도 가능 (<code class="language-plaintext highlighter-rouge">SOME</code>과 <code class="language-plaintext highlighter-rouge">ANY</code>는 동일한 의미로 사용 / <code class="language-plaintext highlighter-rouge">=ANY</code> 구문은 <code class="language-plaintext highlighter-rouge">IN</code>과 동일한 의미)</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">WHERE</span> <span class="n">Population</span> <span class="o">&gt;</span> <span class="k">ANY</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">Population</span>
+                                           <span class="k">From</span> <span class="n">city</span>
+                                           <span class="k">WHERE</span> <span class="n">District</span> <span class="o">=</span> <span class="s1">'New York'</span><span class="p">);</span>
+<span class="o">#</span> <span class="k">New</span> <span class="n">York</span><span class="err">의</span> <span class="err">가장</span> <span class="err">인구수가</span> <span class="err">적은</span> <span class="err">지역보다</span> <span class="err">인구수가</span> <span class="err">많으면</span> <span class="err">모두</span> <span class="err">출력</span> 
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ALL</code> : 서브쿼리의 여러 개의 결과를 모두 만족 시켜야 함</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">WHERE</span> <span class="n">Population</span> <span class="o">&gt;</span> <span class="k">ALL</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">Population</span>
+                                           <span class="k">FROM</span> <span class="n">city</span>
+                                           <span class="k">WHERE</span> <span class="n">District</span> <span class="o">=</span> <span class="s1">'New York'</span><span class="p">);</span>
+<span class="o">#</span> <span class="k">New</span> <span class="n">York</span><span class="err">의</span> <span class="err">가장</span> <span class="err">인구수가</span> <span class="err">많은</span> <span class="err">지역보다</span> <span class="err">인구수가</span> <span class="err">많으면</span> <span class="err">모두</span> <span class="err">출력</span> 
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="order-by">ORDER BY</h3>
+
+<ul>
+  <li>
+    <p>결과가 출력되는 순서를 조절하는 구문</p>
+  </li>
+  <li>
+    <p>기본적으로 오름차순 정렬, 내림차순으로 정력할 경우 열 이름 뒤에 <code class="language-plaintext highlighter-rouge">DESC</code>, 혼합 가능</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">CountryCode</span><span class="p">,</span> <span class="n">Population</span> <span class="k">DESC</span><span class="p">;</span>
+<span class="o">#</span> <span class="n">CountryCode</span><span class="err">는</span> <span class="err">오름차순</span><span class="p">,</span> <span class="n">Population</span><span class="err">은</span> <span class="err">내림차순으로</span> <span class="err">정렬되어</span> <span class="err">출력</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="limit">LIMIT</h3>
+
+<ul>
+  <li>
+    <p>출력 개수를 제한 → 상위의 N개만 출력하는 <code class="language-plaintext highlighter-rouge">LIMIT N</code> 구문</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Population</span> <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="group-by">GROUP BY</h3>
+
+<ul>
+  <li>
+    <p>그룹으로 묶어주는 역할</p>
+  </li>
+  <li>
+    <p>집계함수(Aggregate Function)를 함께 사용</p>
+
+    <ul>
+      <li>AVG() : 평균</li>
+      <li>MIN() : 최소값</li>
+      <li>MAX() : 최대값</li>
+      <li>COUNT() : 행의 개수</li>
+      <li>COUNT(DISTINCT) : 중복 제외된 행의 개수</li>
+      <li>STDEV() : 표준 편차</li>
+      <li>VARIANCE() : 분산</li>
+    </ul>
+  </li>
+  <li>
+    <p>효율적인 그룹화가 가능하고 읽기 좋게 하기 위해 별칭(Alias) 사용</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">CountryCode</span><span class="p">,</span> <span class="k">Max</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span> <span class="k">AS</span> <span class="s1">'Popilation'</span> 
+	<span class="k">FROM</span> <span class="n">city</span> 
+	<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">CountryCode</span><span class="p">;</span>
+<span class="o">#</span> <span class="n">CountryCode</span><span class="err">가</span> <span class="err">같은</span> <span class="err">도시</span> <span class="err">중</span> <span class="err">가장</span> <span class="err">큰</span> <span class="err">인구</span> <span class="err">수를</span> <span class="err">출력</span>
+  
+<span class="n">SELCT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">city</span><span class="p">;</span>
+<span class="o">#</span> <span class="n">city</span> <span class="k">table</span><span class="err">의</span> <span class="err">전체</span> <span class="err">행</span> <span class="err">개수</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">WITH ROLLUP</code> : 총합 또는 중간 합계가 필요할 경우 사용</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">CountryCode</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span>
+	<span class="k">FROM</span> <span class="n">city</span>
+	<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">CountryCode</span><span class="p">,</span> <span class="n">Name</span> <span class="k">WITH</span> <span class="k">ROLLUP</span><span class="p">;</span>
+<span class="o">#</span> <span class="n">CountryCode</span> <span class="err">안</span> <span class="err">각</span> <span class="n">Name</span> <span class="err">인구수의</span> <span class="err">합계가</span> <span class="err">구해지고</span> <span class="err">각</span> <span class="n">CountryCode</span><span class="err">의</span> <span class="err">중간</span> <span class="err">합계</span> <span class="err">출력</span>
+</code></pre></div>    </div>
+    <p><img width="281" alt="ROLLUP" src="https://user-images.githubusercontent.com/86525868/169764810-10210b8c-0f14-4309-bb71-6c1c250d9ffe.png" class="align-center" /></p>
+  </li>
+</ul>
+
+<h3 id="having">HAVING</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">WHERE</code>과 비슷한 개념으로 조건 제한</p>
+  </li>
+  <li>
+    <p>집계 함수(그룹)에 대해서 조건 제한하는 편리한 개념</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">HAVING</code>절은 반드시  <code class="language-plaintext highlighter-rouge">GROUP BY</code>절 다음에 나와야함</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">CountryCode</span><span class="p">,</span> <span class="k">MAX</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span>
+	<span class="k">FROM</span> <span class="n">city</span>
+	<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">CountryCode</span>
+  <span class="k">HAVING</span> <span class="k">MAX</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">8000000</span><span class="p">;</span>
+<span class="o">#</span> <span class="n">CountryCode</span><span class="err">로</span> <span class="err">묶인</span> <span class="err">그룹중에서</span> <span class="err">인구수가</span> <span class="mi">8</span><span class="p">,</span><span class="mi">000</span><span class="p">,</span><span class="mi">000</span> <span class="err">이상일</span> <span class="err">경우</span> <span class="err">출력</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="join">JOIN</h3>
+
+<ul>
+  <li>
+    <p>데이터베이스 내의 여러 테이블에서 가져온 레코드를 조합하여 하나의 테이블이나 결과 집합으로 표현</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> 
+	<span class="k">FROM</span> <span class="n">city</span> 
+	<span class="k">JOIN</span> <span class="n">country</span> <span class="k">ON</span> <span class="n">city</span><span class="p">.</span><span class="n">CountryCode</span> <span class="o">=</span> <span class="n">country</span><span class="p">.</span><span class="n">Code</span>
+	<span class="k">JOIN</span> <span class="n">countrylanguage</span> <span class="k">ON</span> <span class="n">city</span><span class="p">.</span><span class="n">CountryCode</span> <span class="o">=</span> <span class="n">countrylanguage</span><span class="p">.</span><span class="n">CountryCode</span><span class="p">;</span>
+<span class="o">#</span> <span class="err">세개의</span> <span class="err">테이블이</span> <span class="k">JOIN</span><span class="err">된</span> <span class="err">형태</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#mysql" class="page__taxonomy-item" rel="tag">MySQL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#mysql" class="page__taxonomy-item" rel="tag">MySQL</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2022-05-23T00:00:00+09:00">May 23, 2022</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BMySQL%5D+MySQL+%EC%A0%95%EB%A6%AC+1%20http%3A%2F%2Flocalhost%3A4000%2Fmysql%2FMySQL-01%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmysql%2FMySQL-01%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmysql%2FMySQL-01%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/handsonml/HandsOnML-01/" class="pagination--pager" title="[Hands On ML] 한눈에 보는 머신러닝
+">이전</a>
+    
+    
+      <a href="/mysql/MySQL-02/" class="pagination--pager" title="[MySQL] MySQL 정리 2
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/mysql/MySQL-01/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/mysql/MySQL-01"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

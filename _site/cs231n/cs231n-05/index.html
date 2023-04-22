@@ -1,0 +1,1065 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[CS231N] 6. Training Neural Network 1 - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="💡 Iamge Classification  Stanford University “CS231N” 강의를 듣고 정리하였습니다.">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[CS231N] 6. Training Neural Network 1">
+<meta property="og:url" content="http://localhost:4000/cs231n/cs231n-05/">
+
+
+  <meta property="og:description" content="💡 Iamge Classification  Stanford University “CS231N” 강의를 듣고 정리하였습니다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-06-10T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/cs231n/cs231n-05/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[CS231N] 6. Training Neural Network 1">
+    <meta itemprop="description" content="💡 Iamge Classification Stanford University “CS231N” 강의를 듣고 정리하였습니다. ">
+    <meta itemprop="datePublished" content="2022-06-10T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[CS231N] 6. Training Neural Network 1
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#lectrue-6--training-neural-networks-1">Lectrue 6 : Training Neural Networks 1</a>
+    <ul>
+      <li><a href="#activation-function">Activation Function</a>
+        <ul>
+          <li><a href="#sigmoid">Sigmoid</a>
+            <ul>
+              <li><a href="#sigmoid의-3가지-문제점">Sigmoid의 3가지 문제점</a></li>
+            </ul>
+          </li>
+          <li><a href="#tanhx">tanh(x)</a></li>
+          <li><a href="#relu">ReLU</a>
+            <ul>
+              <li><a href="#leaky-relu">Leaky ReLU</a></li>
+              <li><a href="#preluparametric-rectifier">PReLU(parametric rectifier)</a></li>
+              <li><a href="#eluexponential-linear-units">ELU(Exponential Linear Units)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p class="notice--info">💡 Iamge Classification <br />
+Stanford University “CS231N” 강의를 듣고 정리하였습니다. <br /></p>
+
+<p class="notice">자막 : https://github.com/visionNoob/CS231N_17_KOR_SUB (크롬 확장 프로그램 Subtitles for Youtube) <br />
+2017 버전 강의 목차 및 슬라이드 : http://cs231n.stanford.edu/2017/syllabus.html <br />
+2017 버전 강의 동영상 링크 : https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv <br />
+2022 버전 강의 목차 및 슬라이드 : http://cs231n.stanford.edu/schedule.html <br />
+실습 과제 : https://github.com/cs231n/cs231n.github.io/tree/master/assignments <br /></p>
+
+<h1 id="lectrue-6--training-neural-networks-1">Lectrue 6 : Training Neural Networks 1</h1>
+
+<h2 id="activation-function">Activation Function</h2>
+
+<p>데이터의 입력이 들어오면 가중치와 곱하고 활성화함수, 즉 비선형 연산을 거치게 됨</p>
+
+<p><img width="60%" alt="L6_01" src="https://user-images.githubusercontent.com/86525868/172896345-9f917032-5c7f-4e87-89e9-1fcc1d861f35.png" height="60%" class="align-center" /></p>
+
+<h3 id="sigmoid">Sigmoid</h3>
+
+<p><img width="20%" alt="L6_02" src="https://user-images.githubusercontent.com/86525868/172896376-f329f399-8b0b-4a06-a397-478657230f97.png" height="20%" class="align-center" /></p>
+
+\[\sigma(x)=1/(1-e^{-x})\]
+
+<p>각 입력을 받아서 그 입력을 [0, 1] 사이의 값이 되도록 함 (입력값이 크면 Sigmoid의 출력은 1에 가깝고 값이 작으면 0에 가까움)</p>
+
+<p>Sigmoid가 뉴런의 firing rate를 saturation 시키는 것으로 해석할 수 있기 때문에 많이 사용됨 (어떤 값이 0에서 1 사이의 값을 가지면 이를 firing rate라고 생각할 수 있음)</p>
+
+<h4 id="sigmoid의-3가지-문제점">Sigmoid의 3가지 문제점</h4>
+
+<ol>
+  <li>
+    <p><strong>Saturated neurons “kill” the gradients</strong></p>
+
+    <p><img width="70%" alt="L6_03" src="https://user-images.githubusercontent.com/86525868/172896138-d8ad9cb3-3d89-4610-baad-794ae5a7d5bc.png" height="70%" class="align-center" /></p>
+
+    <p>입력 x가 있고 출력이 있다면 Backprop에서 Gradient는 기울기가 구해지는 과정에서 연쇄법칙으로 Backprop(오차역전파)됨</p>
+
+    <p>Sigmoid에서 음의 큰 값(x = -10)이면 Sigmoid가 flat하게 되고 gradient가 거의 0에 가까운 값이 backprop됨</p>
+
+    <p><strong>이 부분에서 gradient가 죽어버리게 되고 밑으로 0이 계속 전달되게 됨</strong>. 양의 큰 값일 경우도 마찬가지</p>
+  </li>
+  <li>
+    <p><strong>Sigmoid output are not zero-centered</strong></p>
+
+    <p><img width="70%" alt="L6_04" src="https://user-images.githubusercontent.com/86525868/172896142-f378cb52-53e2-4a31-8b1a-c32e807cb17c.png" height="70%" class="align-center" /></p>
+
+    <p>뉴런의 입력(x)이 항상 양수일 때 x는 어떤 가중치랑 곱해지고 활성화 함수를 통과함</p>
+
+    <p><img width="20%" alt="L6_05" src="https://user-images.githubusercontent.com/86525868/172896156-fe3071bd-8c18-41ef-b9cc-1ac6426abf28.png" height="20%" class="align-center" /></p>
+
+    <p>이 때 gradient는 “전부 양수” 또는 “전부 음수”가 됨</p>
+
+    <p>위에서 dL/df(활성화함수)가 음수 또는 양수로 넘어오고 local gradient는 이 값이랑 곱해지고 df(활성화함수)/dW는 그냥 x가 됨 → gradient의 부호는 위에서 내려온 gradient의 부호와 같아짐. 이는, W가 모두 같은 방향으로만 움직이게 되는 것을 의미 → (파라미터를 업데이트 할 때 다 같이 증가하거나 다 같이 감소함) 이런 gradient업데이트는 아주 비효율적인 방법</p>
+
+    <p>그림처럼 파란색 화살표 방향으로 내려가지 못하고 빨간색 화살표처럼 내려가기 때문에 비효율적</p>
+
+    <p>그렇기 때문에 <strong>“zero-mean data”</strong> 를 원함 (x가 양수와 음수를 모두 가지고 있으면 전부 같은 뱡향으로 움직이는 일은 발생하지 않음)</p>
+  </li>
+  <li>
+    <p>exp() is a bit compute expensive (exp()로 인해 계산비용이 큼) -&gt; 다른 내적 계산 비용이 더 크기 때문에 큰 문제는 아님</p>
+  </li>
+</ol>
+
+<h3 id="tanhx">tanh(x)</h3>
+
+<p><img width="20%" alt="L6_06" src="https://user-images.githubusercontent.com/86525868/172896158-f18eaf2b-ad65-4711-8f73-4cd34ad15d72.png" height="20%" class="align-center" /></p>
+
+<p>Sigmoid와 유사하지만 범위가 [-1, 1]임. 가장 큰 차이점은 <strong>zero-centered</strong> 이기 때문에 Sigmoid 함수의 두번째 문제는 해결이 되지만, saturation 때문에 여전히 gradient는 죽음</p>
+
+<h3 id="relu">ReLU</h3>
+
+<p><img width="20%" alt="L6_07" src="https://user-images.githubusercontent.com/86525868/172896160-80d02872-a0c8-486f-8854-8c037bc9f237.png" height="20%" class="align-center" /></p>
+
+\[f(X)=max(0, 1)\]
+
+<p>ReLU 함수는 element-wise 연산을 수행하며 입력이 음수면 값이 0이 되고 양수면 입력 값 그대로를 출력함</p>
+
+<p>양의 값에서는 saturation되지 않기 때문에 적어도 입력 스페이스의 절반은 saturation 되지 않음 (<strong>ReLU의 가장 큰 장점</strong>)</p>
+
+<p>그리고 계산 효율이 뛰어남. 기존의 Sigmoid함수는 함수 안에 지수항이 있었지만 ReLU는 단순한 max 연산이므로 계산이 매우 빠름.(실제로 Sigmoid, tanh보다 수렴속도가 6배 정도 빠름) 실제 신경과학적인 실험을 통해 뉴런을 관찰해보면 Sigmoid보다 ReLU스러운것을 알 수 있음</p>
+
+<p><strong>ReLU의 문제점</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Not zero-centered output</strong></p>
+
+    <p>tanh가 이 문제는 해결했지만 ReLU는 여전히 문제를 가지고 있음</p>
+  </li>
+  <li>
+    <p><strong>양의 수에서는 saturation 되지만, 음의 경우엔 그렇지 않음</strong></p>
+
+    <p><img width="50%" alt="L6_08" src="https://user-images.githubusercontent.com/86525868/172897047-5780b55b-39e9-4c8e-9d62-1e516b3d1c5c.png" height="50%" class="align-center" /></p>
+  </li>
+  <li>
+    <p><strong>몇가지 상황에서 DEAD ReLU 발생</strong></p>
+
+    <p><img width="50%" alt="L6_09" src="https://user-images.githubusercontent.com/86525868/172896168-1ef8e57f-879a-4f28-8cf5-9314d5395ca4.png" height="50%" class="align-center" /></p>
+  </li>
+</ol>
+
+<p>ReLU에서는 평면의 절반만 activate 된다는 것을 알 수 있음 (각 평면(초록 빨강 직선)이 각 ReLU를 의미한다고 생각하기). ReLU가 data cloud에서 떨어져 있는 경우에 “dead ReLU”가 발생함 (dead ReLU에서는 activate가 일어나지 않고 update되지 않음). 반면에, active ReLU에서는 일부는 active되고, 일부는 active하지 않음</p>
+
+<ul>
+  <li>
+    <p>초기화를 잘못한 경우 (가중치 평면이  data cloud에서 멀리 떨어져 있는 경우) → 어떤 데이터 입력에섬도 activate 되는 경우가 존재하지 않고 backprop이 일어나지 않음</p>
+  </li>
+  <li>
+    <p>Learning rate가 지나치게 높은 경우 → 적절한 ReLU로 시작할 수 있다고 해도 update를 지나치게 크게 해 가중치가 날뛴다면 ReLU가 데이터의 manifold를 벗어나게 됨</p>
+  </li>
+</ul>
+
+<p>그렇기 때문에 <strong>ReLU를 초기화할 때, positive biases를 추가하거나 zero-bias로 초기화함</strong>(update시 active ReLU가 될 가능성을 높이기 위해)</p>
+
+<h4 id="leaky-relu">Leaky ReLU</h4>
+
+<p><img width="20%" alt="L6_10" src="https://user-images.githubusercontent.com/86525868/172896171-913eb7e6-79e1-4259-85b1-cf34a5478071.png" height="20%" class="align-center" /></p>
+
+\[f(x)=max(0.01x, x)\]
+
+<p>ReLU 와 유사하지만 negative regime에서 더이상 0이 아님.. negative에도 기울기를 살짝 주면서 앞선 문제들를 상당 부분 해결하고 계산도 효율적임</p>
+
+<h4 id="preluparametric-rectifier">PReLU(parametric rectifier)</h4>
+
+\[f(x)=max(\alpha x, x)\]
+
+<p>negative space에 기울기가 있다는 점에서 Leaky ReLU와 유사하지만 기울기가 alpha라는 파라미터로 결정됨 (alpha를 딱 정해놓는 것이 아니라 backprop으로 학습시키는 파라미터로 만들어 활성함수가 조금 더 유연해짐)</p>
+
+<h4 id="eluexponential-linear-units">ELU(Exponential Linear Units)</h4>
+
+<p><img width="20%" alt="L6_11" src="https://user-images.githubusercontent.com/86525868/172896173-1f846be5-2f61-4f0a-a8db-2a31c11a2fec.png" height="20%" class="align-center" /></p>
+
+\[f(x)=
+\begin{cases}
+x, &amp; \mbox{if }x&gt;0 \\
+\alpha(e^x-1), &amp; \mbox{if }x\le0
+\end{cases}\]
+
+<p>ReLU의 이점을 모두 가져오지만 zero-mean에 가까운 출력값을 보임</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cs231" class="page__taxonomy-item" rel="tag">cs231</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#image-classification" class="page__taxonomy-item" rel="tag">image classification</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#cs231n" class="page__taxonomy-item" rel="tag">cs231n</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2022-06-10T00:00:00+09:00">June 10, 2022</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BCS231N%5D+6.+Training+Neural+Network+1%20http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-05%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-05%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-05%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/cs231n/cs231n-04/" class="pagination--pager" title="[CS231N] 5. Convolutional Neural Networks
+">이전</a>
+    
+    
+      <a href="/da/analysis-01/" class="pagination--pager" title="[Data Analysis] 1. Multiple Linear Regression Analysis
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/cs231n/cs231n-05/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/cs231n/cs231n-05"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

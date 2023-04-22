@@ -1,0 +1,1156 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Hands On ML] 한눈에 보는 머신러닝 - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="💡 Hands On Machine Learning  오렐리앙 “핸즈온 머신러닝”을 보고 정리하였습니다.">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[Hands On ML] 한눈에 보는 머신러닝">
+<meta property="og:url" content="http://localhost:4000/handsonml/HandsOnML-01/">
+
+
+  <meta property="og:description" content="💡 Hands On Machine Learning  오렐리앙 “핸즈온 머신러닝”을 보고 정리하였습니다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-23T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/handsonml/HandsOnML-01/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Hands On ML] 한눈에 보는 머신러닝">
+    <meta itemprop="description" content="💡 Hands On Machine Learning 오렐리앙 “핸즈온 머신러닝”을 보고 정리하였습니다.">
+    <meta itemprop="datePublished" content="2022-05-23T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[Hands On ML] 한눈에 보는 머신러닝
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#한눈에-보는-머신러닝">한눈에 보는 머신러닝</a>
+    <ul>
+      <li><a href="#머신러닝-시스템의-종류">머신러닝 시스템의 종류</a>
+        <ul>
+          <li><a href="#지도학습과-비지도-학습">지도학습과 비지도 학습</a>
+            <ul>
+              <li><a href="#배치-학습과-온라인-학습">배치 학습과 온라인 학습</a></li>
+            </ul>
+          </li>
+          <li><a href="#사례-기반-학습과-모델-기반-학습-어떻게-일반화-되는가">사례 기반 학습과 모델 기반 학습 (어떻게 일반화 되는가)</a></li>
+          <li><a href="#머신러닝의-주요-도전-과제">머신러닝의 주요 도전 과제</a></li>
+          <li><a href="#테스트와-검증">테스트와 검증</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p class="notice--info">💡 Hands On Machine Learning <br />
+오렐리앙 “핸즈온 머신러닝”을 보고 정리하였습니다.</p>
+
+<h1 id="한눈에-보는-머신러닝">한눈에 보는 머신러닝</h1>
+
+<h2 id="머신러닝-시스템의-종류">머신러닝 시스템의 종류</h2>
+
+<h3 id="지도학습과-비지도-학습">지도학습과 비지도 학습</h3>
+
+<ul>
+  <li>
+    <p>지도학습(supervised learning) : 정답이 훈련데이터에 포함되어 있음</p>
+
+    <ul>
+      <li>
+        <p>분류(classification) - 스팸 필터</p>
+      </li>
+      <li>
+        <p>회귀(regression) - 중고차 가격 예측 (특성을 나타내는 예측변수를 사용해 가격이라는 타겟수치 예측)</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>비지도 학습(unsupervised learning) : 정답이 훈련데이터에 포함되어 있지 않음</p>
+
+    <ul>
+      <li>
+        <p>군집(clustering) - 블로그 방문자들이 어떤 그룹에 속하는지</p>
+      </li>
+      <li>
+        <p>차원축소(dimensionality reduction) - 정보를 최대한 살리면서 데이터 간소화 ( = 특성추출, feature extraction)</p>
+      </li>
+      <li>
+        <p>시각화(visualization) - 정답이 없는 대규모의 고차원 데이터를 도식화 가능한 2D, 3D로 만들어줌</p>
+      </li>
+      <li>
+        <p>이상치 탐지(outlier detection) - 학습알고리즘에 주입하기 저, 데이터셋에서 이상한 값을 자동으로 제거</p>
+      </li>
+      <li>
+        <p>연관 규칙 학습(association rule learning) - 대량의 데이터에서 특성간 흥미로운 관계 찾음</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>준지도 학습(semisupervised learning) : 일부만 레이어가 있는 데이터를 훈련데이터로 사용 or 지도 학습 + 준지도 학습</p>
+
+    <ul>
+      <li>
+        <p>호스팅 서비스</p>
+      </li>
+      <li>
+        <p>심층 신뢰 신경망(deep belidf network) - RBM이 순차적으로 비지도 학습 훈련한 뒤 전체가 지도 학습으로 조정됨</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>강화 학습(reinforcement learning) : 에이전트(학습하는 시스템), 환경을 관찰해서 행동하고 그 결과로 보상 또는 벌점을 받고 시간이 지나면서 가장 큰 보상을 얻기 위해 정책이라고 부르는 최상의 전략을 스스로 학습</p>
+  </li>
+</ul>
+
+<h4 id="배치-학습과-온라인-학습">배치 학습과 온라인 학습</h4>
+
+<ul>
+  <li>
+    <p>배치학습(batch learning) : 시스템이 점진적으로 학습할 수 없으며 가용한 데이터를 모두 사용해 훈련하기 때문에 오프라인에서 수행, 새로운 종류의 스팸 데이터에 대해 학습하려면 전체 데이터(기존 + 새로운)로 훈련한뒤 교체해야 함</p>
+
+    <ul>
+      <li><strong>단점</strong> : 많은 컴퓨팅 자원과 많은 비용이 발생</li>
+    </ul>
+  </li>
+  <li>
+    <p>온라인 학습(online learning) : 데이터를 순차적으로 미니배치 단위로 주입하여 시스템을 훈련시킴, 매 학습 단계가 빠르고 비용이 적게 들어 데이터가 도착하는 대로 즉시 학습 가능, 중요한 파라미터는 변하는 데이터에 얼마나 빠르게 적응하는지를 나타낸 학습률(learning rate)</p>
+
+    <ul>
+      <li><strong>단점</strong> : 나쁜 데이터가 들어왔을 때 성능이 점진적으로 감소함</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="사례-기반-학습과-모델-기반-학습-어떻게-일반화-되는가">사례 기반 학습과 모델 기반 학습 (어떻게 일반화 되는가)</h3>
+
+<ul>
+  <li>사례 기반 학습 :</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/169726184-01b4120c-7d51-4b0e-852f-6ecbd5d70f26.png" alt="image-20210916203456830" class="align-center" /></p>
+
+<p class="text-center">스팸 메일과 매우 유사한 메일을 구분하도록 프로그래밍 하고 두 메일 사이의 유사도를 측정</p>
+
+<p class="text-center">스팸 메일과 공통으로 가지고 있는 단어가 많으면 스팸으로 분류</p>
+
+<ul>
+  <li>모델 기반 학습 :</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/169726780-12da10c9-0600-4002-8f8e-0e70cc6cba97.png" alt="image-20210916203629105" class="align-center" /></p>
+
+<p class="text-center">샘플들의 모델을 만들어 예측에 사용</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/169726811-1b72db8d-16ee-4ab6-9ef4-3e9915f70f25.png" alt="image-20210916203859413" class="align-center" /></p>
+
+<p class="text-center">삶의 만족도는국가의 1인당 GDP가 증가할 수록 선형적으로 올라감</p>
+
+<p class="text-center">-&gt; <strong>선형함수__로 모델링 , __“삶의_만족도 = $\theta_0+\theta_1~\times$ 1인당_GDP”</strong></p>
+
+<p class="text-center">모델은 파라미터 $\theta_0, \theta_1$을 가지고, 이 파라미터에 따라 선형함수를 표현하는 모델을 얻을 수 있음</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/169726830-1c81b078-fa0c-4e8e-822e-8ad144cbbf72.png" alt="image-20210916204509440" class="align-center" /></p>
+
+<p class="text-center">$\theta_0, \theta_1$를 정의할 땐, 모델의 비용함수를 정의해 비용함수가 최소가 되는 값을 찾는 훈련을 시킴</p>
+
+<ul>
+  <li>
+    <p>머신러닝 프로젝트의 형태</p>
+
+    <ol>
+      <li>데이터 분석</li>
+      <li>모델 선택</li>
+      <li>훈련데이터로 모델 훈련 (비용함수를 최소화하는 모델 파라미터 탐색)</li>
+      <li>새로운 데이터 적용한 뒤 예측</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="머신러닝의-주요-도전-과제">머신러닝의 주요 도전 과제</h3>
+
+<ul>
+  <li>
+    <p><strong>충분하지 않은 양의 훈련 데이터</strong> :</p>
+
+    <p>대부분의 머신러닝 알고리즘은 데이터가 많아야 잘 작동함</p>
+  </li>
+  <li>
+    <p><strong>대표성 없는 훈련 데이터</strong> :</p>
+
+    <p>일반화가 잘 되려면 훈련 데이터가 일반화하기 원하는 사례를 잘 대표하는 것이 중요함</p>
+
+    <p>(샘플이 작으면 sampling noise가 발생하고 큰 샘플이더라도 표본 추출 방법이 잘못되면 sampling bias가 발생할 수 있음)</p>
+  </li>
+  <li>
+    <p><strong>낮음 품질의 데이터</strong> :</p>
+
+    <p>낮은 품질의 데이터는 내제된 패턴을 찾기 어렵기 때문에 데이터 정제가 필요함</p>
+
+    <p>(일부 샘플이 이상치라는 게 명확할 경우, 결측치가 있을 경우 빠진 값을 채울지, 제외할지)</p>
+  </li>
+  <li>
+    <p><strong>관련성 없는 특성</strong> :</p>
+
+    <p>훈련에 사용할 좋은 특성을 찾는 것을 특성 공학(feature engineering)이라고 함</p>
+
+    <p>(feature selection - 가지고 있는 특성 중 훈련에 유용한 특성 선택, feature extraction - 특성을 결합하여 유용한 특성 만듦)</p>
+  </li>
+  <li>
+    <p><strong>훈련 데이터 과대적합</strong> :</p>
+
+    <p>훈련 데이터에만 특화된 알고리즘(일반성이 떨어짐)</p>
+
+    <p><strong>해결방법</strong></p>
+
+    <ol>
+      <li>파라미터 수가 적은 모델 선택, 훈련 데이터 특성 수 줄이기, 모델 규제화</li>
+      <li>훈련 데이터를 더 많이 모으기</li>
+      <li>훈련데이터 잡음 줄이기</li>
+    </ol>
+  </li>
+  <li>
+    <p><strong>훈련 데이터 과소 적합</strong> :</p>
+
+    <p>모델이 단순해 데이터의 내재된 구조를 학습하지 못할 때 발생</p>
+
+    <p><strong>해결방법</strong></p>
+
+    <ol>
+      <li>모델 파라미터가 더 많은, 강력한 모델 선택</li>
+      <li>학습 알고리즘에 더 좋은 특성 제공(feature engineering)</li>
+      <li>모델 규제 x</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="테스트와-검증">테스트와 검증</h3>
+
+<p>모델이 새로운 샘플에 일반화가 잘 되는지 아는 방법은 새로운 샘플에 실제로 적용해 보는 것 ❗ -&gt; <strong>훈련데이터를 training set, test set으로 나눔</strong></p>
+
+<p>training set으로 모델을 훈련하고 test set으로 모델을 평가함으로써 오차에 대한 추정값을 얻음(새로운 샘플에 얼마나 잘 작동할지)</p>
+
+<ul>
+  <li>
+    <p>하이퍼파라미터 튜닝과 모델 선택</p>
+
+    <p>적용할 수 있는 하이퍼파라미터 100개 중 최적의 하이퍼파라미터를 찾기 위해 training set으로 훈련을 시키고 test set으로 평가하는 방법을 사용했을 때, 일반화 오차가 가장 낮은 모델을 만드는 하이퍼파라미터는 최적의 하이퍼파라미터라고 할 수 없음</p>
+
+    <p>( -&gt; 일반화 오차를 test set에서 여러 번 측정했으므로 모델과 하이퍼파라미터가 test set에 최적화된 모델을 만들었기 때문)</p>
+
+    <p><strong>해결방법</strong></p>
+
+    <ol>
+      <li>
+        <p>홀드아웃 검증(holdout validation) : training set의 일부를 떼어 validation set을 만들어 여러 후보 모델을 평가하고 가장 좋은 하나를 선택</p>
+
+        <p><strong>단점</strong> : validation set이 너무 작으면 정확하게 평가할 수 없음</p>
+      </li>
+      <li>
+        <p>교차 검증(cross-validation) : validation set마다 나머지 데이터에서 훈련한 모델을 해당 validation set에서 평가함</p>
+
+        <p><strong>단점</strong> : 훈련시간이 validations et의 개수에 비례해 늘어남</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>데이터 불일치 : 쉽게 많은 양의 훈련 데이터를 얻을 수 있지만 이 데이터가 실제 제품에 사용될 떼이터를 완벽하게 대표하지 못할 수 있음</p>
+
+    <ol>
+      <li>
+        <p><strong>예시</strong> : 꽃 사진을 찍으면 꽃 이름을 자동으로 찾아주는 모바일 앱</p>
+
+        <p>웹에서 꽃 사진을 수백만개 다운로드 할 순 있지만 모바일 앱에서 실제로 유저들이 찍는 사진을 완벽하게 대신하지는 못함</p>
+
+        <p>대신할 수 있는 사진(실제 앱으로 찍은 사진)은 10,000개만 있을 수 있음</p>
+
+        <p>이런 경우 validation set과 test set가 실전에서 기대하는 데이터를 가능한 한 잘 대표해야 한다는 것이 중요함</p>
+
+        <p>-&gt; validation set과 test set에 대표 사진이 배타적으로 포함되어야하기 때문에 반은 validation set에, 반은 test set에 넣음</p>
+
+        <p>하지만, 모델 성능이 낮을 때 training set에 과적합된 것인지, 웹사진과 모바일 앱 사진의 데이터가 불일치하기 때문인지 알기 어려움</p>
+
+        <p><strong>해결방법</strong></p>
+
+        <p>웹에서 다운로드한 training set의 일부를 떼어내 훈련-개발 세트(train-dev set)을 만들어, 모델을 training set으로 훈련시키고 trainig-dev set에서 평가함.</p>
+
+        <p>이 모델이 validation set에서 성능이 낮다면 문제는 데이터 불일치이고 성능이 높다면 training set에 과적합된 것</p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#machinelearning" class="page__taxonomy-item" rel="tag">machineLearning</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#statistics" class="page__taxonomy-item" rel="tag">statistics</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#handsonml" class="page__taxonomy-item" rel="tag">HandsOnML</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2022-05-23T00:00:00+09:00">May 23, 2022</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BHands+On+ML%5D+%ED%95%9C%EB%88%88%EC%97%90+%EB%B3%B4%EB%8A%94+%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%20http%3A%2F%2Flocalhost%3A4000%2Fhandsonml%2FHandsOnML-01%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhandsonml%2FHandsOnML-01%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fhandsonml%2FHandsOnML-01%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/timeseries/time-series-01/" class="pagination--pager" title="[Time Series] 시계열 데이터
+">이전</a>
+    
+    
+      <a href="/mysql/MySQL-01/" class="pagination--pager" title="[MySQL] MySQL 정리 1
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/handsonml/HandsOnML-01/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/handsonml/HandsOnML-01"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

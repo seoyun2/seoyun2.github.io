@@ -1,0 +1,1470 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[MySQL] MySQL 정리 2 - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="MySQL 내장함수">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[MySQL] MySQL 정리 2">
+<meta property="og:url" content="http://localhost:4000/mysql/MySQL-02/">
+
+
+  <meta property="og:description" content="MySQL 내장함수">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-24T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/mysql/MySQL-02/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[MySQL] MySQL 정리 2">
+    <meta itemprop="description" content="MySQL 내장함수">
+    <meta itemprop="datePublished" content="2022-05-24T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[MySQL] MySQL 정리 2
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#mysql-내장함수">MySQL 내장함수</a>
+    <ul>
+      <li><a href="#length">LENGTH()</a></li>
+      <li><a href="#concat">CONCAT()</a></li>
+      <li><a href="#locate">LOCATE()</a></li>
+      <li><a href="#left-right">LEFT(), RIGHT()</a></li>
+      <li><a href="#lower-upper">LOWER(), UPPER()</a></li>
+      <li><a href="#replace">REPLACE()</a></li>
+      <li><a href="#trim">TRIM()</a></li>
+      <li><a href="#format">FORMAT()</a></li>
+      <li><a href="#floor-ceil-rount">FLOOR(), CEIL(), ROUNT()</a></li>
+      <li><a href="#sort-pow-exp-log">SORT(), POW(), EXP(), LOG()</a></li>
+      <li><a href="#sin-cos-tan">SIN(), COS(), TAN()</a></li>
+      <li><a href="#abs-rand">ABS(), RAND()</a></li>
+      <li><a href="#now-curdate-curtime">NOW(), CURDATE(), CURTIME()</a></li>
+      <li><a href="#date-month-day-hour-minute-second">DATE(), MONTH(), DAY(), HOUR(), MINUTE(), SECOND()</a></li>
+      <li><a href="#monthname-dayname">MONTHNAME(), DAYNAME()</a></li>
+      <li><a href="#dayofweek-dayofmonth-dayofyear">DAYOFWEEK(), DAYOFMONTH(), DAYOFYEAR()</a></li>
+      <li><a href="#date_format">DATE_FORMAT()</a></li>
+      <li><a href="#create-table-new_table_name-as-select-table_name">CREATE TABLE [new_table_name] AS SELECT [table_name]</a></li>
+      <li><a href="#create-database-new_table_name">CREATE DATABASE [new_table_name]</a></li>
+      <li><a href="#alter-table">ALTER TABLE()</a></li>
+    </ul>
+  </li>
+  <li><a href="#index">INDEX</a>
+    <ul>
+      <li><a href="#create-index">CREATE INDEX</a></li>
+      <li><a href="#index-삭제">INDEX 삭제</a></li>
+    </ul>
+  </li>
+  <li><a href="#view">VIEW</a></li>
+  <li><a href="#insert">INSERT</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="mysql-내장함수">MySQL 내장함수</h2>
+
+<ul>
+  <li>사람들의 편의를 위해 다양한 기능의 내장 함수를 미리 정의하여 제공</li>
+  <li>대표적인 내장함수 종류
+    <ul>
+      <li>문자열 함수</li>
+      <li>수학 함수</li>
+      <li>날짜와 시간 함수</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="length">LENGTH()</h3>
+
+<ul>
+  <li>
+    <p>전달받은 문자열의 길이를 반환</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">LENGTH</span><span class="p">(</span><span class="s1">'abcdefg'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">7</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="concat">CONCAT()</h3>
+
+<ul>
+  <li>
+    <p>전달받은 문자열을 모두 결합하여 하나의 문자열로 반환</p>
+  </li>
+  <li>
+    <p>전달받은 문자열 중 하나라도 <code class="language-plaintext highlighter-rouge">NULL</code>이 존재하면 <code class="language-plaintext highlighter-rouge">NULL</code>을 반환</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">CONCAT</span><span class="p">(</span><span class="s1">'My'</span><span class="p">,</span> <span class="s1">'SQL Op'</span><span class="p">,</span> <span class="s1">'en Source'</span><span class="p">),</span> <span class="n">CONCAT</span><span class="p">(</span><span class="s1">'MySQL'</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="s1">'OpenSource'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'MySQL Open Source'</span><span class="p">,</span> <span class="k">NULL</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="locate">LOCATE()</h3>
+
+<ul>
+  <li>
+    <p>문자열 내에서 찾는 문자열이 처음으로 나타나는 위치를 찾아서 해당 위치를 반환</p>
+  </li>
+  <li>
+    <p>찾는 문자열이 문자열 내에 존재하지 않으면 0을 반환</p>
+  </li>
+  <li>
+    <p>MySQL에서는 문자열의 시작 인덱스를 1부터 계산</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">LOCATE</span><span class="p">(</span><span class="s1">'abc'</span><span class="p">,</span> <span class="s1">'abababababcabacbac'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">9</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="left-right">LEFT(), RIGHT()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">LEFT()</code> : 문자열의 왼쪽부터 지정한 개수만큼의 문자를 반환</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">RIGHT()</code> : 문자열의 오른쪽부터 지정한 개수만큼의 문자를 반환</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> 
+    <span class="k">LEFT</span><span class="p">(</span><span class="s1">'MySQL is an open source relational database management system'</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="k">RIGHT</span><span class="p">(</span><span class="s1">'MySQL is an open source relational database management system'</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'MySQL'</span><span class="p">,</span> <span class="s1">'system'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="lower-upper">LOWER(), UPPER()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">LOWER()</code> : 문자열의 문자를 모두 소문자로 변경</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">UPPER()</code> : 문자열의 문자를 모두 대문자로 변경</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> 
+  <span class="k">LOWER</span><span class="p">(</span><span class="s1">'MySQL is an open source relational database management system'</span><span class="p">),</span>
+  <span class="k">UPPER</span><span class="p">(</span><span class="s1">'MySQL is an open source relational database management system'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'mysql is an open source relational database management system'</span><span class="p">,</span> <span class="s1">'MYSQL IS AN OPEN SOURCE RELATIONAL DATABASE MANAGEMENT SYSTEM'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="replace">REPLACE()</h3>
+
+<ul>
+  <li>
+    <p>문자열에서 특정 문자열을 대체 문자열로 교체</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">REPLACE</span><span class="p">(</span><span class="s1">'MSSQL'</span><span class="p">,</span> <span class="s1">'MS'</span><span class="p">,</span> <span class="s1">'My'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">MySQL</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="trim">TRIM()</h3>
+
+<ul>
+  <li>
+    <p>문자열의 앞이나 뒤, 또는 양쪽 모두에 있는 특정 문자를 제거</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">TRIM()</code> : 함수에서 사용할 수 있는 지정자</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">BOTH()</code> : 전달받은 문자열의 양 끝에 존재하는 특정 문자를 제거 (기본 설정)</li>
+      <li><code class="language-plaintext highlighter-rouge">LEADING()</code> : 전달받은 문자열 앞에 존재하는 특정 문자를 제거</li>
+      <li><code class="language-plaintext highlighter-rouge">TRAILING()</code> : 전달받은 문자열 뒤에 존재하는 특정 문자를 제거</li>
+    </ul>
+  </li>
+  <li>
+    <p>만약 지정자를 명시하지 않으면, 자동으로 BOTH로 설정</p>
+  </li>
+  <li>
+    <p>제거할 문자를 명시하지 않으면, 자동으로 공백을 제거</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">TRIM</span><span class="p">(</span><span class="s1">'    ##MySQL##    '</span><span class="p">),</span>
+       <span class="k">TRIM</span><span class="p">(</span><span class="k">LEADING</span> <span class="s1">'#'</span> <span class="k">FROM</span> <span class="s1">'##MySQL##'</span><span class="p">),</span>
+       <span class="k">TRIM</span><span class="p">(</span><span class="k">TRAILING</span> <span class="s1">'#'</span> <span class="k">FROM</span> <span class="s1">'##MySQL##'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'##MySQL##'</span><span class="p">,</span> <span class="s1">'MySQL##'</span><span class="p">,</span> <span class="s1">'##MySQL'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="format">FORMAT()</h3>
+
+<ul>
+  <li>
+    <p>숫자 타입의 데이터를 세 자리마다 쉼표를 사용하는 형식으로 변환</p>
+  </li>
+  <li>
+    <p>반환되는 데이터의 형식은 문자열 타입</p>
+  </li>
+  <li>
+    <p>두 번째 인수는 반올림할 소수 부분의 자릿수</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">FORMAT</span><span class="p">(</span><span class="mi">123123123123</span><span class="p">.</span><span class="mi">123123123</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">123</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="mi">123</span><span class="p">.</span><span class="mi">123123</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="floor-ceil-rount">FLOOR(), CEIL(), ROUNT()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">FLOOR()</code> : 내림</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">CEIL()</code> : 올림</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ROUND()</code> : 반올림</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">FLOOR</span><span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="mi">95</span><span class="p">),</span> <span class="n">CEIL</span><span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="mi">95</span><span class="p">),</span> <span class="n">ROUND</span><span class="p">(</span><span class="mi">10</span><span class="p">.</span><span class="mi">95</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'10'</span><span class="p">,</span> <span class="s1">'11'</span><span class="p">,</span> <span class="s1">'11'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="sort-pow-exp-log">SORT(), POW(), EXP(), LOG()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">SORT()</code> : 양의 제곱근</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">POW()</code> : 첫 번째 인수로는 밑수, 두 번째 인수로는 지수를 전달하여 거듭제곱 계산</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">EXP()</code> : 인수로 지수를 전달받아, e의 거듭제곱을 계산</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">LOG()</code> : 자연로그 값을 계산</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">SQRT</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">POW</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">EXP</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">LOG</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'2'</span><span class="p">,</span> <span class="s1">'8'</span><span class="p">,</span> <span class="s1">'20.085536923187668'</span><span class="p">,</span> <span class="s1">'1.0986122886681098'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="sin-cos-tan">SIN(), COS(), TAN()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">SIN()</code> : 사인값 반환</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">COS()</code> : 코사인값 반환</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">TAN()</code> : 탄젠트값 반환</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">SIN</span><span class="p">(</span><span class="n">PI</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">COS</span><span class="p">(</span><span class="n">PI</span><span class="p">()),</span> <span class="n">TAN</span><span class="p">(</span><span class="n">PI</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'1'</span><span class="p">,</span> <span class="s1">'-1'</span><span class="p">,</span> <span class="s1">'0.9999999999999999'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="abs-rand">ABS(), RAND()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ABS()</code> : 절대값을 반환</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">RAND()</code> : 0.0보다 크거나 같고 1.0보다 작은 하나의 실수를 무작위로 생성</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">ABS</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">RAND</span><span class="p">(),</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">RAND</span><span class="p">()</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'2'</span><span class="p">,</span> <span class="s1">'0.4142058337239603'</span><span class="p">,</span> <span class="s1">'35'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="now-curdate-curtime">NOW(), CURDATE(), CURTIME()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">NOW()</code> : 현재 날짜와 시간을 반환, 반환되는 값은 ‘YYYY-MM-DD HH:MM:SS’ 또는 YYYYMMDDHHMMSS 형태로 반환</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">CURDATE()</code> : 현재 날짜를 반환, 반환되는 값은 ‘YYYY-MM-DD’ 또는 YYYYMMDD 형태로 반환</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">CURTIME()</code> : 현재 시간을 반환, 반환되는 값은 ‘HH:MM:SS’ 또는 HHMMSS 형태로 반환</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">NOW</span><span class="p">(),</span> <span class="n">CURDATE</span><span class="p">(),</span> <span class="n">CURTIME</span><span class="p">();</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'2022-05-23 22:28:34'</span><span class="p">,</span> <span class="s1">'2022-05-23'</span><span class="p">,</span> <span class="s1">'22:28:34'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="date-month-day-hour-minute-second">DATE(), MONTH(), DAY(), HOUR(), MINUTE(), SECOND()</h3>
+
+<ul>
+  <li>
+    <p>전달받은 값에 해당하는 날짜, 월, 일, 시, 분, 초에 해당하는 값을 반환</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> 	<span class="n">NOW</span><span class="p">(),</span>
+        <span class="nb">DATE</span><span class="p">(</span><span class="n">NOW</span><span class="p">()),</span>
+        <span class="k">MONTH</span><span class="p">(</span><span class="n">NOW</span><span class="p">()),</span>
+        <span class="k">DAY</span><span class="p">(</span><span class="n">NOW</span><span class="p">()),</span>
+        <span class="n">HOUR</span><span class="p">(</span><span class="n">NOW</span><span class="p">()),</span>
+        <span class="k">MINUTE</span><span class="p">(</span><span class="n">NOW</span><span class="p">()),</span>
+        <span class="k">SECOND</span><span class="p">(</span><span class="n">NOW</span><span class="p">());</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'2022-05-23 22:31:58'</span><span class="p">,</span> <span class="s1">'2022-05-23'</span><span class="p">,</span> <span class="s1">'5'</span><span class="p">,</span> <span class="s1">'23'</span><span class="p">,</span> <span class="s1">'22'</span><span class="p">,</span> <span class="s1">'31'</span><span class="p">,</span> <span class="s1">'58'</span>
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="monthname-dayname">MONTHNAME(), DAYNAME()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">MONTHNAME()</code> : 월에 해당하는 이름을 반환</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DAYNAME()</code> : 요일에 해당하는 이름을 반환</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> 	<span class="n">NOW</span><span class="p">(),</span>
+        <span class="n">MONTHNAME</span><span class="p">(</span><span class="n">NOW</span><span class="p">()),</span>
+        <span class="n">DAYNAME</span><span class="p">(</span><span class="n">NOW</span><span class="p">());</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'2022-05-23 22:34:03'</span><span class="p">,</span> <span class="s1">'May'</span><span class="p">,</span> <span class="s1">'Monday'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="dayofweek-dayofmonth-dayofyear">DAYOFWEEK(), DAYOFMONTH(), DAYOFYEAR()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DAYOFWEEK()</code> : 일자가 해당 주에서 몇번째 날인지를 반환 (일요일 = 1, 토요일 = 7)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DAYOFMONTH()</code> : 일자가 해당 월에서 몇 번째 날인지 반환 (0 ~ 31)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DAYOFYEAR()</code> : 일자가 해당 연도에서 몇번째 날인지를 반환 (1 ~ 366)</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> 	<span class="n">NOW</span><span class="p">(),</span>
+        <span class="n">DAYOFWEEK</span><span class="p">(</span><span class="n">NOW</span><span class="p">()),</span>
+        <span class="n">DAYOFMONTH</span><span class="p">(</span><span class="n">NOW</span><span class="p">()),</span>
+        <span class="n">DAYOFYEAR</span><span class="p">(</span><span class="n">NOW</span><span class="p">());</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'2022-05-23 22:37:03'</span><span class="p">,</span> <span class="s1">'2'</span><span class="p">,</span> <span class="s1">'23'</span><span class="p">,</span> <span class="s1">'143'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="date_format">DATE_FORMAT()</h3>
+
+<ul>
+  <li>
+    <p>전달받은 형식에 맞춰 날짜와 시간 정보를 문자열로 반환</p>
+  </li>
+  <li>
+    <p>MySQL Date and Time Function : https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">DATE_FORMAT</span><span class="p">(</span><span class="n">NOW</span><span class="p">(),</span> <span class="s1">'%D %y %a %d %m %n %j'</span><span class="p">);</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">'23rd 22 Mon 23 05 n 143'</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="create-table-new_table_name-as-select-table_name">CREATE TABLE [new_table_name] AS SELECT [table_name]</h3>
+
+<ul>
+  <li>
+    <p>TABLE 복제</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">city2</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">city</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="create-database-new_table_name">CREATE DATABASE [new_table_name]</h3>
+
+<ul>
+  <li>
+    <p>새로운 데이터베이스를 생성 → <code class="language-plaintext highlighter-rouge">USE</code>문으로 새 데이터베이스를 사용</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">seoyun</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">seoyun</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>[seoyun] → [Tables] 우클릭 → [Create Table]</p>
+
+    <p><img width="865" alt="create_table" src="https://user-images.githubusercontent.com/86525868/169851042-07f3f7ba-999f-4016-874e-e6726a940908.png" class="align-center" /></p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">test</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">col1</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">col2</span> <span class="nb">FLOAT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">col3</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span> <span class="k">NULL</span>		<span class="p">);</span>
+      
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">test</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="alter-table">ALTER TABLE()</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ADD()</code> : 테이블에 칼럼 추가</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">MODIFY()</code> : 테이블의 칼럼 타입 변경</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DROP()</code> : 테이블에 칼럼 제거</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">test</span>
+	<span class="k">ADD</span> <span class="n">col4</span> <span class="nb">INT</span> <span class="k">NULL</span><span class="p">;</span>
+      
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">test</span>
+	<span class="k">MODIFY</span> <span class="n">col4</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NULL</span><span class="p">;</span>
+      
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">test</span>
+	<span class="k">DROP</span> <span class="n">col4</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="index">INDEX</h2>
+
+<ul>
+  <li>테이블에서 원하는 데이터를 빠르게 찾기 위해 사용</li>
+  <li>일반적으로 데이터를 검색할 때 순서대로 테이블 전체를 검색하므로 데이터가 많으면 많을수록 탐색하는 시간이 늘어남</li>
+  <li>검색과 질의를 할 때 테이블 전체를 읽지 않기 때문에 빠름</li>
+  <li>설정된 컬럼 값을 포함한 데이터의 삽입, 삭제, 수정 작업이 원본 테이블에서 이루어질 경우, 인덱스도 함께 수정되어야 함</li>
+  <li>인덱스가 있는 테이블은 처리 속도가 느려질 수 있으므로 수정보다는 검색이 자주 사용되는 테이블에서 사용하는 것이 좋음</li>
+  <li><code class="language-plaintext highlighter-rouge">CREATE INDEX</code> : 인덱스 생성</li>
+  <li><code class="language-plaintext highlighter-rouge">CREATE UNIQUE INDEX</code> : 중복을 허용하지 않는 인덱스</li>
+  <li><code class="language-plaintext highlighter-rouge">FULLTEXT INDEX</code> : 매우 빠르게 테이블의 모든 텍스트 컬럼을 검색</li>
+  <li><code class="language-plaintext highlighter-rouge">SHOW INDEX</code> : 인덱스 정보 보기</li>
+</ul>
+
+<h3 id="create-index">CREATE INDEX</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">Col1Idx</span> <span class="k">ON</span> <span class="n">test</span><span class="p">(</span><span class="n">col1</span><span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">UNIQUE</span> <span class="k">INDEX</span> <span class="n">Col2Idx</span> <span class="k">ON</span> <span class="n">test</span><span class="p">(</span><span class="n">col2</span><span class="p">);</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">test</span> <span class="k">ADD</span> <span class="n">FULLTEXT</span> <span class="n">Col3Idx</span><span class="p">(</span><span class="n">col3</span><span class="p">);</span>
+
+<span class="k">SHOW</span> <span class="k">INDEX</span> <span class="k">FROM</span> <span class="n">test</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img width="649" alt="show_index_test2" src="https://user-images.githubusercontent.com/86525868/170020959-85a3b22d-0613-458a-9587-e84aedb4fe76.png" class="align-center" /></p>
+
+<ul>
+  <li>Test라는 테이블을 생성할 때 <code class="language-plaintext highlighter-rouge">ID</code> 칼럼은 <code class="language-plaintext highlighter-rouge">PRIMARY KEY</code>로 설정해 두었으므로 <code class="language-plaintext highlighter-rouge">PRIMARY</code>라는 인덱스를 부여받음</li>
+</ul>
+
+<h3 id="index-삭제">INDEX 삭제</h3>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ALTER</code>문을 사용하여 테이블에 추가된 인덱스 삭제</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">test</span>
+ <span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">Col3Idx</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DROP</code>문은 내부적으로 <code class="language-plaintext highlighter-rouge">ALTER</code>문으로 자동 변환되어 명시된 이름의 인덱스를 삭제</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">Col2Idx</span> <span class="k">ON</span> <span class="n">test</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="view">VIEW</h2>
+
+<ul>
+  <li>
+    <p>VIEW는 데이터베이스에 존재하는 일종의 가상 테이블</p>
+  </li>
+  <li>
+    <p>실제 테이블처럼 행과 열을 가지고 있지만, 실제로 데이터를 저장하진 않음</p>
+  </li>
+  <li>
+    <p>MySQL에서 뷰는 다른 테이블이나 다른 VIEW에 저장되어 있는 데이터를 보여주는 역할만 수해</p>
+  </li>
+  <li>
+    <p>VIEW를 사용하면 여러 테이블이나 VIEW를 하나의 테이블처럼 볼 수 있음</p>
+  </li>
+  <li>
+    <p>VIEW의 장점</p>
+
+    <ul>
+      <li>특정 사용자에게 테이블 전체가 아닌 필요한 컬럼만 보여줄 수 있음</li>
+      <li>복잡한 쿼리를 단순화해서 사용</li>
+      <li>쿼리 재사용 가능</li>
+    </ul>
+  </li>
+  <li>
+    <p>VIEW의 단점</p>
+
+    <ul>
+      <li>한 번 정의된 뷰는 변경할 수 없음</li>
+      <li>삽입, 삭제, 갱신 작업에 많은 제한 사항을 가짐</li>
+      <li>자신만의 인덱스를 가질 수 없음</li>
+    </ul>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">CREATE VIEW</code> : 뷰 생성</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ALTER VIEW</code> : 뷰 수정</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DROP VIEW</code> : 뷰 삭제</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">testView</span> <span class="k">AS</span>
+  <span class="k">SELECT</span> <span class="n">Col1</span><span class="p">,</span> <span class="n">Col2</span>
+  <span class="k">FROM</span> <span class="n">test</span><span class="p">;</span>
+  	
+<span class="k">ALTER</span> <span class="k">VIEW</span> <span class="n">testView</span> <span class="k">AS</span>
+  <span class="k">SELECT</span> <span class="n">Col1</span><span class="p">,</span> <span class="n">Col2</span><span class="p">,</span> <span class="n">Col3</span>
+  <span class="k">FROM</span> <span class="n">test</span><span class="p">;</span>
+  	
+<span class="k">DROP</span> <span class="k">VIEW</span> <span class="n">testView</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="insert">INSERT</h2>
+
+<ul>
+  <li>
+    <p>데이터를 직접 테이블에 삽입할 때 사용</p>
+  </li>
+  <li>
+    <p>테이블 이름 다음에 나오는 열 생략 가능</p>
+  </li>
+  <li>
+    <p>생략할 경우에 <code class="language-plaintext highlighter-rouge">VALUE</code> 다음에 나오는 값들의 순서 및 개수가 테이블이 정의도니 열 순서 및 개수와 동일해야 함</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">INSERT INTO VALUE</code> : 직접 table에 값을 넣을 수 있음</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span>
+  <span class="n">VALUE</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span> <span class="nv">"test"</span><span class="p">);</span>
+</code></pre></div>    </div>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">SELECT * FROM test;</code> → 직접 <code class="language-plaintext highlighter-rouge">RESULT GRID</code>에서 값을 입력 → [Apply] 로도 값을 삽입할 수 있음</li>
+    </ul>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">INSERT INTO SELECT</code> : 테이블 안에 다른 테이블의 내용을 복사</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="n">Test2</span><span class="err">는</span> <span class="n">Test</span><span class="err">와</span> <span class="err">같은</span> <span class="err">테이블이</span> <span class="err">됨</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test2</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">test</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">UPDATE</code> : 기존에 입력되어 있는 값을 변경 (<code class="language-plaintext highlighter-rouge">WHERE</code>절 생략 가능하나 테이블의 전체행의 내용 변경)</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">test</span>
+  <span class="k">SET</span> <span class="n">col1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="n">col3</span> <span class="o">=</span> <span class="s1">'test'</span>
+  <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DELETE</code> : 행 단위로 데이터를 삭제하는 구문(데이터는 지워지지만 테이블 용량은 줄어들지 않음) → 원하는 데이터만 지울 수 있고 삭제 후 잘못 삭제한 것을 되돌릴 수 있음</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">test</span> 
+	<span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">TRUNCATE</code> : 용량이 줄어 들고, 인덱스 등도 모두 삭제 → 한번에 다 지워야 하고 삭제후 되돌릴 수 없음</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">TRUNCATE</span> <span class="k">TABLE</span> <span class="n">test</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DROP TABLE</code> : 테이블 전체, 공간, 객체를 삭제 → 삭제후 되돌릴 수 없음</p>
+
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">test</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">DATABASE</span> <span class="n">seoyun</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#mysql" class="page__taxonomy-item" rel="tag">MySQL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#mysql" class="page__taxonomy-item" rel="tag">MySQL</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2022-05-24T00:00:00+09:00">May 24, 2022</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BMySQL%5D+MySQL+%EC%A0%95%EB%A6%AC+2%20http%3A%2F%2Flocalhost%3A4000%2Fmysql%2FMySQL-02%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmysql%2FMySQL-02%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmysql%2FMySQL-02%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/mysql/MySQL-01/" class="pagination--pager" title="[MySQL] MySQL 정리 1
+">이전</a>
+    
+    
+      <a href="/cs231n/cs231n-01/" class="pagination--pager" title="[CS231N] 2. Image Classification
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/mysql/MySQL-02/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/mysql/MySQL-02"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

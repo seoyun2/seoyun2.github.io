@@ -1,0 +1,1299 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Data Science] 2. 이상치 탐지(Density Based Anomaly Detection) - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="2.  Density Based Anomaly Detection">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[Data Science] 2. 이상치 탐지(Density Based Anomaly Detection)">
+<meta property="og:url" content="http://localhost:4000/ds/density-based-anomaly-detection/">
+
+
+  <meta property="og:description" content="2.  Density Based Anomaly Detection">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-02-25T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/ds/density-based-anomaly-detection/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Data Science] 2. 이상치 탐지(Density Based Anomaly Detection)">
+    <meta itemprop="description" content="2.  Density Based Anomaly Detection">
+    <meta itemprop="datePublished" content="2023-02-25T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[Data Science] 2. 이상치 탐지(Density Based Anomaly Detection)
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#2--density-based-anomaly-detection">2.  Density Based Anomaly Detection</a>
+    <ul>
+      <li><a href="#이론적-배경">이론적 배경</a>
+        <ul>
+          <li><a href="#이상치-데이터란">이상치 데이터란</a></li>
+          <li><a href="#이상치-탐지-사례">이상치 탐지 사례</a></li>
+          <li><a href="#일반화generalization와-특수화specialization">일반화(Generalization)와 특수화(Specialization)</a></li>
+          <li><a href="#접근-방법">접근 방법</a></li>
+          <li><a href="#평가-지표">평가 지표</a></li>
+        </ul>
+      </li>
+      <li><a href="#밀도-기반-이상치-탐지">밀도 기반 이상치 탐지</a>
+        <ul>
+          <li><a href="#밀도-기반-이상치-탐지-기법">밀도 기반 이상치 탐지 기법</a>
+            <ul>
+              <li><a href="#이상치-데이터-정의">이상치 데이터 정의</a></li>
+              <li><a href="#종류">종류</a></li>
+            </ul>
+          </li>
+          <li><a href="#gaussian-density-estimation">Gaussian Density Estimation</a></li>
+          <li><a href="#mixture-of-gaussian-mog-density-estimation">Mixture of Gaussian (MoG) Density Estimation</a></li>
+          <li><a href="#kernel-density-estimation">Kernel-density Estimation</a>
+            <ul>
+              <li><a href="#과정">과정</a></li>
+              <li><a href="#parzen-window-density-estimation">Parzen Window Density Estimation</a></li>
+            </ul>
+          </li>
+          <li><a href="#local-outlier-factorlof">Local Outlier Factor(LOF)</a>
+            <ul>
+              <li><a href="#definition-1--k-distance-of-an-object-p">Definition 1 : k-distance of an object p</a></li>
+              <li><a href="#definition-2--k-distance-neighborhood-of-an-object-p">Definition 2 : k-distance neighborhood of an object p</a></li>
+              <li><a href="#definition-3--reachability-distance">Definition 3 : reachability distance</a></li>
+              <li><a href="#definition-4--local-reachability-density-of-an-object-p">Definition 4 : local reachability density of an object p</a></li>
+              <li><a href="#definition-5--local-outlier-factor-of-an-object-p">Definition 5 : local outlier factor of an object p</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="2--density-based-anomaly-detection">2.  Density Based Anomaly Detection</h1>
+
+<p class="notice--info">💡 Data Science <br />
+<strong>강필성</strong> 교수님의 강의를 보고 정리하였습니다.</p>
+
+<h2 id="이론적-배경">이론적 배경</h2>
+
+<h3 id="이상치-데이터란">이상치 데이터란</h3>
+
+<p>이상치 데이터는 노이즈 데이터와 다름 (노이즈는 어찌할 수 없는 데이터로 측정 과정에서의 무작위성에 기반)</p>
+
+<p>하지만, 이상치 데이터는 정상적인 데이터를 생성하는 매커니즘을 위반하여 생성되는 데이터로 적지만 중요한 데이터</p>
+
+<h3 id="이상치-탐지-사례">이상치 탐지 사례</h3>
+
+<p><strong>Preventive Maintenance</strong></p>
+
+<p>충분하게 수집된 데이터의 대부분은 정상적인 과정(양품을 생산하는 과정) 속에서 수집된 데이터로 불량품이 생성되는 과정 속에서 수집된 데이터(이상치 데이터)는 극소수 → 범주의 불균형이 극심한 상황에서는 분류같은 알고리즘을 적용하기 어렵기 때문에 정상 데이터만을 가지고 학습한 뒤 새로운 데이터가 들어왔을 때 정상 데이터인지 이상치 데이터인지 판별</p>
+
+<p><strong>적용 분야</strong></p>
+
+<p>대부분의 데이터가 한 범주에 속하며 극소수의 데이터만 다른 범주에 속하는 문제 (ex, 제조업 공정에서의 불량 탐지, 신용카드 사기 거래, 통신망의 불법적인 사용 등)</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347025-16c35dd9-ae2d-499e-9c76-d34bd4f07b02.png" alt="1" class="align-center" /></p>
+
+<h3 id="일반화generalization와-특수화specialization">일반화(Generalization)와 특수화(Specialization)</h3>
+
+<p><strong>일반화(Generalization)</strong> : 주어진 데이터로부터 정상 범주의 개념을 확장해 가는 것</p>
+
+<p><strong>특수화(Specialization)</strong> : 주어진 데이터로부터 정상 범주의 개념을 좁혀 가는 것</p>
+
+<p><strong>일반화</strong>에 치중할 경우 이상치 데이터 판별이 어렵게 되고 <strong>특수화</strong>에 치중할 경우 과적합의 위험에 빠질 수 있음</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347027-d07d5d22-6f1d-4d56-b3ab-65cd4b2aa608.png" alt="2" width="50%" height="50%" class="align-center" /></p>
+
+<h3 id="접근-방법">접근 방법</h3>
+
+<p>주어진 데이터에는 다수의 정상 데이터와 매우 적은 수의 비정상 데이터가 혼재되어 있음</p>
+
+<p><strong>이상치 탐지</strong>는 다수(정상 데이터)만을 사용 
+<img src="https://user-images.githubusercontent.com/86525868/221347029-a6b71d5f-855e-4299-9241-15a89d6d0516.png" alt="3" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347031-8ae452ff-28ed-4588-9acb-29e84b90adb3.png" alt="4" width="70%" height="70%" class="align-center" /></p>
+
+<h3 id="평가-지표">평가 지표</h3>
+
+<p>이상치 알고리즘에 대한 결과물이 산출되면 이를 바탕으로 최종적으로는 이상치인기 아닌지에 대한 판별을 해야 함</p>
+
+<p>실제 데이터에서는 이러한 cut-off에 따라 정오 행렬이 달라지기 때문에 <strong>cut-off에 영향을 받지않는 성능 평가 지표 필요</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347032-7fa05d12-7feb-4f3f-bfbf-ed058e295834.png" alt="5" width="70%" height="70%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p><strong>False Regection Rate (FRR)</strong> : 원래는 정상이나 이상치 탐지 모델에 의해 이상치로 잘못 판별된 비율</p>
+
+\[PRR=\frac{FP}{FP+TN}\]
+  </li>
+  <li>
+    <p><strong>False Acceptance Rate(FAP)</strong> : 원래는 이상치라서 탐지가 되어야 하나 모델에 의해 탐지가 되지 못하고 정상으로 판별된 비율</p>
+
+\[FAR=\frac{FN}{TP+FN}\]
+  </li>
+</ul>
+
+<p><strong>이상치 탐지 방법론 평가 지표 그래프</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347033-70d680ee-53b0-4bd3-9cdb-a2fe49b96f45.png" alt="6" width="40%" height="40%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p><strong>Integrated Error</strong> : FRR - FAR 그래프 밑면의 넓이 = $1-AUROC$</p>
+  </li>
+  <li>
+    <p><strong>Equal Error Rate (ERR)</strong> : FRR과 FAR이 같아지는 지점</p>
+
+    <p>ex. ERR = 10%(0.1) → 정상 데이터 10건 중 1건이 이상치로 잘못 판별되거나 이상치 데이터 10건 중 1건이 정상 데이터로 잘못 판별됨을 뜻함</p>
+  </li>
+</ul>
+
+<h2 id="밀도-기반-이상치-탐지">밀도 기반 이상치 탐지</h2>
+
+<h3 id="밀도-기반-이상치-탐지-기법">밀도 기반 이상치 탐지 기법</h3>
+
+<h4 id="이상치-데이터-정의"><strong>이상치 데이터 정의</strong></h4>
+
+<ol>
+  <li>생성되는 매커니즘이 다른 데이터</li>
+  <li>이상치 데이터가 가진 실제 밀도는 매우 낮음 → 밀도 기반 이상치 탐지 기법의 접근 방식</li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347034-56666ea2-bf81-4390-9d6e-a9431a0d3a98.png" alt="7" class="align-center" /></p>
+
+<p><strong>Low Density Regions</strong>는 현재 데이터의 평균과 분산으로 구성된 가오시안 분포에서는 생성될 수 없는 (매우 낮은 확률) 데이터 → <strong>정상이 아닐 것으로 판단</strong></p>
+
+<h4 id="종류"><strong>종류</strong></h4>
+
+<ul>
+  <li>Gaussian Density Estimation</li>
+  <li>Mixture of Gaussian Density Estimation</li>
+  <li>Kernel Density Estimation</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347035-c4cc14f3-d4e0-4025-94d7-62e81b546886.png" alt="8" class="align-center" /></p>
+
+<h3 id="gaussian-density-estimation">Gaussian Density Estimation</h3>
+
+<p>모든 데이터가 하나의 가우시안(정규) 분포로부터 생성됨을 가정</p>
+
+<p><strong>학습</strong> : 주어진 정상 데이터들을 통해 가우시안 분포의 평균 벡터와 공분산 행렬을 추정</p>
+
+<p><strong>테스트</strong> : 새로운 데이터에 대하여 생성 확률을 구하고 이 확률이 낮을수록 이상치에 가까운 것으로 판단</p>
+
+<p><strong>장점</strong> : 추정이 간단하며 학습시간이 짧음, 적절한 기준치(cut-off)의 분포로부터 정할 수 있음, 각 변수의 측정 단위에 영향을 받지 않음</p>
+
+\[p(\mathbf x)=\frac{1}{(2\pi)^{d/2}|\Sigma|^{1/2}}\exp [\frac{1}{2}(\mathbf x-\mu)^T\Sigma^{-1}(\mathbf x-\mu)]\]
+
+<p>추정해야 하는 파라미터는 $\mu, \sigma^2(\Sigma)$ → 정상 데이터 생성 확률을 최대화 하도록 평균과 분산을 계산하는 것이 가능</p>
+
+\[L=\prod_{i=1}^N P(x_i|\mu, \sigma^2)=\prod_{i=1}^N\frac{1}{\sqrt{2\pi}\sigma}\exp\Big(-\frac{(x_i-\mu)^2}{2\sigma^2}\Big)\\
+\log L=-\frac{1}{2}\sum_{i=1}^N\frac{(x_i-\mu)^2}{\sigma^2}-\frac{N}{2}\log(2\pi\sigma^2)\]
+
+<p><strong>최대 우도 추정법</strong>을 이용하여 해를 찾을 수 있음($\gamma = \frac{1}{\sigma^2}$)</p>
+
+\[\log L=-\frac{1}{2}\sum_{i=1}^N\gamma(x_i-\mu)^2-\frac{N}{2}\log(2\pi)+\frac{N}{2}\log(\gamma)\\
+\frac{\partial \log L}{\partial \mu}=\gamma\sum_{i=1}^N(x_i-\mu)=0 \rightarrow \mu=\frac{1}{N}\sum_{i=1}^nx_i\\
+\frac{\partial \log L}{\partial \gamma}=-\frac{1}{2}\sum_{i=1}^N(x_i-\mu)^2+\frac{N}{2\gamma}=0 \rightarrow \sigma ^2=\frac{1}{N}\sum_{i=1}^n(x_i-\mu)^2\\\]
+
+<p>↳ 일반적인 다변량 데이터에 대해서도 동일한 방식으로 평균 벡터와 공분산 행렬을 구하는 것이 가능</p>
+
+\[\mu=\frac{1}{N}\sum_{i=1}^N\mathbf x_i \quad \quad \quad \Sigma =\frac{1}{N}\sum_{i=1}^N(\mathbf x_i-\mu)(\mathbf x_i-\mu)^T\]
+
+<p>하지만 $x \in R^d$일 경우 공분산 행렬은 $d\times d$로 역행렬을 계산하기 어렵거나 존재하지 않을 수 있음</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347036-ba6c0abd-1cce-4430-8a45-fc4bcd63ab2f.png" alt="9" class="align-center" /></p>
+
+<h3 id="mixture-of-gaussian-mog-density-estimation">Mixture of Gaussian (MoG) Density Estimation</h3>
+
+<p><strong>Gaussian Density Esimation</strong>은 데이터 분포에 대해 매우 강한 가정(Unimodal Gaussian)을 가지고 있음</p>
+
+<p><strong>MoG</strong>는 데이터가 여러 개의 가우시안 분포의 혼합으로 이루어져 있음을 허용하고 이 가우시안 분포들의 선형 결합으로 전체 데이터 분포 표현</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347037-babf0a37-90fa-46c5-bfca-61e716178e86.png" alt="10" width="40%" height="40%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p>하나의 객체가 정상 영역에 속할 확률</p>
+
+\[p(\mathbf x|\lambda)=\sum_{i=1}^M w_mg(\mathbf x|\boldsymbol{\mu}
+_m, \boldsymbol{\Sigma}_m)\]
+  </li>
+  <li>
+    <p>각 가우시안 분포의 밀도 함수</p>
+
+\[g(\mathbf x|\boldsymbol{\mu}
+_m, \boldsymbol{\Sigma}_m)=\frac{1}{(2\pi)^{d/2}|\Sigma|^{1/2}}\exp[\frac{1}{2}(\mathbf x -\boldsymbol{\Sigma}_m)^T\sum_m^{-1}(\mathbf x -\boldsymbol{\Sigma}_m)]\\
+\lambda=\{w_m,\boldsymbol{\mu}_m, \boldsymbol{\Sigma}_m\}, \quad \quad m=1, \cdots, M\]
+  </li>
+</ul>
+
+<p><strong>Expectation-Maximization Algorithm</strong></p>
+
+<ul>
+  <li><strong>E-step</strong> : 주어진 개별 가우시안 분포를 바탕으로 개별 객체가 각 가우시안 분포에 속할 확률을 추정</li>
+  <li>
+    <p><strong>M-step</strong> : E-step에서 추정된 확률을 바탕으로 개별 가우시안 분포의 평균, 공분산행렬, 결합 가중치 업데이트</p>
+
+    <p>↳ 객체별 가우시안 분포 확률, 개별 가우시안 분포의 평균, 공분산행렬, 결합가중치의 변화가 없을때까지 반복</p>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347040-23921d49-f0b9-4191-9529-ee4204e5e4ad.png" alt="11" class="align-center" /></p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Em_old_faithful.gif" alt="img" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p><strong>Expectation</strong> : 각각의 객체들이 $\lambda$라는 개별 파라미터들에 의해 $m$번째 가우시안에 속할 확률</p>
+
+\[p(m|\mathbf x_i, \lambda )=\frac{w_mg(\mathbf x_i|\boldsymbol{\mu}_m,\boldsymbol{\Sigma}_m)}{\sum_{k=1}^M w_k g(\mathbf x_t|\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)}\]
+  </li>
+  <li>
+    <p><strong>Maximization</strong> : $p(m\vert\mathbf x_i, \lambda)$ 고정</p>
+
+\[w_m^{(new)}=\frac{1}{N}\sum_{i=1}^Np(m|\mathbf x_i, \lambda)\\
+\boldsymbol{\mu}_m^{new}=\frac{\sum_{i=1}^Np(m|\mathbf x_i, \lambda)\mathbf x_i}{\sum_{i=1}^Np(m|\mathbf x_i, \lambda)}\\
+\sigma^{2(new)}_{m}=\frac{\sum_{i=1}^Np(m|\mathbf x_i, \lambda)\mathbf x^2}{\sum_{i=1}^Np(m|\mathbf x_i, \lambda)}-\boldsymbol{\mu}^{2(new)}_m\]
+  </li>
+</ul>
+
+<p><strong>공분산 행렬 형태에 따른 MoG 모양</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347041-07e17d3b-b3ef-49dd-b17f-db783b44ac8b.png" alt="12" class="align-center" /></p>
+
+<p>↳ 변수(d)가 매우 크면 Diogonal을 사용하는 것이 안전(full의 역행렬이 생성되지 않아 새로운 데이터가 들어왔을 때, 이상치 스코어 산출이 안될 수 있음)</p>
+
+<h3 id="kernel-density-estimation">Kernel-density Estimation</h3>
+
+<p>데이터의 특정한 분포를 가정하지 않고 주어진 데이터로부터 주변부의 밀도를 추정하는 방식</p>
+
+<h4 id="과정">과정</h4>
+
+<p>확률밀도함수 $p(x)$로부터 생성된 벡터 $x$가 주어진 영역 $R$ 내부에 속할 확률</p>
+
+\[P=\int_R p(x')dx'\]
+
+<p>$N$개의 벡터 ${x_1, x_2, \cdots, x_n}$가 동일한 분포로부터 생성되엇을 때 그 중에서 $k$개가 영역 $R$ 내부에 속할 확률</p>
+
+\[P(k)={N \choose k}p^k(1-p)^{N-k}\]
+
+<p>이항분포 성질에 의해 $\frac{k}{N}$의 기대값과 분산은</p>
+
+\[E\Big[\frac{k}{N}\Big]=P, \quad Var\Big[\frac{k}{N}\Big]=\frac{P(1-P)}{N}\]
+
+<p>$N$이 무한대에 접근하게 되면 위의 식에서 분산은 0에 가까워지고 해당 영역에 대한 발생 확률은 아래와 같음</p>
+
+\[P\cong \frac{k}{N}\]
+
+<p>영역 $R$의 크기가 $p(x)$의 변화가 없을 정도로 매우 작다고 가정하면 ($V$는 $R$영역의 Volume)</p>
+
+\[P=\int _R p(x')dx' \cong p(x)V\]
+
+<p>위의 두 식을 결합</p>
+
+\[P=\int _R p(x')dx' \cong p(x)V=\frac{k}{N}, \quad p(x)=\frac{k}{NV}\]
+
+<p>정리하면 !</p>
+
+\[p(x)=\frac{k}{NV}, \quad where\begin{cases} V : \text{volume surrounding } x\\
+N : \text{the total number of examples}\\
+k : \text{the number fo examples inside }V
+\end{cases}\]
+
+<p>확률밀도의 추정은 샘플의 수가 클수록, 영역의 볼륨이 작을수록 정확해지지만 실제 상황에서는 데이터의 수는 고정되어 있으므로 적절한 $V$를 찾는 문제로 귀결</p>
+
+<p>(볼륨이 작아야하는 이유는 영역안에서 확률함수값이 변하지 않는다는 가정을 만족시켜야하기 때문, 하지만 너무 작으면 영역안에 데이터가 존재하지 않는 상황이 발생할 수 있음)</p>
+
+<p>→ <strong>영역 $R$ 내부에 충분한 데이터가 포함되도록 크지만 $p(x)$의 변동이 없다는 가정을 뒷받침해줄 수 있도록</strong></p>
+
+<p>위의 식에서 $V$를 고정시키고 $k$를 찾으면 <strong>커널 밀도 추정</strong> / 위의 식에서 $k$를 고정시키고 $V$를 찾으면 <strong>K-nn</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347043-181f0010-248d-4641-a01f-379ff4fd7ca5.png" alt="13" width="60%" height="60%" class="align-center" /></p>
+
+<p>$p(x)=\frac{k}{NV}$로 정의되고 $N=20, \ R=2\times 2$인 정사각형이라고 가정</p>
+
+<p>$R=2\times 2$라는 사각형을 어느 영역에 위치시켰을 때 그 안에 실제 데이터가 몇개 있는지 센 후 밀도함수 추정 → <strong>데이터 상황에 맞게 유연한 확률분포함수 모양을 추정</strong></p>
+
+<h4 id="parzen-window-density-estimation">Parzen Window Density Estimation</h4>
+
+<p>$k$개의 객체를 포함하는 영역 $x$를 중심으로 각 면의 길이가 $h$인 Hypercube 정의 (볼륨 $V$는 $h^d$로 정의)</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347044-27070de5-b93f-4970-bd9a-e3d6d64af34f.png" alt="14" width="40%" height="40%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p><strong>kernel function</strong></p>
+
+\[k(u)=\begin{Bmatrix} 1 &amp; |u_j|\lt \frac{1}{2}\quad \forall j=1, \cdots, d \\ 0 &amp; otherwise \end{Bmatrix}\\
+k=\sum_{i=1}^N K\Big(\frac{\mathbf x^i-\mathbf x}{h}\Big)\\
+p(x)=\frac{1}{Nh^d}\sum_{i=1}^N K\Big(\frac{\mathbf x^i-\mathbf x}{h}\Big)\]
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/221347046-98124ae4-f02a-43f8-ab7e-bc5b2ab05aa4.png" alt="15" width="40%" height="40%" class="align-center" /></p>
+
+    <ul>
+      <li>
+        <p>$k(u)$의 단점</p>
+
+        <p>큐브 가장자리 영역에 의해 0, 1로 나눠지는 <strong>불연속적인 추정</strong></p>
+
+        <p>$x$를 기준으로 거리가 다름에도 불구하고 <strong>Hypercube 내에 있는 객체들에 대한 동등한 가중치</strong></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Smooth kernel function</strong></p>
+
+    <p>$k(u)$의 단점을 보완하기 위해 전체 영역에 대한 확률밀도 함수를 1로 표현하면서 smooth한 함수를 사용</p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/221347047-2934ce94-8531-4983-a28e-eee081d9a8ce.png" alt="16" class="align-center" /></p>
+  </li>
+  <li>
+    <p><strong>Smoothing parameter(bandwidth) h</strong></p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/221347049-4cf1efc9-3ed8-4177-ba5a-93b3c917f412.png" alt="17" width="40%" height="40%" class="align-center" /></p>
+
+    <p>hypercube의 길이인 $h$가 작은 값이면 뾰족한 (spiky) 한 분포를 추정하게 되고 큰 값이면 완만한 분포를 추정</p>
+  </li>
+</ul>
+
+<h3 id="local-outlier-factorlof">Local Outlier Factor(LOF)</h3>
+
+<p>특정 분포를 가정하지 않고 이상치 스코어를 산출할 때, 주변부 데이터의 밀도를 고려</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347050-3a87c1da-10bb-4aed-aa7c-9251af686464.png" alt="18" width="60%" height="60%" class="align-center" /></p>
+
+<p>Parzen Window Density Estimation에서는 $k_1 \gt k_2$이기 때문에 $p(x_1)\gt p(x_2)$가 됨 (생성확률이 $x_1$이 더 크기 때문에 anomaly score score은 $x_1$이 작음)</p>
+
+<p>하지만, 여기서 LOF는 문제를 제기!</p>
+
+<p>$x_1$은 밀도가 높은 영역의 중심부이고 $x_2$는 밀도가 낮은 영역의 중심부 → <strong>밀도의 차이이지 중심부라는 것은 동일하기 때문에 $x_1$ anomaly score = $x_2$ anomaly score</strong></p>
+
+<p>LOF score은 주변부 밀도가 높을 때는 중심부에서 조금만 떨어져도 anomaly score는 급격하게 증가하지만 밀도가 낮은 영역에서는 중심부에서 더 많이 떨어져도 anomaly score가 증가하는 폭이 적음</p>
+
+<h4 id="definition-1--k-distance-of-an-object-p">Definition 1 : k-distance of an object p</h4>
+
+<ul>
+  <li>임의의 양의 정수 $k$에 대해서 the k-distance of object p ($k-distance(p)$)는 다음 두 조건 을 만족하는 데이터셋 $D$의 두 점 $p$와 $o$의 거리 $d(p,o)$로 정의됨</li>
+  <li>$D$에 속하는 개체 중 $p$를 제외하고 최소한 $k$개의 개체 $o’$ 에 대해서 $𝑑(𝑝,𝑜’)≤𝑑(𝑝,𝑜)$를 만족 → <strong>어떤 $o$라는 기준점이 있을 때, $o$와 $p$(나 자신) 과의 거리보다 더 작거나 같은 $o’$라는 점이 $k$개 있어야 한다</strong></li>
+  <li>$D$에 속하는 개체 중 $p$를 제외하고 최대 $k-1$개의 개체 $o’$에 대해서 $𝑑(𝑝,𝑜’) &lt; 𝑑(𝑝,𝑜)$를 만족</li>
+  <li>이는 단순히 동률을 고려한 $k$번째 이웃까지의 거리로 생각할 수 있음</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347052-03604768-0884-4382-9874-cff22a4f6861.png" alt="19" class="align-center" /></p>
+
+<h4 id="definition-2--k-distance-neighborhood-of-an-object-p">Definition 2 : k-distance neighborhood of an object p</h4>
+
+<ul>
+  <li>
+    <p>개체 $p$의 k-distance가 Definition 1과 같이 주어질 때, k-distance neighborhood of p 는 $p$에서 부터 k-distance보다 멀지 않은 거리에 있는 모든 개체들의 집합을 의미함</p>
+
+\[N_k(p)=\{q\in D\backslash\{p\}|d(p, q)\le k-distance(p) \}\]
+
+    <p>$p$는 제외한 $q$라는 점들로 구성되어 있고 $p$에서부터 $q$까지의 거리가 $p$의 $k-distance$보다 작거나 같은 점들의 집합</p>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347053-c70c0590-27af-41fe-a5a4-e21c6394a4b4.png" alt="20" class="align-center" /></p>
+
+<h4 id="definition-3--reachability-distance">Definition 3 : reachability distance</h4>
+
+\[reachability- distance_k(p, o)=\max\{k-distance(o), d(p, o)\}\]
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347054-9b4b32b6-30ea-4170-b1ce-c91f869dfa2e.png" alt="21" class="align-center" /></p>
+
+<p>$reachability - distance_3(C, A)$의 경우 $d(C, A)$보다 $3-distance(A)$가 더 크기 때문에 $reachability - distance_3(C, A)=3-distance(A)$</p>
+
+<h4 id="definition-4--local-reachability-density-of-an-object-p">Definition 4 : local reachability density of an object p</h4>
+
+\[lrd_k(p)=\frac{|N_k(p)|}{\sum_{o\in N_k(p)}reachability -distance_k(p, o)}\]
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347055-a8d1a53b-4a98-4cc3-9937-e9f3aeb97a8f.png" alt="22" class="align-center" /></p>
+
+<ul>
+  <li>Case 1 : $p$가 $\color{blue}{o}$의 $N_k(p)$에 속함 → $p$는 주변부에 밀도가 높고 집단의 중심부에 위치 → 분모가 작음 → $lrd_k(p)$값 큼</li>
+  <li>Case 2 : $p$가 $\color{blue}{o}$의 $N_k(p)$에 속하지 않음 → $p$가 두 개의 높은 밀도를 갖는 군집 사이의 밀도가 낮은 공간에 위치 → 분모가 큼 → $lrd_k(p)$값 작음</li>
+</ul>
+
+<h4 id="definition-5--local-outlier-factor-of-an-object-p">Definition 5 : local outlier factor of an object p</h4>
+
+\[LOF_k(p)=\frac{\sum_{o\in N_k(p)\frac{lrd_k(o)}{lrd_k(p)}}}{|N_k(p|}=\frac{\frac{1}{lrd_k(p)}\sum_{o\in N_k(p)}lrd_k(o)}{|N_k(p)|}\]
+
+<p><img src="https://user-images.githubusercontent.com/86525868/221347056-d484eaa2-43dc-4099-a7e3-c88be7df1d34.png" alt="23" class="align-center" /></p>
+
+<p>Parzen Window의 경우에는 중심부 영역의 밀도가 case 1에서는 $\frac{5}{NV}$, case 3에서는 $\frac{1}{NV}$로 차이가 나지만 LOF의 관점에서는 anomaly score가 case 1과 case 2에서 비슷하고 case 2의 anomaly score는 높게 나타남</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#anomaly-detection" class="page__taxonomy-item" rel="tag">Anomaly Detection</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#data-analysis" class="page__taxonomy-item" rel="tag">Data Analysis</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ds" class="page__taxonomy-item" rel="tag">ds</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-02-25T00:00:00+09:00">February 25, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BData+Science%5D+2.+%EC%9D%B4%EC%83%81%EC%B9%98+%ED%83%90%EC%A7%80%28Density+Based+Anomaly+Detection%29%20http%3A%2F%2Flocalhost%3A4000%2Fds%2Fdensity-based-anomaly-detection%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fds%2Fdensity-based-anomaly-detection%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fds%2Fdensity-based-anomaly-detection%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/ds/kernel-based-learning1/" class="pagination--pager" title="[Data Science] 1. 커널 기반 학습(Kernel Based Learning)
+">이전</a>
+    
+    
+      <a href="/ds/ensemble-1/" class="pagination--pager" title="[Data Science] 앙상블(Ensemble) 1. 배깅(Bagging), 랜덤 포레스트(Random Forest)
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/ds/density-based-anomaly-detection/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/ds/density-based-anomaly-detection"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

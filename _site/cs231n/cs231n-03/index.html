@@ -1,0 +1,1078 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[CS231N] 4. Intruduction to Neural Networks - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="💡 Iamge Classification  Stanford University “CS231N” 강의를 듣고 정리하였습니다.">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[CS231N] 4. Intruduction to Neural Networks">
+<meta property="og:url" content="http://localhost:4000/cs231n/cs231n-03/">
+
+
+  <meta property="og:description" content="💡 Iamge Classification  Stanford University “CS231N” 강의를 듣고 정리하였습니다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-06-01T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/cs231n/cs231n-03/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[CS231N] 4. Intruduction to Neural Networks">
+    <meta itemprop="description" content="💡 Iamge Classification Stanford University “CS231N” 강의를 듣고 정리하였습니다. ">
+    <meta itemprop="datePublished" content="2022-06-01T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[CS231N] 4. Intruduction to Neural Networks
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#lecture-4--intruduction-to-neural-networks">Lecture 4 : Intruduction to Neural Networks</a>
+    <ul>
+      <li><a href="#analytic-gradient-using-computational-graphs">Analytic gradient (using Computational graphs)</a></li>
+      <li><a href="#backpropagation--a-simple-example">Backpropagation : a simple example</a>
+        <ul>
+          <li><a href="#another-example">Another Example</a></li>
+          <li><a href="#활용--sigmoid-function">활용 : Sigmoid Function</a></li>
+        </ul>
+      </li>
+      <li><a href="#gradients-for-vectorized-code">Gradients for Vectorized Code</a>
+        <ul>
+          <li><a href="#a-vectorized-example">A Vectorized Example</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p class="notice--info">💡 Iamge Classification <br />
+Stanford University “CS231N” 강의를 듣고 정리하였습니다. <br /></p>
+
+<p class="notice">자막 : https://github.com/visionNoob/CS231N_17_KOR_SUB (크롬 확장 프로그램 Subtitles for Youtube) <br />
+2017 버전 강의 목차 및 슬라이드 : http://cs231n.stanford.edu/2017/syllabus.html <br />
+2017 버전 강의 동영상 링크 : https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv <br />
+2022 버전 강의 목차 및 슬라이드 : http://cs231n.stanford.edu/schedule.html <br />
+실습 과제 : https://github.com/cs231n/cs231n.github.io/tree/master/assignments <br /></p>
+
+<h1 id="lecture-4--intruduction-to-neural-networks">Lecture 4 : Intruduction to Neural Networks</h1>
+
+<h2 id="analytic-gradient-using-computational-graphs">Analytic gradient (using Computational graphs)</h2>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171412748-514cbc3a-3ae5-4004-86ae-242278eead2b.png" alt="L4_01" class="align-center" /></p>
+
+<p><strong>input이 $x, W$인 Linear Classifier</strong></p>
+
+<ul>
+  <li>
+    <p>파라미터 W와 데이터 x의 곱셈은 score vector를 출력함</p>
+  </li>
+  <li>
+    <p>hinge loss라는 다른 계산 노드를 가지고 있고 데이터 항$ L_i$를 계산하는데, 오른쪽 하단에 보이는 Regularization 또한 가지고 있음</p>
+  </li>
+  <li>
+    <p>이 노드(R)는 regularization항을 계산하고 최종 loss, L은 regularization 항과 데이터 항의 합임</p>
+  </li>
+  <li>
+    <p>computational graph를 사용해서 함수를 표현하게 됨으로써 back propagation을 사용할수 있게 됨</p>
+
+    <ul>
+      <li>back propagation은 gradient를 얻기 위해 computataional graph 내부의 모든 변수에 대해 chain rule을 재귀적으로 사용</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171412761-d62d56e9-df79-42c1-a374-8d2fdc32dd6a.png" alt="L4_02" width="50%" height="50%" class="align-center" /></p>
+
+<p>수업에서 사용할 CNN의 가장 위층에 입력 이미지가 들어가고 아래에는 loss가 있음 → 입력 이미지는 loss function으로 가기까지 많은 layer를 거쳐 변형을 겪게 됨</p>
+
+<h2 id="backpropagation--a-simple-example">Backpropagation : a simple example</h2>
+
+\[f(x, y, z)=(x+y)z\]
+
+<p>우선 목표는 함수를 가지는 것 (이 경우의 함수는 f로 정의함) → 그리고 function $f$의 출력에 대한 어떤 변수의 gradient를 찾기 원함</p>
+
+<ol>
+  <li>
+    <p>항상 함수 $f$를 이용해서 computational graph로 나타냄</p>
+
+    <p>함수를 graph로 나타내고 이 네트워크에 우리가 가지고 있는 값$(x=-2, y=5, z=-4)$를 전달 <br /></p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/171412767-fc5767cd-4d76-42bd-bb7c-f68652ddce89.png" alt="L4_03" width="60%" height="60%" class="align-center" /></p>
+
+    <p>$x+y$ 덧셈 노드의 이름은 $q$이고, $x$와 $y$에 각각에 대한 $q$의 gradient는 단순 덧셈이기 때문에 값은 1</p>
+
+    <p>$q$와 $z$에 대한 $f$ 의 gradient는 곱셈 규칙에 의해 각각 $z$와 $q$ → <strong>찾고자 하는것은 $x, y, z$ 각각에 대한 $f$의 gradient</strong> <br /></p>
+  </li>
+  <li>
+    <p>backpropagation은 chain rule의 재귀적인 응용 (chain rule에 의해 뒤에서부터 시작)</p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/172428544-c3953338-615d-43c5-98f5-6ddb2438c9aa.png" alt="L4_04" width="40%" height="40%" class="align-center" /></p>
+
+    <p>출력 $f$에 대한 gradient를 계산하면 1</p>
+
+    <p>그 다음엔 뒤로 이동해서 $z$에 대한 $f$의 gradient를 계산하면 $z$에 대한 $f$ 미분이 $q$</p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/172428557-c5e529d0-785e-4b09-8929-9e52d6625043.png" alt="L4_05" width="40%" height="40%" class="align-center" /></p>
+
+    <p>$q$에 대한 $f$의 gradient는 $z$ →  $z$는 -4의 값을 가짐</p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/172428560-813c5473-9d18-473c-aea6-032848cca7ed.png" alt="L4_06" width="40%" height="40%" class="align-center" /></p>
+
+    <p>$y$에 대한 $f$의 미분값을 알고 싶지만 $y$는 $f$와 바로 연결되어 있지 않음 →  $f$는 $z$와 연결되어 있기 때문에 chain rule을 이용</p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/172428568-ca19b8ee-3f11-4be5-86f5-b125f26ef4e2.png" alt="L4_07" width="40%" height="40%" class="align-center" /></p>
+
+    <p>$x$에 대한 $f$의 미분값도 동일</p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/172428574-5637313b-a870-4406-8306-7e81e9da0755.png" alt="L4_08" width="40%" height="40%" class="align-center" /></p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/172428579-79ba4500-9150-4301-b658-f800e2f84978.png" alt="L4_10" width="40%" height="40%" class="align-center" /></p>
+  </li>
+</ol>
+
+<p>Chain rule을 활용해서 복잡한 층의 미분값을 local gradient $\times$ upstream gradient 의 과정으로 gradient를 얻을 수 있음</p>
+
+<h3 id="another-example">Another Example</h3>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990884-f892bd94-5f17-4f15-8836-4d088d5cc885.JPG" alt="L4_11" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990887-9ae42d20-2c8c-4701-82da-f86af12b4662.JPG" alt="L4_12" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990890-ce287e95-53fd-43aa-9673-22d0373b2d1e.JPG" alt="L4_13" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990891-f4117fa4-ac7a-4574-8bcd-1917027c6f75.JPG" alt="L4_14" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990892-e9d43d86-c879-42d3-955b-31ade44bfebb.JPG" alt="L4_15" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990894-c046e5d1-7841-4cd7-9e79-c08d098502ce.JPG" alt="L4_16" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990895-775fbeb9-9501-4a0a-b475-dad9cb93b8df.JPG" alt="L4_17" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990896-e610b43d-345c-43a3-915c-a70e36398cf6.JPG" alt="L4_18" class="align-center" /></p>
+
+<p><strong>정리</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171990898-aeb0046c-4ebc-42a7-a0d6-c0823c2c2805.png" alt="L4_bonus" class="align-center" /></p>
+
+<h3 id="활용--sigmoid-function">활용 : Sigmoid Function</h3>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/172049931-8acba6f7-2956-4e04-831f-c3547ec35039.png" alt="L4_19" class="align-center" /></p>
+
+<p>위의 식의 $w_0x_0+w_1x_1+w_2$를 $x$로 치환하면 sigmoid function → sigmoid function의 미분값은 $(1-\sigma(x))(\sigma(x))$ 이기 때문에 복잡한 계산 과정 없이 한번에 $0.20$ 라는 gradient를 구할 수 있음</p>
+
+<p><strong>또한, 국소적인 계산($w_0x_0+w_1x_1+w_2$을 보다 간단한 $x$로 묶음)이 가능</strong> <br /></p>
+
+<p><strong>Patterns in backward flow</strong></p>
+
+<p><img width="50%" alt="L4_20" src="https://user-images.githubusercontent.com/86525868/172427715-c860fe2c-2505-482c-9fc7-5dae83cfcea0.png" height="50%" class="align-center" /></p>
+
+<ol>
+  <li><strong>ADD gate</strong> : gradient distributor → upstream gradient의 값을 local gradient에 나눠줌</li>
+  <li><strong>MAX gate</strong> : gradient router → 입력값이 큰 local gradient에 upstream gradient의 값을 주고 입력값이 작은 쪽에 0을 줌</li>
+  <li><strong>MUL gate</strong> : gradient switcher → local gradient $\times$ 다른 변수의 값 <br /></li>
+</ol>
+
+<h2 id="gradients-for-vectorized-code">Gradients for Vectorized Code</h2>
+
+<p>이제 input 값이 스칼라가 아닌 벡터의 형태일 때</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/172428579-79ba4500-9150-4301-b658-f800e2f84978.png" alt="L4_10" width="60%" height="60%" class="align-center" /></p>
+
+<p>입력값 $x, y$가 벡터의 형태라면 local gradient는 <strong>Jacobian matrix</strong>의 형태를 가지게 됨</p>
+
+<p><img width="60%" alt="L4_21" src="https://user-images.githubusercontent.com/86525868/172428717-53ed4919-cda5-4d06-8bd4-433404c33bfd.png" height="60%" class="align-center" /></p>
+
+<p>여기서 필요한 부분은 Jacobian matrix의 대각행렬 <br /></p>
+
+<h3 id="a-vectorized-example">A Vectorized Example</h3>
+
+\[f(x, W)=||W \cdot x||^2=\sum_{i=1}^2(W \cdot x)_i^2\]
+
+<p><img src="https://user-images.githubusercontent.com/86525868/172428734-620f0a2c-1af7-4195-84f3-f4e3ee88d465.JPG" alt="L4_22" width="60%" height="60%" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/172428745-97e2389c-cc59-40ad-ae59-73fda2d45ef4.JPG" alt="L4_23" width="60%" height="60%" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/172428671-73d24735-7f5f-4100-b44b-3731b40b0f24.JPG" alt="L4_24" width="60%" height="60%" class="align-center" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/172428686-c1b2c655-b357-455c-a4b7-1d3f0379ba8a.JPG" alt="L4_25" width="60%" height="60%" class="align-center" /></p>
+
+<p><strong>Point!</strong></p>
+
+<ol>
+  <li>gradient는 항상 변수와 같은 shape</li>
+  <li>gradient는 각 요소가 최종 출력에 영향을 얼만큼 미치는지 정량화함</li>
+  <li>forward pass 값을 저장해야 backward pass에서 사용할 수 있음</li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cs231" class="page__taxonomy-item" rel="tag">cs231</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#image-classification" class="page__taxonomy-item" rel="tag">image classification</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#cs231n" class="page__taxonomy-item" rel="tag">cs231n</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2022-06-01T00:00:00+09:00">June 1, 2022</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BCS231N%5D+4.+Intruduction+to+Neural+Networks%20http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-03%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-03%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-03%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/cs231n/cs231n-02/" class="pagination--pager" title="[CS231N] 3. Loss Functions and Optimization
+">이전</a>
+    
+    
+      <a href="/cs231n/cs231n-04/" class="pagination--pager" title="[CS231N] 5. Convolutional Neural Networks
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/cs231n/cs231n-03/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/cs231n/cs231n-03"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

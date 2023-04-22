@@ -1,0 +1,1079 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[R] 1. Multiple Linear Regression - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="Multiple Linear Regression Practice with R">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[R] 1. Multiple Linear Regression">
+<meta property="og:url" content="http://localhost:4000/r/multiplelinearregression/r-mlr/">
+
+
+  <meta property="og:description" content="Multiple Linear Regression Practice with R">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-01-25T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/r/multiplelinearregression/r-mlr/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[R] 1. Multiple Linear Regression">
+    <meta itemprop="description" content="Multiple Linear Regression Practice with R">
+    <meta itemprop="datePublished" content="2023-01-25T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[R] 1. Multiple Linear Regression
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#multiple-linear-regression-practice-with-r">Multiple Linear Regression Practice with R</a>
+    <ul>
+      <li><a href="#functions">Functions</a></li>
+      <li><a href="#dataset-1-toyota-corolla">Dataset 1: Toyota Corolla</a></li>
+      <li><a href="#dataset-2-boston-housing">Dataset 2. Boston Housing</a></li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="multiple-linear-regression-practice-with-r">Multiple Linear Regression Practice with R</h1>
+
+<h2 id="functions">Functions</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Performance evaluation function for regression </span><span class="w">
+</span><span class="n">perf_eval_reg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tgt_y</span><span class="p">,</span><span class="w"> </span><span class="n">pre_y</span><span class="p">){</span><span class="w">
+  </span><span class="c1">#RMSE</span><span class="w">
+  </span><span class="n">rmse</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">mean</span><span class="p">((</span><span class="n">tgt_y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pre_y</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">))</span><span class="w">
+  </span><span class="c1">#MAE</span><span class="w">
+  </span><span class="n">mae</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">tgt_y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pre_y</span><span class="p">))</span><span class="w">
+  </span><span class="c1">#MAPE</span><span class="w">
+  </span><span class="n">mape</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span><span class="o">*</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="nf">abs</span><span class="p">((</span><span class="n">tgt_y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pre_y</span><span class="p">)</span><span class="o">/</span><span class="n">tgt_y</span><span class="p">))</span><span class="w">
+  
+  </span><span class="nf">return</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">rmse</span><span class="p">,</span><span class="w"> </span><span class="n">mae</span><span class="p">,</span><span class="w"> </span><span class="n">mape</span><span class="p">))</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1"># Initialize a performance summary </span><span class="w">
+</span><span class="n">perf_mat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
+</span><span class="n">rownames</span><span class="p">(</span><span class="n">perf_mat</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Toyota Coroola"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Boston Housing"</span><span class="p">)</span><span class="w">
+</span><span class="n">colnames</span><span class="p">(</span><span class="n">perf_mat</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"RMSE"</span><span class="p">,</span><span class="w"> </span><span class="s2">"MAE"</span><span class="p">,</span><span class="w"> </span><span class="s2">"MAPE"</span><span class="p">)</span><span class="w">
+</span><span class="n">perf_mat</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="dataset-1-toyota-corolla">Dataset 1: Toyota Corolla</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">corolla</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="s2">"ToyotaCorolla.csv"</span><span class="p">)</span><span class="w">
+</span><span class="n">View</span><span class="p">(</span><span class="n">corolla</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">#Indices for the inactivated input variables </span><span class="w">
+</span><span class="n">id_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="c1"># save `id` and `model` columns</span><span class="w">
+
+</span><span class="c1"># Remove irrelevant columns</span><span class="w">
+</span><span class="n">corolla_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">corolla</span><span class="p">[,</span><span class="w"> </span><span class="o">-</span><span class="n">id_idx</span><span class="p">]</span><span class="w"> </span><span class="c1"># remove `id` and `model` columns</span><span class="w">
+</span><span class="n">View</span><span class="p">(</span><span class="n">corolla_data</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Check the linearity betwwen X variables and Y variable </span><span class="w">
+</span><span class="n">plot_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">corolla_data</span><span class="p">[,</span><span class="w"> </span><span class="m">-6</span><span class="p">]</span><span class="w"> </span><span class="c1"># remove `Fuel_Type` column</span><span class="w">
+</span><span class="n">corolla_names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">colnames</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)[</span><span class="m">-1</span><span class="p">]</span><span class="w"> </span><span class="c1"># remove `price` column</span><span class="w">
+
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">))</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">corolla_names</span><span class="p">)){</span><span class="w">
+  </span><span class="n">plot</span><span class="p">(</span><span class="n">Price</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">plot_data</span><span class="p">[,</span><span class="w"> </span><span class="n">i</span><span class="m">+1</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot_data</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">corolla_names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span><span class="c1"># `age_08_04` and `Km` are negatively correlated variables</span><span class="w">
+</span><span class="c1"># `HP` and `Weight` are weak positive correlations </span><span class="w">
+</span><span class="c1"># `cc` has a outlier</span><span class="w">
+</span><span class="n">dev.off</span><span class="p">()</span><span class="w">
+
+</span><span class="c1"># One outlier exists for cc variable </span><span class="w">
+</span><span class="n">cc_outlier</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">which</span><span class="p">(</span><span class="n">plot_data</span><span class="o">$</span><span class="n">cc</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">15000</span><span class="p">)</span><span class="w"> </span><span class="c1"># you can remove the outlier with domain</span><span class="w">
+
+</span><span class="c1"># Select linearly related variables with "Price"</span><span class="w">
+</span><span class="n">plot_data_selected</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">plot_data</span><span class="p">[</span><span class="o">-</span><span class="n">cc_outlier</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">14</span><span class="p">)]</span><span class="w">
+</span><span class="n">corolla_names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">colnames</span><span class="p">(</span><span class="n">plot_data_selected</span><span class="p">)[</span><span class="m">-1</span><span class="p">]</span><span class="w">
+
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">corolla_names</span><span class="p">)){</span><span class="w">
+  </span><span class="n">plot</span><span class="p">(</span><span class="n">Price</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">plot_data_selected</span><span class="p">[,</span><span class="w"> </span><span class="n">i</span><span class="m">+1</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot_data_selected</span><span class="p">,</span><span class="w"> 
+       </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">corolla_names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w">
+</span><span class="p">}</span><span class="w"> </span><span class="c1"># check these are significant variables later :)</span><span class="w">
+</span><span class="n">dev.off</span><span class="p">()</span><span class="w"> </span><span class="c1"># remove plots</span><span class="w">
+
+</span><span class="c1"># Split the data into the training / validation sets </span><span class="w">
+</span><span class="n">corolla_mlr_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">corolla_data</span><span class="p">[</span><span class="o">-</span><span class="n">cc_outlier</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="c1"># make a Multiple Linear Regression's dataset</span><span class="w">
+</span><span class="n">nCar</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nrow</span><span class="p">(</span><span class="n">corolla_mlr_data</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Fix the seed for random number geneeration</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">12345</span><span class="p">)</span><span class="w">
+</span><span class="n">corolla_trn_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nCar</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="m">0.7</span><span class="o">*</span><span class="n">nCar</span><span class="p">))</span><span class="w">
+</span><span class="n">corolla_trn_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">corolla_mlr_data</span><span class="p">[</span><span class="n">corolla_trn_idx</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="n">corolla_tst_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">corolla_mlr_data</span><span class="p">[</span><span class="o">-</span><span class="n">corolla_trn_idx</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">
+
+</span><span class="c1"># Train the MLR </span><span class="w">
+</span><span class="n">mlr_corolla</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">Price</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">corolla_trn_data</span><span class="p">)</span><span class="w"> </span><span class="c1"># . means all columns</span><span class="w">
+</span><span class="n">mlr_corolla</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">mlr_corolla</span><span class="p">)</span><span class="w"> </span><span class="c1"># Pr(&gt;|t|) -&gt; check 3 stars variables :) </span><span class="w">
+                     </span><span class="c1"># ex `Age_08_04` : The later it is released a moth, the lower the price is by 114 euros</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">mlr_corolla</span><span class="p">)</span><span class="w">
+</span><span class="n">dev.off</span><span class="p">()</span><span class="w">
+</span><span class="c1"># Plot the result</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">corolla_trn_data</span><span class="o">$</span><span class="n">Price</span><span class="p">,</span><span class="w"> </span><span class="n">fitted</span><span class="p">(</span><span class="n">mlr_corolla</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4000</span><span class="p">,</span><span class="w"> </span><span class="m">35000</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4000</span><span class="p">,</span><span class="w"> </span><span class="m">35000</span><span class="p">))</span><span class="w">
+</span><span class="n">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">3</span><span class="p">)</span><span class="w">
+  </span><span class="c1"># R^2 and adj_R^2 in summary of mlr_corolla are over 0.9 -&gt; that means it indicated a strong linear relation</span><span class="w">
+
+</span><span class="c1"># normality test of residuals </span><span class="w">
+</span><span class="n">corolla_resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">resid</span><span class="p">(</span><span class="n">mlr_corolla</span><span class="p">)</span><span class="w">
+
+</span><span class="n">m</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">corolla_resid</span><span class="p">)</span><span class="w">
+</span><span class="n">std</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">corolla_resid</span><span class="p">))</span><span class="w">
+
+</span><span class="n">hist</span><span class="p">(</span><span class="n">corolla_resid</span><span class="p">,</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"x-variable"</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"normal curve over histogram"</span><span class="p">)</span><span class="w">
+</span><span class="n">curve</span><span class="p">(</span><span class="n">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'darkblue'</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">yaxt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"n"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">skewness</span><span class="p">(</span><span class="n">corolla_resid</span><span class="p">)</span><span class="w"> </span><span class="c1"># normal distribution's skewness is 0</span><span class="w">
+</span><span class="n">kurtosis</span><span class="p">(</span><span class="n">corolla_resid</span><span class="p">)</span><span class="w"> </span><span class="c1"># normal distribution's kurtosis is 3</span><span class="w">
+
+</span><span class="c1"># Performance Measure</span><span class="w">
+</span><span class="n">mlr_corolla_haty</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">mlr_corolla</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">corolla_tst_data</span><span class="p">)</span><span class="w"> </span><span class="c1"># ignore the warning message </span><span class="w">
+
+</span><span class="n">perf_mat</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">perf_eval_reg</span><span class="p">(</span><span class="n">corolla_tst_data</span><span class="o">$</span><span class="n">Price</span><span class="p">,</span><span class="w"> </span><span class="n">mlr_corolla_haty</span><span class="p">)</span><span class="w">
+</span><span class="n">perf_mat</span><span class="w"> </span><span class="c1"># MAE is 804 -&gt; There is 804 Euro difference between the actual price and the predicted price -&gt; Error rate 8.04%</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="dataset-2-boston-housing">Dataset 2. Boston Housing</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">boston_housing</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="s2">"BostonHousing.csv"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Variable Description</span><span class="w">
+</span><span class="c1"># CRIM : per capita crime rate by town</span><span class="w">
+</span><span class="c1"># ZN : proportion of residential land zoned for lots ouver 25.000 sq.ft.</span><span class="w">
+</span><span class="c1"># INDUS : proportion of non-retail business acres per town</span><span class="w">
+</span><span class="c1"># NOX : nitrogen oxides concentration (parts per 10 million) </span><span class="w">
+</span><span class="c1"># RM : average number of rooms per dwelling</span><span class="w">
+</span><span class="c1"># AGE : proportion of owner-occupied units built prior to 1940</span><span class="w">
+</span><span class="c1"># DIS : weightd mean of distances to five Boston employment centres</span><span class="w">
+</span><span class="c1"># TAX : full-value proporty-tax rate per /$10,000</span><span class="w">
+</span><span class="c1"># PTRATION : pupil-teacher ratio by town</span><span class="w">
+</span><span class="c1"># Black :: 100(Bk-0.63)^2 where Bk is the proportion of blacks by town</span><span class="w">
+</span><span class="c1"># LSTAT : lower status of the population (percent)</span><span class="w">
+</span><span class="c1"># MEDV : median value of owner-occupied homes in /$1000s</span><span class="w">
+
+</span><span class="n">boston_names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">colnames</span><span class="p">(</span><span class="n">boston_housing</span><span class="p">)[</span><span class="o">-</span><span class="n">ncol</span><span class="p">(</span><span class="n">boston_housing</span><span class="p">)]</span><span class="w">
+
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">boston_names</span><span class="p">)){</span><span class="w">
+  </span><span class="n">plot</span><span class="p">(</span><span class="n">MEDV</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">boston_housing</span><span class="p">[,</span><span class="w"> </span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">boston_housing</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">boston_names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="n">dev.off</span><span class="p">()</span><span class="w">
+</span><span class="c1"># It can be seen that quite a few variables show an increasing or decreasing pattern</span><span class="w">
+
+</span><span class="n">nHome</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nrow</span><span class="p">(</span><span class="n">boston_housing</span><span class="p">)</span><span class="w">
+</span><span class="n">nVar</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ncol</span><span class="p">(</span><span class="n">boston_housing</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Split the data into the training/test sets</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">12345</span><span class="p">)</span><span class="w">
+</span><span class="n">boston_trn_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nHome</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="m">0.7</span><span class="o">*</span><span class="n">nHome</span><span class="p">))</span><span class="w">
+</span><span class="n">boston_trn_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">boston_housing</span><span class="p">[</span><span class="n">boston_trn_idx</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="n">boston_tst_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">boston_housing</span><span class="p">[</span><span class="o">-</span><span class="n">boston_trn_idx</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">
+
+</span><span class="c1"># Trian the MLR </span><span class="w">
+</span><span class="n">mlr_boston</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">MEDV</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">boston_trn_data</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">mlr_boston</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">mlr_boston</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Plot the result </span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">boston_trn_data</span><span class="o">$</span><span class="n">MEDV</span><span class="p">,</span><span class="w"> </span><span class="n">fitted</span><span class="p">(</span><span class="n">mlr_boston</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-5</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-5</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">))</span><span class="w">
+</span><span class="n">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="c1"># Residuals and predicted values represent a binary relationship</span><span class="w">
+                      </span><span class="c1"># The regression coefficient estimated by the OLS does not meet the minimum conditions required.</span><span class="w">
+                      </span><span class="c1"># -&gt; It's not statistically correct, but it's worth a try if you're good at predicting</span><span class="w">
+
+</span><span class="c1"># Normality test of residuals </span><span class="w">
+</span><span class="n">boston_resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">resid</span><span class="p">(</span><span class="n">mlr_boston</span><span class="p">)</span><span class="w">
+
+</span><span class="n">m</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">boston_resid</span><span class="p">)</span><span class="w">
+</span><span class="n">std</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">(</span><span class="n">boston_resid</span><span class="p">))</span><span class="w">
+
+</span><span class="n">hist</span><span class="p">(</span><span class="n">boston_resid</span><span class="p">,</span><span class="w"> </span><span class="n">density</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> 
+     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"x-variable"</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"normal curve over histogram"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">curve</span><span class="p">(</span><span class="n">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"darkblue"</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">yaxt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"n"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">skewness</span><span class="p">(</span><span class="n">boston_resid</span><span class="p">)</span><span class="w">
+</span><span class="n">kurtosis</span><span class="p">(</span><span class="n">boston_resid</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#multiple-linear-regression" class="page__taxonomy-item" rel="tag">Multiple Linear Regression</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#r" class="page__taxonomy-item" rel="tag">R</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#multiplelinearregression" class="page__taxonomy-item" rel="tag">MultipleLinearRegression</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#r" class="page__taxonomy-item" rel="tag">R</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-01-25T00:00:00+09:00">January 25, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BR%5D+1.+Multiple+Linear+Regression%20http%3A%2F%2Flocalhost%3A4000%2Fr%2Fmultiplelinearregression%2Fr-mlr%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fr%2Fmultiplelinearregression%2Fr-mlr%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fr%2Fmultiplelinearregression%2Fr-mlr%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/da/K-nearest-regression/" class="pagination--pager" title="[Data Analysis] 6. K-Nearest Neighbor Learning
+">이전</a>
+    
+    
+      <a href="/r/logisticregression/confusionmatrix/auroc-r/" class="pagination--pager" title="[R] 2. Logistic Regression with Confusion Matrix
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/r/multiplelinearregression/r-mlr/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/r/multiplelinearregression/r-mlr"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

@@ -1,0 +1,1255 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Data Analysis] 1. Multiple Linear Regression Analysis - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="다중 선형 회귀 모형 : Multivariate Linear Regression">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[Data Analysis] 1. Multiple Linear Regression Analysis">
+<meta property="og:url" content="http://localhost:4000/da/analysis-01/">
+
+
+  <meta property="og:description" content="다중 선형 회귀 모형 : Multivariate Linear Regression">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-09-23T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/da/analysis-01/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Data Analysis] 1. Multiple Linear Regression Analysis">
+    <meta itemprop="description" content="다중 선형 회귀 모형 : Multivariate Linear Regression">
+    <meta itemprop="datePublished" content="2022-09-23T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[Data Analysis] 1. Multiple Linear Regression Analysis
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#다중-선형-회귀-모형--multivariate-linear-regression">다중 선형 회귀 모형 : Multivariate Linear Regression</a>
+    <ul>
+      <li><a href="#최소자승법--ordinary-least-squaresols">최소자승법 : Ordinary Least Squares(OLS)</a></li>
+      <li><a href="#다중-선형-회귀-모형--회귀-모형의-적합도">다중 선형 회귀 모형 : 회귀 모형의 적합도</a></li>
+      <li><a href="#예시--도요타-코롤라-중고차-가격-예측">예시 : 도요타 코롤라 중고차 가격 예측</a>
+        <ul>
+          <li><a href="#회귀모형-성능-평가">회귀모형 성능 평가</a></li>
+          <li><a href="#예시--p개의-설비-파라미터로부터-각-제품glass의-수율을-추정하는-모형">예시 : p개의 설비 파라미터로부터 각 제품(GLASS)의 수율을 추정하는 모형</a>
+            <ul>
+              <li><a href="#지표-1--평균오차-average-error">지표 1 : 평균오차, Average Error</a></li>
+              <li><a href="#지표-2--평균-절대-오차-mean-absolute-error-mae">지표 2 : 평균 절대 오차 (Mean Absolute Error, MAE)</a></li>
+              <li><a href="#지표-3--평균-절대-비율-오차-mean-absolute-percentage-error-mape">지표 3 : 평균 절대 비율 오차 (Mean Absolute Percentage Error, MAPE)</a></li>
+            </ul>
+          </li>
+          <li><a href="#mae와-mape를-목적함수로-사용할-경우-추정되는-최귀식의-차이">MAE와 MAPE를 목적함수로 사용할 경우 추정되는 최귀식의 차이</a>
+            <ul>
+              <li><a href="#mae와-mape-중-어느-지표를-더-중점적으로-고려해야-하는가">MAE와 MAPE 중 어느 지표를 더 중점적으로 고려해야 하는가?</a></li>
+              <li><a href="#지표-4--5--mean-squared-error-mse--root-mean-squared-error-rmse">지표 4 &amp; 5 : (Mean Squared Error, MSE / Root Mean Squared Error, RMSE)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="다중-선형-회귀-모형--multivariate-linear-regression">다중 선형 회귀 모형 : Multivariate Linear Regression</h1>
+
+<p><strong>목적</strong> : 종속변수 $Y$와 설명변수 집합 $x_1, x_2, \cdots, x_p$ 사이의 관계를 선형으로 가정하고 이를 가장 잘 설명할 수 있는 회귀 계수(Regression coefficients)를 추정</p>
+
+\[y=\beta_0+\beta_1x_1+\cdots+\beta_dx_d+\epsilon \ \ \ \ \Longrightarrow \ \ \ \ \hat{y}=\hat{\beta_0}+\hat{\beta_1}x_1+\cdots+\hat{\beta_dx}_d\]
+
+<p>우리가 알고있는  $y, x_1, x_2, \cdots, x_d$ 를 통해 미지수(파라미터) $\hat{\beta_0}, \hat{\beta_1}, \cdots, \hat{\beta_d}$ 를 추정하여 $y$와 가장 유사한 값 $\hat{y}$를 찾는 모형</p>
+
+<p><strong>회귀 모형에서의 노이즈(noise, $\epsilon$)란?</strong> : 데이터 생성 및 수집 과정에서 발생할 수 있는 여러 원인들에 의해 발생하는 변동성</p>
+
+<p>즉, 선형 회귀 모형은 반응변수들과 설명변수 사이의 관계를 선형으로 표현 → $\hat{y}=\hat{\beta_0}+\hat{\beta_1}x_1+\cdots+\hat{\beta_dx}_d$</p>
+
+<p><img width="70%" alt="01" src="https://user-images.githubusercontent.com/86525868/191927081-5b20568d-fb3c-4da6-9bc0-9c30e34edc02.png" height="70%" class="align-center" /></p>
+
+<p>그렇다면, 어떤 직선이 설명변수와 종속변수를 가장 잘 표현하는가 → <strong>최소자승법: Ordinary Least Squares(OLS)</strong></p>
+
+<h2 id="최소자승법--ordinary-least-squaresols">최소자승법 : Ordinary Least Squares(OLS)</h2>
+
+<p>: 추정된 회귀식에 의해 결정된 값과 실제 종속변수 값의 차이를 최소한으로 줄이는 것을 목적</p>
+
+<p><img width="70%" alt="02" src="https://user-images.githubusercontent.com/86525868/191927090-1edadd1f-b83c-41e3-be7d-361bcaf8ff5f.png" height="70%" class="align-center" /></p>
+
+<p>{실제값 - 예측값}을 모두 더하게 되면 부호가 달라져 측정에 어려움이 있음 → 제곱하여 더하는 것이 최소자승법</p>
+
+\[\text{Actual target}:\ y=\beta_0+\beta_1x_1+\cdots+\beta_dx_d+\epsilon \\
+\text{Predicted target}:\ \hat{y}=\hat{\beta_0}+\hat{\beta_1}x_1+\cdots+\hat{\beta_dx}_d\\
+\\
+\text{OLS}:\ \min\frac{1}{2}\sum_{i=1}^n(y_i-\hat{h_i})^2=\frac{1}{2}(y_i-(\hat{\beta_0}+\hat{\beta_1}x_{i1}+\cdots+\hat{\beta_d}x_{id}))^2\]
+
+<p><strong>행렬을 이용한 해 구하기</strong></p>
+
+<p>$X:n \times (d+1) \text{ matrix}, \quad y: n \times 1 \text{vector}$</p>
+
+<p>$\hat{\beta}:(d+1)\times 1 \text{ vector}$</p>
+
+<p><img width="50%" alt="03" src="https://user-images.githubusercontent.com/86525868/191927096-f80cd6de-4eeb-4886-822f-9de8a2b68547.png" height="50%" class="align-center" /></p>
+
+\[\begin{align}
+\min E(X)&amp;=\frac{1}{2}\Big(y-X\hat{\beta} \Big)^T\Big(y-X\hat{\beta}\Big)\\
+\frac{\partial E(X)}{\partial \hat{\beta}}&amp;=-X^T\Big(y-X\hat{\beta}\Big)=0\\
+&amp;=-X^Ty+X^TX\hat{\beta}=0\\
+\Rightarrow \hat{\beta}&amp;=\Big(X^TX\Big)^{-1}X^Ty
+\end{align}\]
+
+<dl>
+  <dt><strong>선형 회귀 분석에서 최소자승법(OLS)를 이용할 경우 $\hat{\beta}$ , 학습 데이터에 대해 유일하고 명시적인 해가 존재</strong></dt>
+  <dd>
+    <p>$X, y$ 라는 이미 데이터를 통해 알고 있는 값의 조합으로 $\hat{\beta}$ 이라는 미지수를 찾기 때문에 하나의 해가 존재 (Nural Network에서는 해당하지 않음)</p>
+  </dd>
+</dl>
+
+<p><img width="50%" alt="04" src="https://user-images.githubusercontent.com/86525868/191927097-8a33903a-70b0-41d1-b852-0e120cdaa7af.png" height="50%" class="align-center" /></p>
+
+<p><strong>만족해야하는 조건</strong></p>
+
+<ol>
+  <li>
+    <p>오차항 $\epsilon$ 이 정규분포</p>
+
+    <p><img width="70%" alt="05" src="https://user-images.githubusercontent.com/86525868/191927103-19f3d2d0-7826-4fb6-bcd7-b129a37d4aae.png" height="70%" class="align-center" /></p>
+
+    <p>오잔차의 분포를 나타내는 QQ plot에서 정규분포를 벗어남, histogram에서도 확인 가능</p>
+  </li>
+  <li>
+    <p>설명변수와 종속변수 사이에 선형관계가 성립</p>
+  </li>
+  <li>
+    <p>각 관측치들은 서로 독립</p>
+  </li>
+  <li>
+    <p>종속변수 $y$에 대한 오차항은 설명변수 값의 범위에 관계없이 일정 (homoskedasticity)</p>
+
+    <p><img src="https://user-images.githubusercontent.com/86525868/191927106-20375aaf-5cbe-473c-b480-223834e040fa.png" alt="06" width="50%" height="50%" class="align-center" /></p>
+
+    <p>(a) : 종속변수의 추정값이 증가할수록 잔차값도 증가하는 추세</p>
+
+    <p>(b) : 평균은 0으로 일정하지만 $\hat{y}$값이 커질수록 변동성이 커짐</p>
+
+    <p>(c) : 이차항 형태를 보임</p>
+
+    <p>(d) : 어떠한 값의 크기에 관계없이 추세나 변동성을 보이지 않음</p>
+  </li>
+</ol>
+
+<h2 id="다중-선형-회귀-모형--회귀-모형의-적합도">다중 선형 회귀 모형 : 회귀 모형의 적합도</h2>
+
+<p><img width="50%" alt="07" src="https://user-images.githubusercontent.com/86525868/191927114-bee94a9d-0445-49d3-b391-7bea2f78f975.png" height="50%" class="align-center" /></p>
+
+<p>데이터를 얼마나 잘 설명하고 있는지를 하나의 숫자로 어떻게 측정하느냐 → 회귀 모형의 적합도</p>
+
+<p>↳ 데이터의 종속변수($y$)가 갖는 변동성을 이용해서 계산</p>
+
+\[\begin{align}
+\sum_{i=1}^n(y_i-\bar{y})^2 &amp;= \sum_{i=1}^n(y_i-\hat{y_i}+\hat{y_i}-\bar{y})^2\\
+&amp;=\sum_{i=1}^n(\hat{y_i}-\bar{y})^2+\sum_{i=1}^n(y_i-\hat{y})^2+2\sum_{i=1}^n(\hat{y_i}-\bar{y})(y_i-\hat{y})\\
+&amp;=\sum_{i=1}^n(y_i-\bar{y})^2+\sum_{i=1}^n\hat{\epsilon}^2
+\end{align}\]
+
+<p><strong>종속변수의 전체 변동성(분산) = 회귀식이 설명할 수 있는 변동성 + 회귀식이 설명할 수 없는 변동성</strong></p>
+
+<p><img width="50%" alt="08" src="https://user-images.githubusercontent.com/86525868/191927116-cc22a35a-9ae3-4a81-a534-232a2fb0401f.png" height="50%" class="align-center align-center" /></p>
+
+<p>좋은 회귀모형이란 종속변수의 전체 변동성중에서 회귀식이 설명할 수 있는 변동성이 커야하고 회귀식이 설명할 수 없는 변동성(잔차)가 작아야함 → 이것을 수치화 한 것이 결정계수, $R^2$</p>
+
+<p><strong>회귀 모형의 적합도 (결정계수, $R^2$) = 전체 변동성 중 회귀식이 설명할 수 있는 변동성의 비율</strong></p>
+
+\[R^2=1-\frac{SSE}{SST}=\frac{SSR}{SST}\qquad \qquad 0\leq R^2\leq1\]
+
+<p><img width="50%" alt="09" src="https://user-images.githubusercontent.com/86525868/191927121-0061a2e7-2574-4eb5-999c-b077a86b2ffe.png" height="50%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p>$R^2=1$ → 회귀직선으로  $Y$의 총변동이 완전히 설명됨 (모든 측정값들이 회귀직선 위에 있는 경우)</p>
+  </li>
+  <li>
+    <p>$R^2=0$  → 추정된 회귀직선은 $X$ 와 $Y$ 의 관계를 전혀 설명하지 못함</p>
+  </li>
+</ul>
+
+<p><img width="50%" alt="10" src="https://user-images.githubusercontent.com/86525868/191927124-3461b4ec-26b6-41b4-8067-2721264250c9.png" height="50%" class="align-center" /></p>
+
+<p>선형회귀분석을 했을 때 $R^2$가 높게 나왔을 때는 분석을 잘 한 것이 아니라 데이터의 입력변수와 출력변수 사이에 강한 선형관계가 있음으로 해석</p>
+
+<p>하지만 $R^2$ 는 유의하지 않은 변수가 추가되어도 항상 증가함 → Adjusted $R^2$는 이러한 단점을 앞에 계수를 곱해줌으로써 보정</p>
+
+\[R^2_{adj}=1-\Big[\frac{n-1}{n-{(p+1)}}\Big]\frac{SSE}{SST}\leq 1-\frac{SSE}{SST}=R^2\]
+
+<p>변수의 수 $p$가 커지게 되면 $R^2_{adj}$는 작아지게 됨 → <strong>변수가 충분한 상황에서 SSE를 줄일 수 없는 효과가 없는 변수가 추가되면 $R^2{adj}$는 변수가 추가됨에 따라 작아질 수 있음</strong></p>
+
+<p><img width="30%" alt="11" src="https://user-images.githubusercontent.com/86525868/191927128-e95b271e-b2fa-4a29-917b-4c2096970a53.png" height="30%" class="align-center" /></p>
+
+<p>Adjusted $R^2$를 사용하면 변수를 무작정 추가하는 상황을 피할 수 있음</p>
+
+<h2 id="예시--도요타-코롤라-중고차-가격-예측">예시 : 도요타 코롤라 중고차 가격 예측</h2>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/191927138-c1c6563f-b2f6-40fb-9421-269a64beaa19.png" alt="12" width="50%" height="50%" class="align-center" /></p>
+
+<ol>
+  <li>
+    <p>데이터 전처리 : 변수 Fuel_Type은 카테고리형 변수이기 때문에 1-of-C coding(one-hot-encoding) 변환</p>
+  </li>
+  <li>
+    <p>데이터 구분 : 가용한 모든 데이터를 전부 학습에 사용하면 과적합 위험 (60%를 training data, 40%를 test data로 사용)</p>
+  </li>
+</ol>
+
+<p><strong>다중회귀분석 결과 해석</strong></p>
+
+<ol>
+  <li>
+    <p>유의 확률 p-value</p>
+
+    <p>선형 회귀 분석에서 해당 변수가 통계적으로 유의미한지 알려주는 지표</p>
+
+    <p>0에 가까울수록 모델링에 중요한 변수이며, 1에 가까울수록 유의미하지 않은 변수</p>
+
+    <p>특정 유의수준($\alpha$)을 설정하여 해당 값 미만의 변수만을 사용하여 다시 선형회귀분석을 구축하는 것도 가능 (주로 $\alpha=0.05$ 사용)</p>
+
+    <p><img width="70%" alt="13" src="https://user-images.githubusercontent.com/86525868/191927144-11dcf04e-c014-4681-8216-4dc4e844f420.png" height="70%" class="align-center" /></p>
+
+    <p>$H_0:\hat{\beta}_i=0$ → 귀무가설 : 설명변수가 종속변수에 영향을 끼치지 않는다</p>
+
+    <p>$H_1:\hat{\beta}_i\neq 0$ → 대립가설 : 설명변수가 종속변수에 영향을 끼친다</p>
+
+    <p>귀무가설을 지지한다(=대립가설을 기각한다)는 설명변수가 종속변수에 영향을 끼지지 않는 것을 의미하고 대립가설을 지지한다(=귀무가설을 기각한다)는 설명변수가 종속변수에 영향을 끼치는 것을 의미함</p>
+
+    <p>↳ <strong>p-value값이 작으면 작을수록 귀무가설을 기각할 가능성이 높음</strong> → <strong>p-value가 작을수록 중요한 변수</strong></p>
+
+    <p>즉, p-value를 통해 <code class="language-plaintext highlighter-rouge">Age_08_04(출시월), KM(주행거리), Fuel_Type_Petrol(가솔린 여부), HP(마력), Quarterly_Tax(세금), Weight(공차중량)</code>가 중요한 변수</p>
+  </li>
+  <li>
+    <p>회귀 계수 Coefficient</p>
+
+    <p>$\hat{y}=\hat{\beta_0}+\hat{\beta_1}x_1+\cdots+\hat{\beta_dx}_d$에서 각 변수에 대응 하는 $\beta$값을 의미</p>
+
+    <p>해당 변수가 1단위 증가할 때 종속변수의 변화량을 의미</p>
+
+    <p>양수이면 해당 설명변수와 종속변수는 양의 상관관계, 음수이면 음의 상관관계를 뜻함</p>
+
+    <p><img width="70%" alt="14" src="https://user-images.githubusercontent.com/86525868/191927146-82a17371-6a0b-408d-a0af-3712d50ca8ac.png" height="70%" class="align-center" /></p>
+
+    <p><code class="language-plaintext highlighter-rouge">Age_08_04</code>의 회귀 계수는 -123.8319168 → 나머지 모든 조건이 동일한 상황에서 1개월 이후 출시되면 가격은 약 123유로만큼 낮아진다.</p>
+
+    <p><code class="language-plaintext highlighter-rouge">KM</code>의 회귀 계수는 -0.02 → 나머지 모든 조건이 동일한 상황에서 1km 더 주행했을 경우 가격은 0.02유로만큼 낮아진다.</p>
+
+    <p>↳ 그렇다고해서 <code class="language-plaintext highlighter-rouge">Age_08_04</code>가 <code class="language-plaintext highlighter-rouge">KM</code>보다 회귀 계수가 더 높다고해서 더 중요한 변수는 아님 (두 변수 사이의 측정 단위가 다르기 때문)</p>
+  </li>
+</ol>
+
+<h3 id="회귀모형-성능-평가">회귀모형 성능 평가</h3>
+
+<p><strong>분류문제나 회귀문제를 풀 수 있는 다양한 알고리즘 존재</strong></p>
+
+<ul>
+  <li>Classification : Naive bayes, Linear discriminant, K-nearest neighbor, Classification trees, etc</li>
+  <li>Prediction : Mutiple linear regression, Neural networks, Regression trees, etc</li>
+</ul>
+
+<p><strong>어떤 알고리즘은 최적의 하이퍼파라미터 설정이 필요함</strong></p>
+
+<ul>
+  <li>K-nearest Neighorhood : 이웃 개체의 수 (k), Neural networks : 은닉 노드의 수 등</li>
+</ul>
+
+<p><strong>주어진 문제를 해결하기 위한 최적의 방법론을 선택하기 위해 개별 모델을 동등한 조건에서 평가할 필요가 있음</strong></p>
+
+<ul>
+  <li>검증 데이터 : 다양한 파라미터 조합 중 최적의 파라미터를 찾는데 주로 사용</li>
+  <li>테스트 데이터 : 여러 기계학습 알고리즘 중 최적의 알고리즘을 찾는데 주로 사용</li>
+</ul>
+
+<p><strong>시간 정보를 고려할 필요가 없을 경우</strong></p>
+
+<ul>
+  <li>
+    <p>원래 데이터를 무작위 추출 방식으로 학습:검증:테스트 데이터셋 으로 분할 (검증 밑 체스트셋의 데이터가 충분히 확보할 수 있는 범위내에서 6:2:2, 8:1:1까지 분할 가능)</p>
+  </li>
+  <li>
+    <p>원칙적으로 무작위로 분할한 데이터셋 구축을 충분히 반복하여 모델의 예측 성능과 안정성을 함께 비교해야함</p>
+
+    <ul>
+      <li>
+        <p>무작위 추출은 데이터셋 단위로 수행하며, 한번 추출된 데이터셋으로 비교 대상인 모든 후보 알고리즘에 일괄 적용해야함</p>
+      </li>
+      <li>
+        <p>알고리즘마다 서로 다르게 무작위 추출된 데이터 셋으로 학습을 수행할 경우 공정한 비교가 불가능함</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img width="70%" alt="15" src="https://user-images.githubusercontent.com/86525868/191927148-3bf9f57d-42a0-4070-a43f-2f31169a9adb.png" height="70%" class="align-center" /></p>
+
+<p><img width="50%" alt="16" src="https://user-images.githubusercontent.com/86525868/191927151-d9becfd4-8c76-41ae-ba9f-273b73c72ef5.png" height="50%" class="align-center" /></p>
+
+<p><strong>시간 정보를 반드시 고려해야 하는 경우</strong></p>
+
+<ul>
+  <li>
+    <p>반드시 학습:검증:테스트는 시간 순서대로 배열이 되어 있어야 함</p>
+
+    <ul>
+      <li>무작위 추출 방식을 사용할 경우, 미래 정보를 활용하여 과거를 예측하는 오류를 범하게 됨</li>
+    </ul>
+  </li>
+  <li>
+    <p>1번의 검증으로는 앞 선 방식과 같이 모델 성능의 안정성을 평가할 수 없음으로 Sliding Window 방식을 이용한 Time-Series Cross Validation 기법을 활용함 (10개월치의 데이터가 존재하면, 학습:검증:테스트를 2개월:1개월:1개월로 정의, window size=1개월)</p>
+  </li>
+</ul>
+
+<p><img width="70%" alt="17" src="https://user-images.githubusercontent.com/86525868/191927155-7cb65e1b-0c84-45a4-9630-70e4554c98eb.png" height="70%" class="align-center" /></p>
+
+<h3 id="예시--p개의-설비-파라미터로부터-각-제품glass의-수율을-추정하는-모형">예시 : p개의 설비 파라미터로부터 각 제품(GLASS)의 수율을 추정하는 모형</h3>
+
+<p><img width="50%" alt="18" src="https://user-images.githubusercontent.com/86525868/191927157-cdc4d4be-7aa7-46fe-9b96-783deab42b8d.png" height="50%" class="align-center" /></p>
+
+<h4 id="지표-1--평균오차-average-error">지표 1 : 평균오차, Average Error</h4>
+
+<p>실제 값에 비해 과대/과소 추정 여부를 판단 (부호로 인해 잘못된 결론을 내릴 위험이 있음)</p>
+
+\[\text{Average Error}=\frac{1}{n}\sum_{i=1}^n(y_i-y'_i)\]
+
+<p><img width="50%" alt="20" src="https://user-images.githubusercontent.com/86525868/191927171-b7544d1f-910b-49ce-aabe-4732173d59d8.png" height="50%" class="align-center" /></p>
+
+<p>↳ Average Error는 0.1로 정확한 듯 보이지만 실제값과 예측값의 차이가 양수인 값과 음수인 값들이 상쇄되면서 평균오차가 낮아진 것</p>
+
+<h4 id="지표-2--평균-절대-오차-mean-absolute-error-mae">지표 2 : 평균 절대 오차 (Mean Absolute Error, MAE)</h4>
+
+<p>실제 값과 예측 값 사이의 절대적인 오차의 평균을 측정</p>
+
+<p><img width="50%" alt="21" src="https://user-images.githubusercontent.com/86525868/191927173-a729cb5e-cbaf-4183-ab79-559cfbfb34c8.png" height="50%" class="align-center" /></p>
+
+<ul>
+  <li>
+    <p>MAE의 단점 : 실제 값과 예측된 값의 절대 차이에 대한 정보만 제공하고 상대적인 차이에 대한 정보를 제공하지 못함</p>
+
+    <p><img width="50%" alt="22" src="https://user-images.githubusercontent.com/86525868/191927175-f1d492a2-11b9-461f-bbb0-8a267863469a.png" height="50%" class="align-center" /></p>
+
+    <p>두 모델의 MAE는 1로 같지만 절대적인 $Y$라는 정답의 크기 차이가 크기 때문에 왜곡된 결과를 도출</p>
+  </li>
+</ul>
+
+<h4 id="지표-3--평균-절대-비율-오차-mean-absolute-percentage-error-mape">지표 3 : 평균 절대 비율 오차 (Mean Absolute Percentage Error, MAPE)</h4>
+
+<p>실제값 대비 얼마나 예측 차이가 있는지를 비율(%)로 측정</p>
+
+<p>상대적인 오차율이 절대적인 오차 수치보다 제조업에서의 품질관리와 같은 분야에서 자주 사용</p>
+
+<p>↳ Target이 넘지 말아야 할 상한선과 하한선 사이에서 얼마만큼의 변동성을 가지고 있는지가 중요한 상황에서 주로 사용</p>
+
+\[MAPE=\frac{1}{n}\sum_{i=1}^n\Bigg|\frac{y_i-y'_i}{y_i}\Bigg|\]
+
+<p><img width="50%" alt="23" src="https://user-images.githubusercontent.com/86525868/191927179-dfedd65e-7e1b-4221-8f86-a4b55f24ab76.png" height="50%" class="align-center" /></p>
+
+<h3 id="mae와-mape를-목적함수로-사용할-경우-추정되는-최귀식의-차이">MAE와 MAPE를 목적함수로 사용할 경우 추정되는 최귀식의 차이</h3>
+
+<p><img width="50%" alt="24" src="https://user-images.githubusercontent.com/86525868/191927180-512dd4ab-08e6-4f3b-9578-72288be81523.png" height="50%" class="align-center" /></p>
+
+<p>두번째 그래프를 보면 MAPE는 (실제값과 추정값의 차이 / 정답) 을 나타내기 때문에 실제 정답이 0에 가까울 때는 값을 크거나 작게 추정하려고 하지 않음 → 0에 가까운 값에서는 MAPE가 MAE보다 과소 추정하는 것을 볼 수 있음</p>
+
+<h4 id="mae와-mape-중-어느-지표를-더-중점적으로-고려해야-하는가">MAE와 MAPE 중 어느 지표를 더 중점적으로 고려해야 하는가?</h4>
+
+<p>Domain 마다 다름</p>
+
+<ul>
+  <li>절대적 차이가 중요한 분야 (추천 시스템의 평점 예측) → MAE</li>
+  <li>상대적 차이가 중요한 분야 (제조업에서의 품질지표 관리) →  MAPE</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/191927183-cb94204c-6b31-4cf9-b6ec-f1fec9e9e165.png" alt="25" width="30%" height="30%" class="align-center" /></p>
+
+<p>영화 D에 대한 절대 오차는 1, 상대 오차는 12.5% ($\frac{1}{8}\times 100$)</p>
+
+<p>하지만, 평점 1점을 2점으로 예측한 상대 오차는 100%, 평점 10점을 9점으로 예측한 오차는 10%로 다름</p>
+
+<p>↳ 상대적인 오차가 아닌 절대적인 오차가 중요함 →  MAE를 주 평가 지표로 사용</p>
+
+<h4 id="지표-4--5--mean-squared-error-mse--root-mean-squared-error-rmse">지표 4 &amp; 5 : (Mean Squared Error, MSE / Root Mean Squared Error, RMSE)</h4>
+
+<p>부호의 영향을 제거하기 위해 절대값이 아닌 제곱(제곱합의 제곱근)을 취한 지표</p>
+
+<p>논문에서는 제곱 형태인 MSE, RMSE를 더 선호하지만 현업에서는 직관적으로 볼 수 있는 MAE, MAPE를 더 많이 사용함</p>
+
+\[MSE=\frac{1}{n}\sum_{i=1}^n(y_i-y'_i)^2 \quad , \quad RSME=\sqrt{\frac{1}{n}\sum_{i=1}^n(y_i-y'_i)^2}\]
+
+<p><img width="50%" alt="26" src="https://user-images.githubusercontent.com/86525868/191927185-8f831501-ff5d-486c-99a0-94473e783bc9.png" height="50%" class="align-center" /></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#data-analysis" class="page__taxonomy-item" rel="tag">Data Analysis</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#linear-regression" class="page__taxonomy-item" rel="tag">Linear Regression</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#da" class="page__taxonomy-item" rel="tag">da</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2022-09-23T00:00:00+09:00">September 23, 2022</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BData+Analysis%5D+1.+Multiple+Linear+Regression+Analysis%20http%3A%2F%2Flocalhost%3A4000%2Fda%2Fanalysis-01%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fda%2Fanalysis-01%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fda%2Fanalysis-01%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/cs231n/cs231n-05/" class="pagination--pager" title="[CS231N] 6. Training Neural Network 1
+">이전</a>
+    
+    
+      <a href="/da/LogisticRegression-01/" class="pagination--pager" title="[Data Analysis] 2. Logistic Regression
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/da/analysis-01/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/da/analysis-01"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

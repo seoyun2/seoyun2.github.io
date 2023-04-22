@@ -1,0 +1,1279 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[SQL Hackerrank] Easy - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[SQL Hackerrank] Easy">
+<meta property="og:url" content="http://localhost:4000/hackerrank/sql-codingtest-1/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-04-17T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/hackerrank/sql-codingtest-1/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[SQL Hackerrank] Easy">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2023-04-17T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[SQL Hackerrank] Easy
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#q1">Q1.</a></li>
+  <li><a href="#q2">Q2.</a></li>
+  <li><a href="#q3">Q3.</a></li>
+  <li><a href="#q4">Q4.</a></li>
+  <li><a href="#q5">Q5.</a></li>
+  <li><a href="#weather-observation-station-6">Weather Observation Station 6</a></li>
+  <li><a href="#weather-observation-station-7">Weather Observation Station 7</a></li>
+  <li><a href="#weather-observation-station-8">Weather Observation Station 8</a></li>
+  <li><a href="#weather-observation-station-9">Weather Observation Station 9</a></li>
+  <li><a href="#weather-observation-station-10">Weather Observation Station 10</a></li>
+  <li><a href="#weather-observation-station-11">Weather Observation Station 11</a></li>
+  <li><a href="#weather-observation-station-12">Weather Observation Station 12</a></li>
+  <li><a href="#higher-than-75-marks">Higher than 75 Marks</a></li>
+  <li><a href="#revising-aggregations">Revising Aggregations</a></li>
+  <li><a href="#population-density-difference">Population Density Difference</a></li>
+  <li><a href="#the-blunder">The Blunder</a></li>
+  <li><a href="#top-earners">Top Earners</a></li>
+  <li><a href="#weather-observation-station-2">Weather Observation Station 2</a></li>
+  <li><a href="#weather-observation-station-13">Weather Observation Station 13</a></li>
+  <li><a href="#weather-observation-station-14">Weather Observation Station 14</a></li>
+  <li><a href="#weather-observation-station-15">Weather Observation Station 15</a></li>
+  <li><a href="#weather-observation-station-16">Weather Observation Station 16</a></li>
+  <li><a href="#weather-observation-station-17">Weather Observation Station 17</a></li>
+  <li><a href="#weather-observation-station-18">Weather Observation Station 18</a></li>
+  <li><a href="#weather-observation-station-19">Weather Observation Station 19</a></li>
+  <li><a href="#weather-observation-station-20">Weather Observation Station 20</a></li>
+  <li><a href="#population-census">Population Census</a></li>
+  <li><a href="#average-population-of-each-continent">Average Population of Each Continent</a></li>
+  <li><a href="#the-report">The Report</a></li>
+  <li><a href="#top-competitors">Top Competitors</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p><img width="40%" alt="스크린샷 2023-04-04 17 11 24" src="https://user-images.githubusercontent.com/86525868/232437808-8bba0de0-0396-47a3-8739-8c5d47ebbdf8.png" height="40%" class="align-center" /></p>
+
+<h5 id="q1">Q1.</h5>
+
+<p>Query all columns for all American cities in the <strong>CITY</strong> table with populations larger than <code class="language-plaintext highlighter-rouge">100000</code>. The <strong>CountryCode</strong> for America is <code class="language-plaintext highlighter-rouge">USA</code>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">CITY</span> <span class="k">WHERE</span> <span class="n">POPULATION</span> <span class="o">&gt;</span> <span class="mi">100000</span>
+</code></pre></div></div>
+
+<h5 id="q2">Q2.</h5>
+
+<p>Query the <strong>NAME</strong> field for all American cities in the <strong>CITY</strong> table with populations larger than <code class="language-plaintext highlighter-rouge">120000</code>. The <em>CountryCode</em> for America is <code class="language-plaintext highlighter-rouge">USA</code>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">NAME</span> <span class="k">FROM</span> <span class="n">CITY</span> <span class="k">WHERE</span> <span class="n">POPULATION</span> <span class="o">&gt;</span> <span class="mi">12000</span> <span class="k">AND</span> <span class="n">COUNTRYCODE</span> <span class="o">=</span> <span class="s1">'USA'</span>
+</code></pre></div></div>
+
+<p><img width="40%" alt="image-20230404171936074" src="https://user-images.githubusercontent.com/86525868/232437824-a65d857b-04f1-47b6-aebd-63b0349cc439.png" height="40%" class="align-center" /></p>
+
+<h5 id="q3">Q3.</h5>
+
+<p>Query a list of <strong>CITY</strong> names from <strong>STATION</strong> for cities that have an even <strong>ID</strong> number. Print the results in any order, but exclude duplicates from the answer.</p>
+
+<pre><code class="language- sql">SELECT DISTINCT CITY FROM STATION WHERE ID % 2 = 0
+SELECT DISTINCT CITY FROM STATION WHERE MOD(ID, 2) = 0
+</code></pre>
+
+<h5 id="q4">Q4.</h5>
+
+<p>Find the difference between the total number of <strong>CITY</strong> entries in the table and the number of distinct <strong>CITY</strong> entries in the table.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">CITY</span><span class="p">)</span> <span class="o">-</span> <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">CITY</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">STATION</span>
+</code></pre></div></div>
+
+<h5 id="q5">Q5.</h5>
+
+<p>Query the two cities in <strong>STATION</strong> with the shortest and longest <em>CITY</em> names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">SELECT</span> <span class="n">CITY</span><span class="p">,</span> <span class="k">LENGTH</span><span class="p">(</span><span class="n">CITY</span><span class="p">)</span> 
+	<span class="k">FROM</span> <span class="n">STATION</span>
+	<span class="k">WHERE</span> <span class="k">LENGTH</span><span class="p">(</span><span class="n">CITY</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MIN</span><span class="p">(</span><span class="k">LENGTH</span><span class="p">(</span><span class="n">CITY</span><span class="p">))</span> <span class="k">FROM</span> <span class="n">STATION</span><span class="p">)</span>
+ 	<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">CITY</span> 
+ 	<span class="k">LIMIT</span> <span class="mi">1</span><span class="p">)</span>
+ 	
+<span class="k">UNION</span> 
+
+<span class="p">(</span><span class="k">SELECT</span> <span class="n">CITY</span><span class="p">,</span> <span class="k">LENGTH</span><span class="p">(</span><span class="n">CITY</span><span class="p">)</span>
+	<span class="k">FROM</span> <span class="n">STATION</span>
+	<span class="k">WHERE</span> <span class="k">LENGTH</span><span class="p">(</span><span class="n">CITY</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="k">LENGTH</span><span class="p">(</span><span class="n">CITY</span><span class="p">))</span> <span class="k">FROM</span> <span class="n">STATION</span><span class="p">)</span>
+	<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">CITY</span> 
+	<span class="k">LIMIT</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-6">Weather Observation Station 6</h5>
+
+<p>Query the list of <em>CITY</em> names starting with vowels (i.e., <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">e</code>, <code class="language-plaintext highlighter-rouge">i</code>, <code class="language-plaintext highlighter-rouge">o</code>, or <code class="language-plaintext highlighter-rouge">u</code>) from <strong>STATION</strong>. Your result <em>cannot</em> contain duplicates.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CITY</span> <span class="k">FROM</span> <span class="n">STATION</span> 
+	<span class="k">WHERE</span> <span class="k">LEFT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-7">Weather Observation Station 7</h5>
+
+<p>Query the list of <em>CITY</em> names ending with vowels (a, e, i, o, u) from <strong>STATION</strong>. Your result <em>cannot</em> contain duplicates.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CITY</span> 
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="k">RIGHT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-8">Weather Observation Station 8</h5>
+
+<p>Query the list of <em>CITY</em> names from <strong>STATION</strong> which have vowels (i.e., <em>a</em>, <em>e</em>, <em>i</em>, <em>o</em>, and <em>u</em>) as both their first <em>and</em> last characters. Your result cannot contain duplicates.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CITY</span> 
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="k">LEFT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span> <span class="k">AND</span> <span class="k">RIGHT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-9">Weather Observation Station 9</h5>
+
+<p>Query the list of <em>CITY</em> names from <strong>STATION</strong> that <em>do not start</em> with vowels. Your result cannot contain duplicates.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CITY</span> 
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="k">LEFT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-10">Weather Observation Station 10</h5>
+
+<p>Query the list of <em>CITY</em> names from <strong>STATION</strong> that <em>do not end</em> with vowels. Your result cannot contain duplicates.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CITY</span> 
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="k">RIGHT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-11">Weather Observation Station 11</h5>
+
+<p>Query the list of <em>CITY</em> names from <strong>STATION</strong> that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CITY</span> 
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="k">LEFT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span> <span class="k">OR</span> <span class="k">RIGHT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-12">Weather Observation Station 12</h5>
+
+<p>Query the list of <em>CITY</em> names from <strong>STATION</strong> that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CITY</span> 
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="k">LEFT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span> <span class="k">AND</span> <span class="k">RIGHT</span><span class="p">(</span><span class="n">CITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="higher-than-75-marks">Higher than 75 Marks</h5>
+
+<p>Query the <em>Name</em> of any student in <strong>STUDENTS</strong> who scored higher than <em>Marks</em>. Order your output by the <em>last three characters</em> of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending <em>ID</em>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">NAME</span> 
+    <span class="k">FROM</span> <span class="n">STUDENTS</span> 
+    <span class="k">WHERE</span> <span class="n">MARKS</span> <span class="o">&gt;</span> <span class="mi">75</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">RIGHT</span><span class="p">(</span><span class="n">NAME</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">ID</span> <span class="k">ASC</span>
+</code></pre></div></div>
+
+<p><img width="40%" alt="스크린샷 2023-04-05 10 25 25" src="https://user-images.githubusercontent.com/86525868/232437818-97c0043b-e995-4529-92e7-71eb8d1c4bc2.png" height="40%" class="align-center" /></p>
+
+<h5 id="revising-aggregations">Revising Aggregations</h5>
+
+<p>Query the total population of all cities in <strong>CITY</strong> where <em>District</em> is <strong>California</strong>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="n">POPULATION</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">CITY</span> 
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">DISTRICT</span> 
+    <span class="k">HAVING</span> <span class="n">DISTRICT</span> <span class="o">=</span> <span class="s1">'California'</span>
+</code></pre></div></div>
+
+<h5 id="population-density-difference">Population Density Difference</h5>
+
+<p>Query the difference between the maximum and minimum populations in <strong>CITY</strong>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">POPULATION</span><span class="p">)</span> <span class="o">-</span> <span class="k">MIN</span><span class="p">(</span><span class="n">POPULATION</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">CITY</span> 
+</code></pre></div></div>
+
+<h5 id="the-blunder">The Blunder</h5>
+
+<p>Samantha was tasked with calculating the average monthly salaries for all employees in the <strong>EMPLOYEES</strong> table, but did not realize her keyboard’s key was broken until after completing the calculation. She wants your help finding the difference between her miscalculation (using salaries with any zeros removed), and the actual average salary.</p>
+
+<p>Write a query calculating the amount of error (i.e.: $actual - miscalculated$ average monthly salaries), and round it up to the next integer.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">CEIL</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">SALARY</span><span class="p">)</span> <span class="o">-</span> <span class="k">AVG</span><span class="p">(</span><span class="k">REPLACE</span><span class="p">(</span><span class="k">CAST</span><span class="p">(</span><span class="n">SALARY</span> <span class="k">AS</span> <span class="nb">CHAR</span><span class="p">),</span><span class="s1">'0'</span> <span class="p">,</span> <span class="s1">''</span><span class="p">)))</span>
+    <span class="k">FROM</span> <span class="n">EMPLOYEES</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>SQL Format Number Options</p>
+
+  <p><code class="language-plaintext highlighter-rouge">CAST</code> : 자료형 변환 <code class="language-plaintext highlighter-rouge">CAST(1234.12 AS INT)</code></p>
+
+  <p><code class="language-plaintext highlighter-rouge">CONVERT</code> : 자료형 변환 <code class="language-plaintext highlighter-rouge">CONVERT(INT, 1234.12)</code></p>
+
+  <p><code class="language-plaintext highlighter-rouge">ROUND</code> : 반올림<code class="language-plaintext highlighter-rouge">ROUND(1234.1234, 2)</code> → <code class="language-plaintext highlighter-rouge">1234.1200</code></p>
+
+  <p><code class="language-plaintext highlighter-rouge">CEILING</code> : 정수값으로 올림 <code class="language-plaintext highlighter-rouge">CEILING(1234.12)</code> → <code class="language-plaintext highlighter-rouge">1234</code></p>
+
+  <p><code class="language-plaintext highlighter-rouge">FLOOR</code> : 소수점 아래 값 버림 <code class="language-plaintext highlighter-rouge">FLOOR(1234.1234)</code> → <code class="language-plaintext highlighter-rouge">1234</code></p>
+</blockquote>
+
+<h5 id="top-earners">Top Earners</h5>
+
+<p>We define an employee’s <em>total earnings</em> to be their monthly $salary \times months$ worked, and the <em>maximum total earnings</em> to be the maximum total earnings for any employee in the <strong>Employee</strong> table. Write a query to find the <em>maximum total earnings</em> for all employees as well as the total number of employees who have maximum total earnings. Then print these values as 2 space-separated integers.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">MONTHS</span><span class="o">*</span><span class="n">SALARY</span> <span class="k">AS</span> <span class="n">EARNINGS</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">EMPLOYEE</span>
+    <span class="k">WHERE</span> <span class="n">MONTHS</span><span class="o">*</span><span class="n">SALARY</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">MONTHS</span><span class="o">*</span><span class="n">SALARY</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">EMPLOYEE</span><span class="p">)</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">EARNINGS</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-2">Weather Observation Station 2</h5>
+
+<p>Query the following two values from the <strong>STATION</strong> table:</p>
+
+<ol>
+  <li>The sum of all values in <em>LAT_N</em> rounded to a scale of 2 decimal places.</li>
+  <li>The sum of all values in <em>LONG_W</em> rounded to a scale of 2 decimal places.</li>
+</ol>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="k">AS</span> <span class="n">LAT</span><span class="p">,</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">LONG_W</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="k">AS</span> <span class="n">LON</span>
+    <span class="k">FROM</span> <span class="n">STATION</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-13">Weather Observation Station 13</h5>
+
+<p>Query the sum of <em>Northern Latitudes</em> (<em>LAT_N</em>) from <strong>STATION</strong> having values greater than $38.7880$ and less than $137.2345$ . Truncate your answer to decimal places.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">TRUNCATE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="k">BETWEEN</span> <span class="mi">38</span><span class="p">.</span><span class="mi">7880</span> <span class="k">AND</span> <span class="mi">137</span><span class="p">.</span><span class="mi">2345</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-14">Weather Observation Station 14</h5>
+
+<p>Query the greatest value of the <em>Northern Latitudes</em> (<em>LAT_N</em>) from <strong>STATION</strong> that is less than $137.2345$ . Truncate your answer to 4 decimal places.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">TRUNCATE</span><span class="p">(</span><span class="k">MAX</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="o">&lt;</span> <span class="mi">137</span><span class="p">.</span><span class="mi">2345</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-15">Weather Observation Station 15</h5>
+
+<p>Query the <em>Western Longitude</em> (<em>LONG_W</em>) for the largest <em>Northern Latitude</em> (<em>LAT_N</em>) in <strong>STATION</strong> that is less than $137.2345$. Round your answer to 4 decimal places.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">LONG_W</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">STATION</span>
+    <span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="o">&lt;</span> <span class="mi">137</span><span class="p">.</span><span class="mi">2345</span> <span class="k">AND</span> <span class="n">LAT_N</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">)</span>
+                                            <span class="k">FROM</span> <span class="n">STATION</span>
+                                            <span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="o">&lt;</span> <span class="mi">137</span><span class="p">.</span><span class="mi">2345</span><span class="p">)</span>
+                                            
+<span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">LONG_W</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+	<span class="k">FROM</span> <span class="n">STATION</span> 
+	<span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="o">&lt;</span> <span class="mi">137</span><span class="p">.</span><span class="mi">2345</span>
+	<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">LAT_N</span> <span class="k">DESC</span>
+	<span class="k">LIMIT</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-16">Weather Observation Station 16</h5>
+
+<p>Query the smallest <em>Northern Latitude</em> (<em>LAT_N</em>) from <strong>STATION</strong> that is greater than $38.7780$. Round your answer to 1 decimal places.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="o">&gt;</span> <span class="mi">38</span><span class="p">.</span><span class="mi">7780</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">LAT_N</span> <span class="k">ASC</span>
+    <span class="k">LIMIT</span> <span class="mi">1</span>	
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-17">Weather Observation Station 17</h5>
+
+<p>Query the <em>Western Longitude</em> (<em>LONG_W</em>)where the smallest <em>Northern Latitude</em> (<em>LAT_N</em>) in <strong>STATION</strong> is greater than $38.7780$. Round your answer to 1 decimal places.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">LONG_W</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+    <span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="o">&gt;</span> <span class="mi">38</span><span class="p">.</span><span class="mi">7780</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">LAT_N</span>
+    <span class="k">LIMIT</span> <span class="mi">1</span>	
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-18">Weather Observation Station 18</h5>
+
+<p>Consider $P_1(a, b)$ and $P_2(c, d)$ to be two points on a <em>2D</em> plane.</p>
+
+<ul>
+  <li>$a$ happens to equal the minimum value in <em>Northern Latitude</em> (<em>LAT_N</em> in <strong>STATION</strong>).</li>
+  <li>$b$ happens to equal the minimum value in <em>Western Longitude</em> (<em>LONG_W</em> in <strong>STATION</strong>).</li>
+  <li>$c$ happens to equal the maximum value in <em>Northern Latitude</em> (<em>LAT_N</em> in <strong>STATION</strong>).</li>
+  <li>$d$ happens to equal the maximum value in <em>Western Longitude</em> (<em>LONG_W</em> in <strong>STATION</strong>).</li>
+</ul>
+
+<p>Query the <a href="https://xlinux.nist.gov/dads/HTML/manhattanDistance.html">Manhattan Distance</a> between points $P_1$ and $P_2$and round it to a scale of decimal places.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">ABS</span><span class="p">(</span><span class="k">MAX</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">)</span><span class="o">-</span><span class="k">MIN</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">))</span><span class="o">+</span><span class="k">ABS</span><span class="p">(</span><span class="k">MAX</span><span class="p">(</span><span class="n">LONG_W</span><span class="p">)</span><span class="o">-</span><span class="k">MIN</span><span class="p">(</span><span class="n">LONG_W</span><span class="p">)),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-19">Weather Observation Station 19</h5>
+
+<p>Consider $P_1(a, c)$ and $P_2(b, d)$ to be two points on a 2D plane where $a, b$ are the respective minimum and maximum values of <em>Northern Latitude</em> (<em>LAT_N</em>) and $c, d$ are the respective minimum and maximum values of <em>Western Longitude</em> (<em>LONG_W</em>) in <strong>STATION</strong>.</p>
+
+<p>Query the <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean Distance</a> between points and and <em>format your answer</em> to display decimal digits.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">SQRT</span><span class="p">(</span><span class="n">POWER</span><span class="p">((</span><span class="k">MAX</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">)</span><span class="o">-</span><span class="k">MIN</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">POWER</span><span class="p">((</span><span class="k">MAX</span><span class="p">(</span><span class="n">LONG_W</span><span class="p">)</span><span class="o">-</span><span class="k">MIN</span><span class="p">(</span><span class="n">LONG_W</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">STATION</span> 
+</code></pre></div></div>
+
+<h5 id="weather-observation-station-20">Weather Observation Station 20</h5>
+
+<p>A <em><a href="https://en.wikipedia.org/wiki/Median">median</a></em> is defined as a number separating the higher half of a data set from the lower half. Query the <em>median</em> of the <em>Northern Latitudes</em> (<em>LAT_N</em>) from <strong>STATION</strong> and round your answer to decimal places.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="k">CASE</span> <span class="mi">1</span>
+<span class="k">WITH</span> <span class="k">TEMP</span> <span class="k">AS</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">PERCENT_RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">LAT_N</span><span class="p">)</span> <span class="k">AS</span> <span class="n">RNK</span><span class="p">,</span> <span class="n">LAT_N</span>
+              	<span class="k">FROM</span> <span class="n">STATION</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+	<span class="k">FROM</span> <span class="k">TEMP</span>
+	<span class="k">WHERE</span> <span class="n">RNK</span><span class="o">=</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span>
+
+<span class="o">#</span> <span class="k">CASE</span> <span class="mi">2</span>
+<span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+	<span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">LAT_N</span><span class="p">,</span> <span class="n">PERCENT_RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">LAT_N</span> <span class="k">ASC</span><span class="p">)</span> <span class="n">percent</span>
+      		<span class="k">FROM</span> <span class="n">STATION</span><span class="p">)</span> <span class="n">A</span>
+	<span class="k">WHERE</span> <span class="n">percent</span><span class="o">=</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span>
+
+<span class="o">#</span> <span class="k">CASE</span> <span class="mi">3</span>
+<span class="k">SELECT</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">LAT_N</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">STATION</span> <span class="k">AS</span> <span class="n">S</span>
+    <span class="k">WHERE</span> <span class="p">(</span> <span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
+                <span class="k">FROM</span> <span class="n">STATION</span> 
+                <span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="o">&lt;</span> <span class="n">S</span><span class="p">.</span><span class="n">LAT_N</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+                                            <span class="k">FROM</span> <span class="n">STATION</span> 
+                                            <span class="k">WHERE</span> <span class="n">LAT_N</span> <span class="o">&gt;</span> <span class="n">S</span><span class="p">.</span><span class="n">LAT_N</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="population-census">Population Census</h5>
+
+<p>Given the <strong>CITY</strong> and <strong>COUNTRY</strong> tables, query the sum of the populations of all cities where the <em>CONTINENT</em> is <em>‘Asia’</em>.</p>
+
+<p><strong>Note:</strong> <em>CITY.CountryCode</em> and <em>COUNTRY.Code</em> are matching key columns.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="n">C1</span><span class="p">.</span><span class="n">POPULATION</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">CITY</span> <span class="n">C1</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">COUNTRY</span> <span class="n">C2</span> <span class="k">ON</span> <span class="n">C1</span><span class="p">.</span><span class="n">COUNTRYCODE</span> <span class="o">=</span> <span class="n">C2</span><span class="p">.</span><span class="n">CODE</span> 
+    <span class="k">WHERE</span> <span class="n">C2</span><span class="p">.</span><span class="n">CONTINENT</span> <span class="k">LIKE</span> <span class="s1">'%Asia%'</span>
+    
+<span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="n">C1</span><span class="p">.</span><span class="n">POPULATION</span><span class="p">)</span>   
+    <span class="k">FROM</span> <span class="n">CITY</span> <span class="n">C1</span><span class="p">,</span> <span class="n">COUNTRY</span> <span class="n">C2</span> 
+    <span class="k">WHERE</span> <span class="n">C1</span><span class="p">.</span><span class="n">COUNTRYCODE</span> <span class="o">=</span> <span class="n">C2</span><span class="p">.</span><span class="n">CODE</span> <span class="k">AND</span> <span class="n">C2</span><span class="p">.</span><span class="n">CONTINENT</span> <span class="k">LIKE</span> <span class="s1">'%Asia%'</span>
+</code></pre></div></div>
+
+<h5 id="average-population-of-each-continent">Average Population of Each Continent</h5>
+
+<p>Given the <strong>CITY</strong> and <strong>COUNTRY</strong> tables, query the names of all the continents (<em>COUNTRY.Continent</em>) and their respective average city populations (<em>CITY.Population</em>) rounded <em>down</em> to the nearest integer.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">C2</span><span class="p">.</span><span class="n">CONTINENT</span><span class="p">,</span> <span class="n">FLOOR</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">C1</span><span class="p">.</span><span class="n">POPULATION</span><span class="p">))</span>
+    <span class="k">FROM</span> <span class="n">CITY</span> <span class="n">C1</span><span class="p">,</span> <span class="n">COUNTRY</span> <span class="n">C2</span>
+    <span class="k">WHERE</span> <span class="n">C1</span><span class="p">.</span><span class="n">COUNTRYCODE</span> <span class="o">=</span> <span class="n">C2</span><span class="p">.</span><span class="n">CODE</span> 
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">C2</span><span class="p">.</span><span class="n">CONTINENT</span>
+</code></pre></div></div>
+
+<h5 id="the-report">The Report</h5>
+
+<p><em>Ketty</em> gives <em>Eve</em> a task to generate a report containing three columns: <em>Name</em>, <em>Grade</em> and <em>Mark</em>. <em>Ketty</em> doesn’t want the NAMES of those students who received a grade lower than <em>8</em>. The report must be in descending order by grade – i.e. higher grades are entered first. If there is more than one student with the same grade (8-10) assigned to them, order those particular students by their name alphabetically. Finally, if the grade is lower than 8, use “NULL” as their name and list them by their grades in descending order. If there is more than one student with the same grade (1-7) assigned to them, order those particular students by their marks in ascending order.</p>
+
+<p>Write a query to help Eve.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">IF</span><span class="p">(</span><span class="k">G</span><span class="p">.</span><span class="n">GRADE</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">NAME</span><span class="p">),</span> <span class="k">G</span><span class="p">.</span><span class="n">GRADE</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">MARKS</span> 
+    <span class="k">FROM</span> <span class="n">STUDENTS</span> <span class="n">S</span><span class="p">,</span> <span class="n">GRADES</span> <span class="k">G</span>
+    <span class="k">WHERE</span> <span class="n">S</span><span class="p">.</span><span class="n">MARKS</span> <span class="k">BETWEEN</span> <span class="k">G</span><span class="p">.</span><span class="n">MIN_MARK</span> <span class="k">AND</span> <span class="k">G</span><span class="p">.</span><span class="n">MAX_MARK</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">G</span><span class="p">.</span><span class="n">GRADE</span> <span class="k">DESC</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">NAME</span> <span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">MARKS</span> 
+</code></pre></div></div>
+
+<h5 id="top-competitors">Top Competitors</h5>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#coding-test" class="page__taxonomy-item" rel="tag">coding test</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#haker-rank" class="page__taxonomy-item" rel="tag">haker rank</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sql" class="page__taxonomy-item" rel="tag">sql</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#hackerrank" class="page__taxonomy-item" rel="tag">hackerrank</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-04-17T00:00:00+09:00">April 17, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BSQL+Hackerrank%5D+Easy%20http%3A%2F%2Flocalhost%3A4000%2Fhackerrank%2Fsql-codingtest-1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhackerrank%2Fsql-codingtest-1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fhackerrank%2Fsql-codingtest-1%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/ds/ensemble-3/" class="pagination--pager" title="[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+">이전</a>
+    
+    
+      <a href="/kaggle/porti-kaggle/" class="pagination--pager" title="[Kaggle] Porti Seguro’s Safe Driver Prediction
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-1/" rel="permalink">[Data Science] 앙상블(Ensemble) 1. 배깅(Bagging), 랜덤 포레스트(Random Forest)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/hackerrank/sql-codingtest-1/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/hackerrank/sql-codingtest-1"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

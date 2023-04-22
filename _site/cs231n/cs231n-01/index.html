@@ -1,0 +1,1178 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[CS231N] 2. Image Classification - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="💡 Iamge Classification  Stanford University “CS231N” 강의를 듣고 정리하였습니다.">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[CS231N] 2. Image Classification">
+<meta property="og:url" content="http://localhost:4000/cs231n/cs231n-01/">
+
+
+  <meta property="og:description" content="💡 Iamge Classification  Stanford University “CS231N” 강의를 듣고 정리하였습니다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-25T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/cs231n/cs231n-01/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[CS231N] 2. Image Classification">
+    <meta itemprop="description" content="💡 Iamge Classification Stanford University “CS231N” 강의를 듣고 정리하였습니다. ">
+    <meta itemprop="datePublished" content="2022-05-25T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[CS231N] 2. Image Classification
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#2-image-classification">2. Image Classification</a>
+    <ul>
+      <li><a href="#data-driven-approach">Data-Driven Approach</a></li>
+      <li><a href="#first-classifier--nearest-neighbor">First Classifier : Nearest Neighbor</a>
+        <ul>
+          <li><a href="#cifar-10">CIFAR-10</a></li>
+          <li><a href="#distance-metric-to-compare-images--l1-distance">Distance Metric to compare images : L1 distance</a></li>
+          <li><a href="#k-nn-algorithm">K-NN Algorithm</a></li>
+        </ul>
+      </li>
+      <li><a href="#second-classifier--linear-classifier">Second Classifier : Linear Classifier</a></li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p class="notice--info">💡 Iamge Classification <br />
+Stanford University “CS231N” 강의를 듣고 정리하였습니다. <br /></p>
+
+<p class="notice">자막 : https://github.com/visionNoob/CS231N_17_KOR_SUB (크롬 확장 프로그램 Subtitles for Youtube) <br />
+2017 버전 강의 목차 및 슬라이드 : http://cs231n.stanford.edu/2017/syllabus.html <br />
+2017 버전 강의 동영상 링크 : https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv <br />
+2022 버전 강의 목차 및 슬라이드 : http://cs231n.stanford.edu/schedule.html <br />
+실습 과제 : https://github.com/cs231n/cs231n.github.io/tree/master/assignments <br /></p>
+
+<h1 id="2-image-classification">2. Image Classification</h1>
+
+<p><img width="50%" alt="L2_01" src="https://user-images.githubusercontent.com/86525868/170157401-40c15f2e-87e4-489b-ba63-2059dd9c8f91.png" height="50%" class="align-center" /></p>
+
+<p>컴퓨터에게 고양이 사진은 큰 격자 모양의 숫자집합으로 인식이 되고 이 거대한 숫자집합에서 <strong>고양이</strong>를 인식하는 것은 어려운 일</p>
+
+<p>사람들은 이 이미지를 <strong>“고양이”</strong>라는 레이블로 인식하고 컴퓨터는 거대한 숫자 집단으로 인식하는 것을 <strong>Semantic Gap(의미론적 차이)</strong>이라고 함</p>
+
+<p><img width="1240" alt="L2_02" src="https://user-images.githubusercontent.com/86525868/170157543-d507a044-0fd6-4904-8ba4-50f56e4c2709.png" class="align-center" /></p>
+
+<p>하지만 같은 고양이도 각도와 빛, 자세가 달라지면 픽셀들은 모두 달라지고 배경과 비슷한 색의 고양이와 다양한 고양이 종도 모두 고양이라고 인식하는 것은 어려울 수 있음 → <strong>Image Classification 알고리즘은 이런 변수에 강해야 함</strong> <br /></p>
+
+<h2 id="data-driven-approach">Data-Driven Approach</h2>
+
+<p>이미지 분류를 가능하게 하는 하나의 Insight로 Data-Driven Approach(데이터 중심 접근 방법)이 있음</p>
+
+<p>고양이는 무엇이다, 물고기는 무엇이다라고 직접 규칙을 써내려가는 것 대신에 Google Image Serach와 같은 도구로 많은 데이터를 수집하고 이 데이터 셋을 이용해 Machine Learning Classifier를 학습시킬 수 있음</p>
+
+<p>ML Algorithm은 데이터를 요약해서 다양한 객체들을 인식할 수 있는 모델을 만들고 학습 모델로 새로운 이미지를 테스트하면 사물을 인식할 수 있음 → Machine Learning의 Key Insight인 <strong>두 개의 함수 필요</strong></p>
+
+<ol>
+  <li>Train Function → input = image, label / output = model</li>
+  <li>Predict Function → input = model / output = predict <br /></li>
+</ol>
+
+<h2 id="first-classifier--nearest-neighbor">First Classifier : Nearest Neighbor</h2>
+
+<ol>
+  <li>
+    <p>Memorize all data and labels</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+	<span class="c1"># Machine Learning
+</span>  <span class="k">return</span> <span class="n">model</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Predict the label of the most similar training image</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_images</span><span class="p">):</span>
+	<span class="c1"># Use model to predict labels
+</span>	<span class="k">return</span> <span class="n">test_labels</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>간단한 모델이지만 Data-Driven Approach를 이해하기 좋은 Algorithm <br /></p>
+
+<h3 id="cifar-10">CIFAR-10</h3>
+
+<p>총 50,000여개의 학습용 이미지가 각 10개의 카테고리에 균일하게 분포되어 있고 10,000여개의 테스트 이미지로 이루어진 데이터 셋</p>
+
+<p><img width="80%" alt="L2_03" src="https://user-images.githubusercontent.com/86525868/170157675-16886d7a-143c-4b43-a1d1-29d0c3a4e5cb.png" height="80%" class="align-center" /></p>
+
+<p>오른쪽 칸의 맨 왼쪽 열은 CIFAR-10의 테스트 이미지이고 오른쪽 방향으로 학습 이미지 중 테스트 이미지와 유사한 순으로 정렬 되어 있음</p>
+
+<p>NN Algorithm을 적용시키면 트레이닝 셋에서 <strong>가장 가까운 샘플</strong>을 찾게되고 <strong>가장 가까운 샘플</strong>의 레이블로 테스트 이미지의 레이블을 알 수 있음</p>
+
+<p>❗️중요한 점은 test image와 train image를 어떻게 비교하는가 = <strong>어떤 비교 함수를 사용할 것인가</strong>❗️ <br /></p>
+
+<h3 id="distance-metric-to-compare-images--l1-distance">Distance Metric to compare images : L1 distance</h3>
+
+\[d_1(I_1, I_2)=\sum_p |I_1^p-I_2^p|\]
+
+<p><img width="50%" alt="L2_04" src="https://user-images.githubusercontent.com/86525868/170157685-537d9704-a0e3-4c83-8b2b-57143683dc09.png" height="50%" class="align-center" /></p>
+
+<p>L1 distance는 이미지를 Pixel-Wise로 비교 → <strong>두 이미지간의 차이를 어떻게 측정할 것인가에 구체적인 방법을 제시</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">class</span> <span class="nc">NearestNeighbor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+  <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="s">""" X is N x D where each row is an example. Y is 1-dimension of size N """</span>
+    <span class="c1"># the nearest neighbor classifier simply remembers all the training data
+</span>    <span class="n">self</span><span class="p">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="s">""" X is N x D where each row is an example we wish to predict label for """</span>
+    <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># lets make sure that the output type matches the input type
+</span>    <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">ytr</span><span class="p">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="c1"># loop over all test rows
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+      <span class="c1"># find the nearest training image to the i'th test image
+</span>      <span class="c1"># using the L1 distance (sum of absolute value differences)
+</span>      <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">abs</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="c1"># get the index with smallest distance
+</span>      <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span> <span class="c1"># predict the label of the nearest example
+</span>
+    <span class="k">return</span> <span class="n">Ypred</span>
+</code></pre></div></div>
+
+<p>Train Function에서는 학습 데이터를 기억하고 Test Function에서는 이미지를 입력으로 받고 L1 Distance로 비교하며 학습 데이터 중에서 테스트 이미지와 가장 유사한 이미지를 찾아냄</p>
+
+<p><strong>Q1. With NN examples, how fast are training and prediction?</strong></p>
+
+<ul>
+  <li>Train time은 데이터를 기억하기 때문에 상수시간이 걸리지만 Test time은 N개의 학습 데이터를 전부 테스트 이미지와 비교하기 때문에 상당한 시간이 소요됨 → <strong>우리는 반대의 상황을 기대 (Classifier의 좋은 성능을 위해 train time에 투자 하는 방향으로 기대)</strong> <br /></li>
+</ul>
+
+<h3 id="k-nn-algorithm">K-NN Algorithm</h3>
+
+<p><strong>NN’s Decision Regions</strong></p>
+
+<p>각 점은 학습데이터이고 점의 색은 카테고리를 뜻하고 모든 좌표에서 각 좌표가 어떤 학습 데이터와 가장 가까운지 계산하고 각 좌표를 해당 카테고리로 칠함</p>
+
+<p>NN Classifier은 공간을 나눠서 각 카테고리로 분류함</p>
+
+<p><img width="80%" alt="L2_05" src="https://user-images.githubusercontent.com/86525868/170157708-67bb7a7d-28b5-4699-87ee-5c6b0aa4486e.png" height="80%" class="align-center" /></p>
+
+<ul>
+  <li><strong>K = 1</strong> : NN Algorithm, 가장 가까운 이웃만을 보기 때문에 녹색 영역 중간에 노란색 영역이 생기고 파란색 영역에 녹색이 침범 (NN Classifier에서 발생 가능한 문제점) → <strong>noise와 spurious</strong></li>
+</ul>
+
+<p>이런 문제를 해결하기 위해 일반화된 버전인 <strong>K-NN Algorithm</strong>이 탄생 → <strong>Distance metric을 이용하여 가까운 이웃을 K개 만큼 찾고, 이웃끼리 투표하는 방법</strong></p>
+
+<ul>
+  <li><strong>K = 3</strong> : 녹색 영역이 깔끔해지고 빨강, 파랑 영역의 경계들도 부드러워짐</li>
+  <li><strong>K = 5</strong> : 각 영역들의 경계가 더 부드러워짐 <br /></li>
+</ul>
+
+<p><strong>K-Nearest Neighbors : Distance Metric</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/170157732-2193baa2-a8f1-4d6f-a252-caecf34999bc.jpeg" alt="L2_06" class="align-center" /></p>
+
+<p>지금까지 L1 Distance 만 고려했지만 L2 Distance도 사용할 수 있음 → <strong>공간의 근본적인 기하학적 구조가 다름</strong></p>
+
+<p>좌표계를 회전시킨다면 L1 Distance는 변하지만 L2 Distance는 변하지 않음 → <strong>L1은 좌표축의 영향을 받지만, L2는 고르게 영향을 받음</strong></p>
+
+<ul>
+  <li><strong>L1 Distance</strong>
+    <ul>
+      <li>특징 벡터의 각각 요소들이 개별적인 의미를 가지고 있는 경우 → <strong>특정 벡터의 영향이 강하게 적용됨</strong></li>
+      <li>좌표 시스템의 영향을 받고 결정 경계를 만듦 → 부자연스러움</li>
+    </ul>
+  </li>
+  <li><strong>L2 Distance</strong>
+    <ul>
+      <li>특징 벡터가 일반적인 벡터이고 요소들간 실질적인 의미를 잘 모르는 경우 → <strong>특정 벡터의 영향이 고르게 적용됨</strong></li>
+      <li>좌표 시스템의 영향을 받지 않고 결정 경계를 만듦 → 자연스러움 <br /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Hyperparameter</strong></p>
+
+<p>K값과 거리척도는 <strong>Hyperparameter</strong>로 학습 전 사전에 반드시 선택해야 함</p>
+
+<ol>
+  <li>
+    <p>학습 데이터의 정확도와 성능을 최대화하는 Hyperparameter를 선택 → <strong>BAD</strong></p>
+
+    <p><img width="70%" alt="L2_07" src="https://user-images.githubusercontent.com/86525868/170635130-2012f25d-1d85-49c5-a292-7ad56f918de4.png" height="70%" class="align-center" /></p>
+
+    <ul>
+      <li><strong>K=1</strong>일 때 가장 학습 데이터의 정확도가 높지만 <strong>K를 큰 값</strong>으로 선택하는 것이 학습 데이터에서는 몇 개 잘못 분류할 수 있지만 테스트 데이터에서는 더 좋은 성능을 보일 수 있음</li>
+      <li>학습 데이터를 얼마나 잘 맞추는지는 중요하지 않음, 새로운 데이터에 좋은 성능을 보이는 것이 중요 <br /> <br /></li>
+    </ul>
+  </li>
+  <li>
+    <p>전체 데이터 셋 중 학습 데이터를 쪼개서 일부를 테스트 데이터로 사용 (학습 데이터로 다양한 Hyperparameter값들을 학습시키고 테스트 데이터에서 가장 좋은 성능을 보이는 Hyperparameter 선택) → <strong>BAD</strong></p>
+
+    <p><img width="70%" alt="L2_08" src="https://user-images.githubusercontent.com/86525868/170635138-ae08111e-67c5-4667-b7cc-97ce0c29eb32.png" height="70%" class="align-center" /></p>
+
+    <ul>
+      <li>학습시킨 모델들 중 테스트 데이터에 가장 잘 맞는 모델을 선택하는 것은 테스트 셋에서만 잘 작동하는 Hyperparameter를 고른 것일 수 있음 <br /> <br /></li>
+    </ul>
+  </li>
+  <li>
+    <p>데이터를 Training set, Vaildation set, Testing set으로 나눔</p>
+
+    <p><img width="70%" alt="L2_09" src="https://user-images.githubusercontent.com/86525868/170635141-5b18e41b-efa0-4cdd-832e-357e6fd98b9f.png" height="70%" class="align-center" /></p>
+
+    <ul>
+      <li>다양한 Hyperparameter로 트레이닝 셋을 학습 → 벨리데이션 셋으로 검증 → 테스트 셋에서 “<strong>한번만</strong>” 수행 <br /> <br /></li>
+    </ul>
+  </li>
+  <li>
+    <p>Cross Validation (5-fold cross validation)</p>
+
+    <p><img width="70%" alt="L2_10" src="https://user-images.githubusercontent.com/86525868/170635144-4a476e33-8bc1-40e1-b214-4db2ab7ce0e5.png" height="70%" class="align-center" /></p>
+
+    <ul>
+      <li>테스트 데이터를 제외한 나머지 데이터를 여러 부분으로 나누고 번갈아가면서 벨리데이션 셋을 지정</li>
+      <li>여러번의 검증을 거치면서 최적의 하이퍼파리미터를 확인할 수 있음 <br /> <br /></li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>But K-Nearest Neighbor on images never used.</strong></p>
+
+<ol>
+  <li>
+    <p>Very slow at test time</p>
+  </li>
+  <li>
+    <p>Distance metrics on pixels are nor informative</p>
+
+    <p><img width="80%" alt="L2_11" src="https://user-images.githubusercontent.com/86525868/170635145-6059aa38-f399-41fb-9acc-d6eabdf10a4a.png" height="80%" class="align-center" /></p>
+
+    <p>각 이미지와 원본 사이의 Euclidean Distance를 측정하면 동일한 L2 Distance를 가지는 것을 알 수 있음 → L2 Distance는 “지각적 유사도”를 측정하기에 적합하지 않음</p>
+  </li>
+  <li>
+    <p>Curse of Dimensionality</p>
+
+    <p>k-nn은 트레이닝 데이터로 공간을 분할하는 일을 수행 → 잘 동작하려면 전체 공간을 조밀하게 커버할 만큼의 충분한 트레이닝 샘플이 필요함</p>
+
+    <p>공간을 조밀하게 덮으려면 차원이 증가함에 따라 데이터의 양의 기하급수적으로 증가함 <br /></p>
+  </li>
+</ol>
+
+<h2 id="second-classifier--linear-classifier">Second Classifier : Linear Classifier</h2>
+
+<p>Linear Classifier은 <strong>Parametric model</strong>의 가장 단순한 형태</p>
+
+<ol>
+  <li><strong>x</strong> : 입력 이미지</li>
+  <li><strong>w(theta)</strong> : 가중치</li>
+  <li><strong>b(Bias)</strong> : 편향, 데이터와 무관하게 특정 클래스에 우선권 부여</li>
+</ol>
+
+<p>트레이닝 데이터의 정보를 요약해 <strong>W</strong>에 모으는 방식을 사용 → 효율적임</p>
+
+<p>딥러닝은 가중치(<strong>W</strong>)와 데이터를 어떻게 조합할지 함수를 적절하게 설계하는 일로 설명할 수 있음</p>
+
+<p><img width="80%" alt="L2_12" src="https://user-images.githubusercontent.com/86525868/170635151-13324cc7-ddf4-44b0-b1bd-800d28244601.png" height="80%" class="align-center" /></p>
+
+<p>$F(x, w) = Wx$ →  Linear Classification</p>
+
+<p>입력 이미지와 가중치를 가지가 함수 $f$를 통해 10개의 class scoresf를 결과로 내놓고 이것 중 클래스의 점수가 가장 높은 클래스로 분류됨</p>
+
+<p><img width="80%" alt="L2_13" src="https://user-images.githubusercontent.com/86525868/170635153-1e16c05a-4e4c-4fe8-a3ea-46aca361f278.png" height="80%" class="align-center" /></p>
+
+<p><br /></p>
+
+<p><strong>Interpreting Linear Classification</strong></p>
+
+<p><img width="80%" alt="L2_14" src="https://user-images.githubusercontent.com/86525868/170635156-d52a563a-182b-4f20-99d4-a920b7f81bf9.png" height="80%" class="align-center" /></p>
+
+<p>각 이미지를 고차원 공간의 한 점이라고 생각하면 Linear Classifier은 각 클래스를 구분시켜 주는 선형 결정 경계를 그어주는 역할을 함</p>
+
+<p>하지만, 이미지가 고차원 공간의 하나의 점이라는 관점으로 해석하면 직면하는 문제가 있음</p>
+
+<p><img width="80%" alt="L2_15" src="https://user-images.githubusercontent.com/86525868/170635158-8631ed1a-c002-4c91-b04d-259ca9fd7fd8.png" height="80%" class="align-center" /></p>
+
+<p>데이터를 선 하나로 분류할 수 있는 방법이 없는 경우 → <strong>홀/짝수를 분류하는 반전성 문제(parity probem)</strong> 해결에 어려움</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cs231" class="page__taxonomy-item" rel="tag">cs231</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#image-classification" class="page__taxonomy-item" rel="tag">image classification</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#cs231n" class="page__taxonomy-item" rel="tag">cs231n</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2022-05-25T00:00:00+09:00">May 25, 2022</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BCS231N%5D+2.+Image+Classification%20http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-01%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-01%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-01%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/mysql/MySQL-02/" class="pagination--pager" title="[MySQL] MySQL 정리 2
+">이전</a>
+    
+    
+      <a href="/cs231n/cs231n-02/" class="pagination--pager" title="[CS231N] 3. Loss Functions and Optimization
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/cs231n/cs231n-01/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/cs231n/cs231n-01"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

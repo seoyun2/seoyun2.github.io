@@ -1,0 +1,1233 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[CS231N] 3. Loss Functions and Optimization - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="💡 Iamge Classification  Stanford University “CS231N” 강의를 듣고 정리하였습니다.">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[CS231N] 3. Loss Functions and Optimization">
+<meta property="og:url" content="http://localhost:4000/cs231n/cs231n-02/">
+
+
+  <meta property="og:description" content="💡 Iamge Classification  Stanford University “CS231N” 강의를 듣고 정리하였습니다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-30T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/cs231n/cs231n-02/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[CS231N] 3. Loss Functions and Optimization">
+    <meta itemprop="description" content="💡 Iamge Classification Stanford University “CS231N” 강의를 듣고 정리하였습니다. ">
+    <meta itemprop="datePublished" content="2022-05-30T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[CS231N] 3. Loss Functions and Optimization
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#lecture-3--loss-functions-and-optimization">Lecture 3 : Loss Functions and Optimization</a>
+      - {:.} <a href="#multi-class-svm">Multi-class SVM</a>
+    <ul>
+      <li><a href="#regularization">Regularization</a>
+        <ul>
+          <li><a href="#in-common-use-regularizations">In common use Regularizations</a></li>
+        </ul>
+      </li>
+      <li><a href="#softmax-classifier-multinomial-logistic-regression">Softmax Classifier (Multinomial Logistic Regression)</a></li>
+      <li><a href="#svm-loss-vs-softmax-loss">SVM Loss vs Softmax Loss</a></li>
+      <li><a href="#optimization">Optimization</a>
+        <ul>
+          <li><a href="#strategy-1--random-search임의-탐색">Strategy #1 : Random Search(임의 탐색)</a></li>
+          <li><a href="#strategy-2--follow-the-slope">Strategy #2 : Follow the slope</a></li>
+          <li><a href="#gradient-descent">Gradient Descent</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p class="notice--info">💡 Iamge Classification <br />
+Stanford University “CS231N” 강의를 듣고 정리하였습니다. <br /></p>
+
+<p class="notice">자막 : https://github.com/visionNoob/CS231N_17_KOR_SUB (크롬 확장 프로그램 Subtitles for Youtube) <br />
+2017 버전 강의 목차 및 슬라이드 : http://cs231n.stanford.edu/2017/syllabus.html <br />
+2017 버전 강의 동영상 링크 : https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv <br />
+2022 버전 강의 목차 및 슬라이드 : http://cs231n.stanford.edu/schedule.html <br />
+실습 과제 : https://github.com/cs231n/cs231n.github.io/tree/master/assignments <br /></p>
+
+<h1 id="lecture-3--loss-functions-and-optimization">Lecture 3 : Loss Functions and Optimization</h1>
+
+<p><img width="40%" alt="L3_01" src="https://user-images.githubusercontent.com/86525868/170991223-7e442583-42e4-488c-afe3-eb1b08fe4c7a.png" height="40%" class="align-center" /></p>
+
+<p>2강에서는 가중치 행렬 $W$의 각 행들이 해당하는 플래스의 템플릿이 되고 행렬 $W$의 각 행은 <strong>이미지의 픽셀 값</strong>과 <strong>해당 클래스</strong>사이의 가중치가 되고 이것을 통해 각 이미지에 해당하는 10개의 클래스 스코어를 계산</p>
+
+<p>이 클래스 스코어를 가지고 이미지를 분류하는 것은 좋은 방법이 아님 (개구리 이미지의 경우 개구리 클래스 점수가 $-4.34$ )</p>
+
+<p>어떤 행렬 $W$가 가장 좋은 점수를 내는지 <strong>정량화</strong>할 필요가 있음 → 행렬 $W$를 입력으로 받아서 각 스코어를 확인하고 얼마나 좋고 나쁜지 정략적으로 말해주는 것이 <strong>손실함수</strong></p>
+
+<p><img width="30%" alt="L3_02" src="https://user-images.githubusercontent.com/86525868/170991244-8b0297f0-6d19-4cfb-b352-931a5b3946d8.png" height="30%" class="align-center" /></p>
+
+<p>트레이닝 데이터 $X$는 알고리즘의 입력값인 이미지이고 $Y$는 예측하고자 하는 값인 레이블(타켓)로 카테고리의 갯수 사이의 정수 값이 됨</p>
+
+<p>다음으로 예측함수 $f$ 와 정답 값  $Y$를 입력받아 얼마나 예측을 못하는지 정량화 하는 손실함수 $L_i$를 정의 → 평균내면 최종 loss인 $L$</p>
+
+\[L=\frac{1}{N}\sum_i L_i(f(x_i, W), y_i)\]
+
+<p><br /></p>
+
+<h3 id="multi-class-svm">Multi-class SVM</h3>
+
+<p>Image Classification에 적합한 손실함수</p>
+
+\[\begin{align}
+L_i &amp;=&amp; &amp;\sum_{j\ne y_i}\begin{cases}0 &amp;\mbox if s_{y_i} \geq s_j +1 \\ 
+				s_i-s_{y_i} +1 &amp;\mbox otherwise\end{cases}\\
+&amp;=&amp; &amp;\sum_{j \ne y_i} max(0, s_j-s_{y_i}+1)
+\end{align}\\\]
+
+<p>$L_i$ 구하는 방법</p>
+
+<ol>
+  <li>True인 카테고리를 제외한 나머지 카테고리 $Y$ 즉, 맞지 않는 카테고리 전부 합침</li>
+  <li>올바른 카테고리의 스코어와 올바르지 않은 카테고리의 스코어 비교</li>
+</ol>
+
+<ul>
+  <li>올바른 카테고리의 점수가 올바르지 않은 카테고리의 점수+margin($S_j+1$)보다 높으면 True인 스코어가 다른 False 카테고리보다 훨씬 더 크다는 것을 의미 → <strong>Loss는 0이 됨</strong></li>
+</ul>
+
+<ol>
+  <li>0과 다른 값의 최댓값 $Max(0, value)$의 식으로 손실함수를 만듦</li>
+</ol>
+
+<p><img width="30%" alt="L3_03" src="https://user-images.githubusercontent.com/86525868/170991251-9d70c202-08cc-43eb-85fa-693bf39dd602.png" height="30%" class="align-center" /></p>
+
+<p>이러한 손실함수를 <strong>Hinge loss</strong></p>
+
+<ul>
+  <li>정답 카테고리의 점수가 올라갈수록 Loss가 선형적으로 줄어듦 → Loss가 0이라는 건 클래스를 잘 분류한 것</li>
+</ul>
+
+<p><img width="30%" alt="L3_04" src="https://user-images.githubusercontent.com/86525868/170991239-1d6c6c3b-92e9-4be8-8fa2-9e1bffcd559e.png" height="30%" class="align-center" /></p>
+
+<p>$L_{cat}=max(0, 5.1-3.2+1)+max(0,-1.7-3.2+1)=2.9+0=2.9$</p>
+
+<p>$L_{car}=max(0, 1.3-4.9+1)+max(0,2.0-4.9+1)=0+0=0$</p>
+
+<p>$L_{frog}=max(0, 2.2+3.1+1)+max(0,2.5+3.1+1)=6.3+6.6=12.9$</p>
+
+\[\begin{align}
+L &amp;=&amp;  &amp; \frac{1}{N}\sum_{i=1}^N L_i \\
+&amp;=&amp; &amp; (2.9+0.0+12.9)/3=5.27
+\end{align}\]
+
+<p>분류기가 5.27 만큼 이 트레이닝 셋을 안 좋게 분류하고 있다는 <strong>정량적 지표</strong> <br /></p>
+
+<p><strong>Question</strong> : SVM Loss가 가질 수 있는 최댓값과 최솟값은</p>
+
+<ul>
+  <li>손실함수가 Hinge Loss 모양이라는 것을 생각해 보면 $\infty$, 0 <br /></li>
+</ul>
+
+<p><strong>Question</strong> : 파라미터를 초기화하고 처음부터 학습시킬 때, 보통 행렬 $W$를 임의의 작은 수로 초기화 하는데 그렇게 되면 처음 학습시에는 결과 스코어가 임의의 일정한 값을 갖게 됨. 만약 모든 스코어 $S$가 거의 0에 가깝고 값이 서로 비슷하다면 Loss가 어떻게 될까</p>
+
+<ul>
+  <li>Loss를 계산할 때 정답이 아닌 클래스를 순회하기 때문에 $C-1$ 클래스를 순회하게 되고 비교하는 두 스코어가 비슷하니 Margin 때문에 1이라는 값을 얻게 됨</li>
+</ul>
+
+<p>→ 트레이닝을 처음 시작할때 Loss가 $C-1$이 아니라면 <strong>디버깅 문제</strong>가 있다는 걸 의미 <br /></p>
+
+<p><strong>Question</strong> : 손실 함수가 $\sum_{j \ne y_i} max(0, s_j-s_{y_i}+1)$가 아닌 $\sum_{j \ne y_i} max(0, s_j-s_{y_i}+1)^2$이라면 어떻게 될까</p>
+
+<ul>
+  <li>Hinge Loss는 조금 잘못된 에러와 많이 잘못된 에러를 크게 신경 쓰지 않지만 Squared Hinge Loss는 에러의 값도 제곱이 되기 때문에 에러도 곱절로 정량화 할 수 있음</li>
+  <li>손실함수를 만들 때 어떤 에러를 신경쓰는지, 어떤 에러가 트레이드 오프 되는 것인지에 따라 손실함수를 설계해야함</li>
+</ul>
+
+<h2 id="regularization">Regularization</h2>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171036604-0c479197-336e-4e2a-992f-a85146cab732.png" alt="L3_05" /></p>
+
+<ol>
+  <li>트레이닝 셋(파란색 점)에 맞춘 분류기(파란색 선)</li>
+  <li>
+    <p>새로 들어온 테스트 셋(녹색 네모) → <strong>트레이닝 셋에 맞춘 분류기에만 맞춘 분류기는 테스트 셋을 맞추지 못함</strong></p>
+  </li>
+  <li>우리가 의도한 건 녹색 선 → <strong>트레이닝 셋을 잘 맞추지 못하더라도 테스트 셋에서의 높은 성능을 보이는 분류기</strong></li>
+</ol>
+
+<p>이러한 문제를 해결하는 방법이 <strong>Regularization</strong></p>
+
+<p><img width="50%" alt="L3_06" src="https://user-images.githubusercontent.com/86525868/171037052-7a41fb79-06f0-436f-9e0b-6e1da3a269d8.png" height="50%" class="align-center" /></p>
+
+<p>Data Loss Term에서는 분류기가 트레이닝 데이터에 fit하게 하고 Loss Function에서 Regularization을 추가해 모델이 좀 더 <strong>단순한 W</strong>를 찾도록 도와줌 <br /></p>
+
+<p>Regularization의 역할</p>
+
+<ol>
+  <li>모델이 더 복잡해지지 못하게 하거나</li>
+  <li>
+    <p>모델은 여전히 복잡하지만 sort penalty를 추가하거나 (복잡한 모델을 계속 쓰고싶으면 penalty를 감수해야 함을 의미) <br /></p>
+
+    <p><strong>모델이 트레이닝 데이터 셋에 완벽히 fit되지 않도록 penalty를 부여</strong></p>
+  </li>
+</ol>
+
+<p><strong>오컴의 면도날(Occam’s Razor)</strong> : Among competing hypotheses, the simplest is the best</p>
+
+<ul>
+  <li>더 일반적인 (더 단순한) 것이 미래에 일어날 현상을 잘 설명할 가능성이 높기 때문</li>
+</ul>
+
+<h3 id="in-common-use-regularizations">In common use Regularizations</h3>
+
+\[L=\frac{1}{N}\sum_{i=1}^N\sum_{j\ne y_i}max(0, f(x_i;W)_j-f(X_i;W)y_i+1)+\lambda R(W)\]
+
+<ol>
+  <li>
+    <p>L2 Regularization : $R(W)=\sum_k\sum_lW_{k,l}^2$</p>
+
+    <ul>
+      <li>가중치 행렬 $W$에 penalty를 부여</li>
+    </ul>
+  </li>
+  <li>
+    <p>L1 Regularization : $R(W)=\sum_k\sum_l|W_{k,l}|$</p>
+
+    <ul>
+      <li>행렬 $W$가 희소행렬(행렬의 값이 대부분 0인 행렬)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Elastic net (L1+L2) : $R(W)=\sum_k\sum_l\beta W_{k,l}^2+|W_{k,l}|$ <br /></p>
+  </li>
+</ol>
+
+<p><strong>예시</strong> $x=[1\ 1\ 1\ 1], w_1=[1 \ 0 \ 0 \ 0], w_2=[0.25 \ 0.25 \ 0.25 \ 0.25]$</p>
+
+<ul>
+  <li>
+    <p>Linear Regression은 $x$와의 내적이 서로 같기 때문에 $w_1, w_2$는 같음</p>
+  </li>
+  <li>
+    <p>L2 Regresstion에서는 어떤것이 더 조잡한지(매끄러워야함)에 따라 결정되기 때문에 $w_2$가 norm이 작기 때문에 $w_2$를 선호 → $x$의 모든 요소가 영향을 끼치길 바람</p>
+  </li>
+  <li>
+    <p>L1 Regresstion은 행렬 $w$에 0의 갯수에 따라 복잡도가 결정되기 때문에 $w_1$를 선호</p>
+  </li>
+</ul>
+
+<h2 id="softmax-classifier-multinomial-logistic-regression"><strong>Softmax Classifier</strong> (Multinomial Logistic Regression)</h2>
+
+<p>Multi-class SVM에서는 스코어 자체를 신경 쓰지 않았지만 Multinomial Logistic Regression에서는 스코어 자체에 추가적인 의미를 부여함</p>
+
+<p>socore은 클래스의 정규화 되지 않은 로그확률을 의미하고 수식을 이용해서 스코어를 통해 클래스 별 확률 분포를 계산함<br /></p>
+
+\[P(Y=k|X=x_i)=\frac{e^{s_k}}{\sum_j e^{s_j}}\quad \text{where}\quad s=f(x_i;W)\\
+\\
+L_i=-\log P(Y=y_i|X=x_i)\\ \\
+\text{in summary : } \quad L_i=-\log (\frac{e^{s_{y_i}}}{\sum_j e^{s_j}})\]
+
+<ul>
+  <li>스코어 전부를 지수를 취해서 양수가 되고 만들고 $\sum$으로 다시 정규화 시킴</li>
+  <li>softmax에서 나온 확률이 정답 클래스에 해당하는 클래스의 확률, 즉 1로 나타나게 하고 싶기 때문에 $Loss$는$\log(\text{probability of the true class})$ → 손실 함수는 얼마나 잘 못 맞추는지를 측정하는 함수이기 때문에 마이너스를 붙임</li>
+  <li>softmax 함수를 거치면 해당 클래스의 확률 분포를 얻을 수 있음</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171036603-b7d345ad-30bb-4a23-97b3-b17d684b6bf5.png" alt="L3_07" /></p>
+
+<p><strong>과정</strong> : 스코어 → 지수화 → (합이 1이 되도록) 정규화 → 정답 스코어에만 $-\log$를 씌움</p>
+
+<p><strong>Question</strong> : Softmax Loss의 최댓값과 최솟값은</p>
+
+<ul>
+  <li>확률 분포를 생각해 보면 정답 클래스의 확률은 1이 되길 원하고 정답이 아닌 클래스는 0이 되길 원함. 정답 클래스에 대한 $\log$확률이기 때문에 $\log(1)=0, -\log(1)=0$ → 고양이를 완벽하게 분류했다면 Loss는 0이 됨</li>
+  <li>Loss가 0이 되려면 실제 스코어는 무한대에 가깝게 높아야하고 지수화와 정규화를 하기 때문에 확률 1(정답), 0(그외)를 얻으려면 정답 클래스의 스코어는 $+\infty$, 나머지는 $-\infty$이 되어야 함</li>
+  <li>최댓값은 없음 <br /></li>
+</ul>
+
+<p><strong>Question</strong> : SVM Loss와 마찬가지로 $s$가 모두 0 근처에 모여있는 작은 수일때의 Loss는</p>
+
+<ul>
+  <li>$-\log(\frac{1}{C}=\log(C))$ → 마찬가지로 초기에 $\log(C)$가 아니라면 디버깅 문제가 있다는 걸 의미</li>
+</ul>
+
+<h2 id="svm-loss-vs-softmax-loss">SVM Loss vs Softmax Loss</h2>
+
+<p><img width="1130" alt="L3_08" src="https://user-images.githubusercontent.com/86525868/171037152-9b7ded56-25ed-4b6d-a4a9-a230ae280f42.png" /></p>
+
+<ul>
+  <li><strong>SVM Loss</strong> : 정답 스코어, 정답이 아닌 스코어 간의 margin에 집중</li>
+  <li>
+    <p><strong>Softmax Loss</strong> : 확률을 구해서 $-\log(\text{probability of the true class})$에 집중</p>
+  </li>
+  <li>Multi-class SVM Loss은 앞에 예시에서 car 클래스에서 car score가 다른 클래스보다 훨씬 높았고 그렇기 때문에 car score를 조금 높인하고해서 SVM Loss가 변하진 않음(SVM Loss는 오직 정답과 그 외 클래스의 마진이 얼마나 되는지에만 관심이 있기 때문)</li>
+  <li>하지만 Softmax Loss는 정답 스코어가 충분히 높고 다른 클래스 스코어가 충분히 낮은 상태에서도 최대한 정답 클래스에 확률을 몰아 넣으려고(언제나 확률을 1로 만듦) 노력하기 때문에 정답 클래스는 양의 무한대로, 그외 글래스는 음의 무한대로 보내려고 노력함</li>
+  <li>SVM의 경우 일정 margin을 넘기면 더이상 성능개선에 신경쓰지 않지만, Softmax의 경우 계속해서 성능을 개선해나감</li>
+</ul>
+
+<h2 id="optimization">Optimization</h2>
+
+<p>어떻게 해야 실제 Loss를 줄이는 $W$를 찾을 수 있을지를 고민하는 것이 <strong>최적화</strong></p>
+
+<h3 id="strategy-1--random-search임의-탐색">Strategy #1 : Random Search(임의 탐색)</h3>
+
+<p>임의로 샘플링한 $W$를 많이 모아두고 Loss를 계산해서 어떤 $W$가 좋은지 살펴보는 것 → 아주 안 좋은 방법</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># assume X_train is the data where each column is an example (e.g. 3073 x 50,000)
+# assume Y_train are the labels (e.g. 1D array of 50,000)
+# assume the function L evaluates the loss function
+</span>
+<span class="n">bestloss</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="s">"inf"</span><span class="p">)</span> <span class="c1"># Python assigns the highest possible float value
+</span><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+  <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span> <span class="c1"># generate random parameters
+</span>  <span class="n">loss</span> <span class="o">=</span> <span class="nc">L</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="c1"># get the loss over the entire training set
+</span>  <span class="k">if</span> <span class="n">loss</span> <span class="o">&lt;</span> <span class="n">bestloss</span><span class="p">:</span> <span class="c1"># keep track of the best solution
+</span>    <span class="n">bestloss</span> <span class="o">=</span> <span class="n">loss</span>
+    <span class="n">bestW</span> <span class="o">=</span> <span class="n">W</span>
+  <span class="k">print</span> <span class="s">'in attempt %d the loss was %f, best %f'</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">bestloss</span><span class="p">)</span>
+
+<span class="c1"># prints:
+# in attempt 0 the loss was 9.401632, best 9.401632
+# in attempt 1 the loss was 8.959668, best 8.959668
+# in attempt 2 the loss was 9.044034, best 8.959668
+# in attempt 3 the loss was 9.278948, best 8.959668
+# in attempt 4 the loss was 8.857370, best 8.857370
+# in attempt 5 the loss was 8.943151, best 8.857370
+# in attempt 6 the loss was 8.605604, best 8.605604
+# ... (trunctated: continues for 1000 lines)
+</span>
+<span class="c1"># Assume X_test is [3073 x 10000], Y_test [10000 x 1]
+</span><span class="n">scores</span> <span class="o">=</span> <span class="n">Wbest</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">Xte_cols</span><span class="p">)</span> <span class="c1"># 10 x 10000, the class scores for all test examples
+# find the index with max score in each column (the predicted class)
+</span><span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># and calculate accuracy (fraction of predictions that are correct)
+</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)</span>
+<span class="c1"># returns 0.1555
+</span></code></pre></div></div>
+
+<p>→ CIFAR-10에서 클래스는 10개 이므로 임의 확률은 10%가 되고 무작위 시행을 거치게 되면 이 예시에서는 15%정도의 정확도를 보임 <br /></p>
+
+<h3 id="strategy-2--follow-the-slope">Strategy #2 : Follow the slope</h3>
+
+<p>골자기에서 땅의 경사(Slope)를 느끼면서 어느 방향으로 내려가야 산 아래로 도착하는지 조금씩 걸어 내려가는 방법<br /></p>
+
+<p><strong>Slope(경사)</strong></p>
+
+\[\frac{df(x)}{dx}=\lim_{h \rightarrow 0}\frac{f(x+h)-f(x)}{h}\]
+
+<p>1차원 공간에서의 slope는 어떤 함수에 대한 미분 값을 의미하지만 $x$는 스칼라가 아니라 벡터이기 때문에 다변수함수로 확장시켜야 함</p>
+
+<p><img width="60%" alt="L3_09" src="https://user-images.githubusercontent.com/86525868/171177146-fa2e0f7b-3420-446e-a302-9ef940b3c534.png" height="60%" class="align-center" /> <br /></p>
+
+<p>Current $W$에 아주 작은 값인 $h$를 더하고 다시 Loss를 구하면 $1.25347$에서 $1.25322$로 감소하고 극한식을 이용해서 FDM으로 근사시킨 gradient를 구함 → 이 과정을 반복</p>
+
+<ul>
+  <li>하지만 이 방법은 많은 시간이 걸리기 때문에 사용하지 않음</li>
+</ul>
+
+<p><strong>The loss is just a function of $W$</strong></p>
+
+\[\begin{align}
+&amp;L=\frac{1}{N}\sum_{i=1}^N L_i+\sum_k W_k^2\\
+&amp;L_i=\sum_{j \ne y_i}max(0, s_j-s_i+1)\\
+&amp;s=f(x;W)=Wx\\ \\ 
+&amp;\text{want}\ \nabla_W L
+\end{align}\]
+
+<p><img width="60%" alt="L3_10" src="https://user-images.githubusercontent.com/86525868/171177165-40f232b6-9e99-44df-b332-f9db80e68b64.png" height="60%" class="align-center" /></p>
+
+<p><br /></p>
+
+<p>$W$의 모든 원소를 순회하는 것이 아니라 gradient를 나타내는 식이 무엇인지 먼저 찾아내고 수식으로 한번에 gradient $dW$를 한번에 계산</p>
+
+<p>앞에서 다룬 수치적인 gradient는 실제로는 사용하지 않지만 디버깅 툴로는 유용할 수 있음 (하지만 수치적 gradient는 느리고 부정확하기 때문에 디버깅에 이용할 때는 파라미터의 스케일을 줄여야 함)</p>
+
+<h3 id="gradient-descent">Gradient Descent</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Vanilla Gradient Descent
+</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+  <span class="n">weights_grad</span> <span class="o">=</span> <span class="nf">evaluate_gradient</span><span class="p">(</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+  <span class="n">weights</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">weights_grad</span> <span class="c1"># perform parameter update
+</span></code></pre></div></div>
+
+<p>Loss와 gradient를 계산한 뒤에 $W$를 gradient 반대 방향으로 <code class="language-plaintext highlighter-rouge">step_size</code> = Learning rate를 조절하며 최적화 시키는 방법</p>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/171177171-0b38f906-d7cb-472d-9986-049336342983.png" alt="L3_11" /></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cs231" class="page__taxonomy-item" rel="tag">cs231</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#image-classification" class="page__taxonomy-item" rel="tag">image classification</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#cs231n" class="page__taxonomy-item" rel="tag">cs231n</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2022-05-30T00:00:00+09:00">May 30, 2022</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BCS231N%5D+3.+Loss+Functions+and+Optimization%20http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-02%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-02%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcs231n%2Fcs231n-02%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/cs231n/cs231n-01/" class="pagination--pager" title="[CS231N] 2. Image Classification
+">이전</a>
+    
+    
+      <a href="/cs231n/cs231n-03/" class="pagination--pager" title="[CS231N] 4. Intruduction to Neural Networks
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/cs231n/cs231n-02/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/cs231n/cs231n-02"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>

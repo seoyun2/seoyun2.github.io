@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>이서윤(Seoyun Lee)</title>
+    <description>매일 공부하고 매일 정리하겠어요.</description>
+    <link>http://localhost:4000</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+	<lastBuildDate>Thu, 20 Apr 2023 00:00:00 +0900</lastBuildDate>
+	
+	<item>
+		<title>[Kaggle] Porti Seguro&apos;s Safe Driver Prediction</title>
+        
+        
+            <description>&lt;head&gt;
+  &lt;style&gt;
+    table.dataframe {
+      white-space: normal;
+      width: 100%;
+      height: 240px;
+      display: block;
+      overflow: auto;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+      line-height: 20px;
+      text-align: center;
+      border: 0px !important;
+    }
+&lt;/style&gt;&lt;/head&gt;
+</description>
+        
+        <pubDate>Thu, 20 Apr 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/kaggle/porti-kaggle/</link>
+        <guid isPermaLink="true">http://localhost:4000/kaggle/porti-kaggle/</guid>
+      </item>
+    
+	<item>
+		<title>[SQL Hackerrank] Easy</title>
+        
+        
+            <description>&lt;p&gt;&lt;img width=&quot;40%&quot; alt=&quot;스크린샷 2023-04-04 17 11 24&quot; src=&quot;https://user-images.githubusercontent.com/86525868/232437808-8bba0de0-0396-47a3-8739-8c5d47ebbdf8.png&quot; height=&quot;40%&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+</description>
+        
+        <pubDate>Mon, 17 Apr 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/hackerrank/sql-codingtest-1/</link>
+        <guid isPermaLink="true">http://localhost:4000/hackerrank/sql-codingtest-1/</guid>
+      </item>
+    
+	<item>
+		<title>[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM</title>
+        
+        
+            <description>&lt;h1 id=&quot;ensemble&quot;&gt;Ensemble&lt;/h1&gt;
+</description>
+        
+        <pubDate>Tue, 28 Mar 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/ds/ensemble-3/</link>
+        <guid isPermaLink="true">http://localhost:4000/ds/ensemble-3/</guid>
+      </item>
+    
+	<item>
+		<title>[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM</title>
+        
+        
+            <description>&lt;h1 id=&quot;ensemble&quot;&gt;Ensemble&lt;/h1&gt;
+</description>
+        
+        <pubDate>Fri, 24 Mar 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/ds/ensemble-2/</link>
+        <guid isPermaLink="true">http://localhost:4000/ds/ensemble-2/</guid>
+      </item>
+    
+	<item>
+		<title>[Data Science] 앙상블(Ensemble) 1. 배깅(Bagging), 랜덤 포레스트(Random Forest)</title>
+        
+        
+            <description>&lt;h1 id=&quot;ensemble&quot;&gt;Ensemble&lt;/h1&gt;
+</description>
+        
+        <pubDate>Wed, 22 Mar 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/ds/ensemble-1/</link>
+        <guid isPermaLink="true">http://localhost:4000/ds/ensemble-1/</guid>
+      </item>
+    
+	<item>
+		<title>[Data Science] 2. 이상치 탐지(Density Based Anomaly Detection)</title>
+        
+        
+            <description>&lt;h1 id=&quot;2--density-based-anomaly-detection&quot;&gt;2.  Density Based Anomaly Detection&lt;/h1&gt;
+</description>
+        
+        <pubDate>Sat, 25 Feb 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/ds/density-based-anomaly-detection/</link>
+        <guid isPermaLink="true">http://localhost:4000/ds/density-based-anomaly-detection/</guid>
+      </item>
+    
+	<item>
+		<title>[Data Science] 1. 커널 기반 학습(Kernel Based Learning)</title>
+        
+        
+            <description>&lt;h1 id=&quot;1--kernel-based-learning&quot;&gt;1.  Kernel Based Learning&lt;/h1&gt;
+</description>
+        
+        <pubDate>Wed, 15 Feb 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/ds/kernel-based-learning1/</link>
+        <guid isPermaLink="true">http://localhost:4000/ds/kernel-based-learning1/</guid>
+      </item>
+    
+	<item>
+		<title>[R] 3. Decision Tree with Confusion Matrix</title>
+        
+        
+            <description>&lt;h1 id=&quot;decision-tree-practice-with-r&quot;&gt;Decision Tree Practice with R&lt;/h1&gt;
+</description>
+        
+        <pubDate>Thu, 09 Feb 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/r/decisiontree/cart/decision-tree-r/</link>
+        <guid isPermaLink="true">http://localhost:4000/r/decisiontree/cart/decision-tree-r/</guid>
+      </item>
+    
+	<item>
+		<title>[R] 2. Logistic Regression with Confusion Matrix</title>
+        
+        
+            <description>&lt;h1 id=&quot;logistic-regression-practice-with-r&quot;&gt;Logistic Regression Practice with R&lt;/h1&gt;
+</description>
+        
+        <pubDate>Tue, 07 Feb 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/r/logisticregression/confusionmatrix/auroc-r/</link>
+        <guid isPermaLink="true">http://localhost:4000/r/logisticregression/confusionmatrix/auroc-r/</guid>
+      </item>
+    
+	<item>
+		<title>[R] 1. Multiple Linear Regression</title>
+        
+        
+            <description>&lt;h1 id=&quot;multiple-linear-regression-practice-with-r&quot;&gt;Multiple Linear Regression Practice with R&lt;/h1&gt;
+</description>
+        
+        <pubDate>Wed, 25 Jan 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/r/multiplelinearregression/r-mlr/</link>
+        <guid isPermaLink="true">http://localhost:4000/r/multiplelinearregression/r-mlr/</guid>
+      </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1118 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[R] 3. Decision Tree with Confusion Matrix - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="Decision Tree Practice with R">
+
+
+  <meta name="author" content="Seoyun Lee">
+  
+  <meta property="article:author" content="Seoyun Lee">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
+<meta property="og:title" content="[R] 3. Decision Tree with Confusion Matrix">
+<meta property="og:url" content="http://localhost:4000/r/decisiontree/cart/decision-tree-r/">
+
+
+  <meta property="og:description" content="Decision Tree Practice with R">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-02-09T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/r/decisiontree/cart/decision-tree-r/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "이서윤(Seoyun Lee)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="google32f284dcb09e1f6f.html" />
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리왕이 되고싶은 서윤씨의 BLOG Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리왕 서윤씨
+          <span class="site-subtitle">Bachelor of Science in Applied statistics</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/bio-photo.jpg" alt="Seoyun Lee" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Seoyun Lee</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>매일 <strong>공부</strong>하고 매일 <strong>정리</strong>하기</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+          
+            <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">25</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">데이터 분석</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/da" class="">Data Analysis (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ds" class="">Data Science (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/kaggle" class="">Kaggle (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Coding Test</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <span class="nav__sub-title">ETC</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs231n" class="">CS231N (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+  
+
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[R] 3. Decision Tree with Confusion Matrix">
+    <meta itemprop="description" content="Decision Tree Practice with R">
+    <meta itemprop="datePublished" content="2023-02-09T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">[R] 3. Decision Tree with Confusion Matrix
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#decision-tree-practice-with-r">Decision Tree Practice with R</a>
+    <ul>
+      <li><a href="#performance-evaluation-function-1">Performance Evaluation Function 1</a></li>
+      <li><a href="#dataset-1-personal-loan-dataset">Dataset 1. Personal Loan Dataset</a>
+        <ul>
+          <li><a href="#cart-with-post-pruning">CART with Post-Pruning</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="decision-tree-practice-with-r">Decision Tree Practice with R</h1>
+
+<h2 id="performance-evaluation-function-1">Performance Evaluation Function 1</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">perf_eval</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">cm</span><span class="p">){</span><span class="w">
+  
+  </span><span class="c1"># True positive rate: TPR (Recall)</span><span class="w">
+  </span><span class="n">TPR</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cm</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">]</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="m">2</span><span class="p">,])</span><span class="w">
+  </span><span class="c1"># Precision</span><span class="w">
+  </span><span class="n">PRE</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cm</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">]</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">cm</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span><span class="w">
+  </span><span class="c1"># True negative rate: TNR</span><span class="w">
+  </span><span class="n">TNR</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cm</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">]</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="m">1</span><span class="p">,])</span><span class="w">
+  </span><span class="c1"># Simple Accuracy</span><span class="w">
+  </span><span class="n">ACC</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">]</span><span class="o">+</span><span class="n">cm</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">])</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span><span class="w">
+  </span><span class="c1"># Balanced Correction Rate</span><span class="w">
+  </span><span class="n">BCR</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">TPR</span><span class="o">*</span><span class="n">TNR</span><span class="p">)</span><span class="w">
+  </span><span class="c1"># F1-Measure</span><span class="w">
+  </span><span class="n">F1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="o">*</span><span class="n">TPR</span><span class="o">*</span><span class="n">PRE</span><span class="o">/</span><span class="p">(</span><span class="n">TPR</span><span class="o">+</span><span class="n">PRE</span><span class="p">)</span><span class="w">
+  
+  </span><span class="nf">return</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">TPR</span><span class="p">,</span><span class="w"> </span><span class="n">PRE</span><span class="p">,</span><span class="w"> </span><span class="n">TNR</span><span class="p">,</span><span class="w"> </span><span class="n">ACC</span><span class="p">,</span><span class="w"> </span><span class="n">BCR</span><span class="p">,</span><span class="w"> </span><span class="n">F1</span><span class="p">))</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1"># Performance table</span><span class="w">
+</span><span class="n">Perf_Table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">)</span><span class="w">
+</span><span class="n">rownames</span><span class="p">(</span><span class="n">Perf_Table</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Post-Pruning"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Pre-Pruning"</span><span class="p">)</span><span class="w">
+</span><span class="n">colnames</span><span class="p">(</span><span class="n">Perf_Table</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"TPR"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Precision"</span><span class="p">,</span><span class="w"> </span><span class="s2">"TNR"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Accuracy"</span><span class="p">,</span><span class="w"> </span><span class="s2">"BCR"</span><span class="p">,</span><span class="w"> </span><span class="s2">"F1-Measure"</span><span class="p">)</span><span class="w">
+</span><span class="n">Perf_Table</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="dataset-1-personal-loan-dataset">Dataset 1. Personal Loan Dataset</h2>
+
+<p><img width="1184" alt="스크린샷 2023-02-09 16 23 29" src="https://user-images.githubusercontent.com/86525868/217745094-943166ef-8642-4544-aeb6-092b03a770d8.png" /></p>
+
+<ul>
+  <li>총 14개의 변수</li>
+  <li>2개의 불필요한 변수 : <code class="language-plaintext highlighter-rouge">ID, ZIP</code></li>
+  <li>종속변수 : <code class="language-plaintext highlighter-rouge">Personal Loan</code> → <code class="language-plaintext highlighter-rouge">int</code>이기 때문에 <code class="language-plaintext highlighter-rouge">factor</code>로 변형</li>
+</ul>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the data &amp; Preprocessing</span><span class="w">
+</span><span class="n">Ploan</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="s2">"Personal Loan.csv"</span><span class="p">)</span><span class="w">
+</span><span class="n">input_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">6</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">9</span><span class="p">,</span><span class="m">11</span><span class="p">,</span><span class="m">12</span><span class="p">,</span><span class="m">13</span><span class="p">,</span><span class="m">14</span><span class="p">)</span><span class="w">
+</span><span class="n">target_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10</span><span class="w">
+
+</span><span class="n">Ploan_input</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">Ploan</span><span class="p">[,</span><span class="n">input_idx</span><span class="p">]</span><span class="w">
+</span><span class="n">Ploan_target</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.factor</span><span class="p">(</span><span class="n">Ploan</span><span class="p">[,</span><span class="n">target_idx</span><span class="p">])</span><span class="w">
+
+</span><span class="n">trn_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">1500</span><span class="w">
+
+</span><span class="n">CART_trn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">Ploan_input</span><span class="p">[</span><span class="n">trn_idx</span><span class="p">,],</span><span class="w"> </span><span class="n">PloanYN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ploan_target</span><span class="p">[</span><span class="n">trn_idx</span><span class="p">])</span><span class="w">
+</span><span class="n">CART_tst</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">Ploan_input</span><span class="p">[</span><span class="o">-</span><span class="n">trn_idx</span><span class="p">,],</span><span class="w"> </span><span class="n">PloanYN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ploan_target</span><span class="p">[</span><span class="o">-</span><span class="n">trn_idx</span><span class="p">])</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="cart-with-post-pruning">CART with Post-Pruning</h3>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"tree"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Training the tree</span><span class="w">
+</span><span class="n">CART_post</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tree</span><span class="p">(</span><span class="n">PloanYN</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">CART_trn</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">CART_post</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Plot the tree</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">CART_post</span><span class="p">)</span><span class="w">
+</span><span class="n">text</span><span class="p">(</span><span class="n">CART_post</span><span class="p">,</span><span class="w"> </span><span class="n">pretty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Find the best tree</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_post_cv</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cv.tree</span><span class="p">(</span><span class="n">CART_post</span><span class="p">,</span><span class="w"> </span><span class="n">FUN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prune.misclass</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Plot the pruning result</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">CART_post_cv</span><span class="o">$</span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="n">CART_post_cv</span><span class="o">$</span><span class="n">dev</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"b"</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_post_cv</span><span class="w">
+
+</span><span class="c1"># Select the final model</span><span class="w">
+</span><span class="n">CART_post_pruned</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">prune.misclass</span><span class="p">(</span><span class="n">CART_post</span><span class="p">,</span><span class="w"> </span><span class="n">best</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">CART_post_pruned</span><span class="p">)</span><span class="w">
+</span><span class="n">text</span><span class="p">(</span><span class="n">CART_post_pruned</span><span class="p">,</span><span class="w"> </span><span class="n">pretty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/86525868/217746368-f8b3854f-f9c4-4456-8cbe-f4e868f87a8a.png" alt="image" /></p>
+
+<ul>
+  <li>대출 받은 고객이 왜 대출을 받았을까? 란 질문에 대한 답을 할 수 있다
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Income</code>은 98.5 보다 작고 <code class="language-plaintext highlighter-rouge">CCAvg, 신용카드평균사용량</code>도 2.95 보다 작고 <code class="language-plaintext highlighter-rouge">CDAccount</code>가 있는 고객은 대출을 받음</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Prediction</span><span class="w">
+</span><span class="n">CART_post_prey</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">CART_post_pruned</span><span class="p">,</span><span class="w"> </span><span class="n">CART_tst</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"class"</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_post_cm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">CART_tst</span><span class="o">$</span><span class="n">PloanYN</span><span class="p">,</span><span class="w"> </span><span class="n">CART_post_prey</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_post_cm</span><span class="w">
+
+</span><span class="n">Perf_Table</span><span class="p">[</span><span class="m">1</span><span class="p">,]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">perf_eval</span><span class="p">(</span><span class="n">CART_post_cm</span><span class="p">)</span><span class="w">
+</span><span class="n">Perf_Table</span><span class="w">
+
+</span><span class="c1"># CART with Pre-Pruning -------------------------------</span><span class="w">
+</span><span class="c1"># For CART</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"matrixStats"</span><span class="p">)</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"party"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">party</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># For AUROC</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"ROCR"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ROCR</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Divide the dataset into training/validation/test datasets</span><span class="w">
+</span><span class="n">trn_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">1000</span><span class="w">
+</span><span class="n">val_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1001</span><span class="o">:</span><span class="m">1500</span><span class="w">
+</span><span class="n">tst_idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1501</span><span class="o">:</span><span class="m">2500</span><span class="w">
+
+</span><span class="n">CART_trn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">Ploan_input</span><span class="p">[</span><span class="n">trn_idx</span><span class="p">,],</span><span class="w"> </span><span class="n">PloanYN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ploan_target</span><span class="p">[</span><span class="n">trn_idx</span><span class="p">])</span><span class="w">
+</span><span class="n">CART_val</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">Ploan_input</span><span class="p">[</span><span class="n">val_idx</span><span class="p">,],</span><span class="w"> </span><span class="n">PloanYN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ploan_target</span><span class="p">[</span><span class="n">val_idx</span><span class="p">])</span><span class="w">
+</span><span class="n">CART_tst</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">Ploan_input</span><span class="p">[</span><span class="n">tst_idx</span><span class="p">,],</span><span class="w"> </span><span class="n">PloanYN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ploan_target</span><span class="p">[</span><span class="n">tst_idx</span><span class="p">])</span><span class="w">
+
+</span><span class="c1"># Construct single tree and evaluation</span><span class="w">
+</span><span class="c1"># tree parameter settings</span><span class="w">
+</span><span class="n">min_criterion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="m">0.95</span><span class="p">,</span><span class="w"> </span><span class="m">0.99</span><span class="p">)</span><span class="w">
+</span><span class="n">min_split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span><span class="w">
+</span><span class="n">max_depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_pre_search_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="nf">length</span><span class="p">(</span><span class="n">min_criterion</span><span class="p">)</span><span class="o">*</span><span class="nf">length</span><span class="p">(</span><span class="n">min_split</span><span class="p">)</span><span class="o">*</span><span class="nf">length</span><span class="p">(</span><span class="n">max_depth</span><span class="p">),</span><span class="m">11</span><span class="p">)</span><span class="w">
+</span><span class="n">colnames</span><span class="p">(</span><span class="n">CART_pre_search_result</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"min_criterion"</span><span class="p">,</span><span class="w"> </span><span class="s2">"min_split"</span><span class="p">,</span><span class="w"> </span><span class="s2">"max_depth"</span><span class="p">,</span><span class="w"> 
+                                      </span><span class="s2">"TPR"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Precision"</span><span class="p">,</span><span class="w"> </span><span class="s2">"TNR"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ACC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"BCR"</span><span class="p">,</span><span class="w"> </span><span class="s2">"F1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AUROC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"N_leaves"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">iter_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">min_criterion</span><span class="p">)){</span><span class="w">
+  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">min_split</span><span class="p">)){</span><span class="w">
+    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">max_depth</span><span class="p">)){</span><span class="w">
+      
+      </span><span class="n">cat</span><span class="p">(</span><span class="s2">"CART Min criterion:"</span><span class="p">,</span><span class="w"> </span><span class="n">min_criterion</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="s2">", Min split:"</span><span class="p">,</span><span class="w"> </span><span class="n">min_split</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="w"> </span><span class="s2">", Max depth:"</span><span class="p">,</span><span class="w"> </span><span class="n">max_depth</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="w"> </span><span class="s2">"\n"</span><span class="p">)</span><span class="w">
+      
+      </span><span class="n">tmp_control</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctree_control</span><span class="p">(</span><span class="n">mincriterion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min_criterion</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">minsplit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min_split</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="w"> </span><span class="n">maxdepth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_depth</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="w">
+      </span><span class="n">tmp_tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ctree</span><span class="p">(</span><span class="n">PloanYN</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CART_trn</span><span class="p">,</span><span class="w"> </span><span class="n">controls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmp_control</span><span class="p">)</span><span class="w">
+      </span><span class="n">tmp_tree_val_prediction</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">tmp_tree</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CART_val</span><span class="p">)</span><span class="w">
+      
+      </span><span class="n">tmp_tree_val_response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">treeresponse</span><span class="p">(</span><span class="n">tmp_tree</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CART_val</span><span class="p">)</span><span class="w">
+      </span><span class="n">tmp_tree_val_prob</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="n">unlist</span><span class="p">(</span><span class="n">tmp_tree_val_response</span><span class="p">,</span><span class="w"> </span><span class="n">use.names</span><span class="o">=</span><span class="nb">F</span><span class="p">)[</span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">nrow</span><span class="p">(</span><span class="n">CART_val</span><span class="p">)</span><span class="o">*</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">)]</span><span class="w">
+      </span><span class="n">tmp_tree_val_rocr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">prediction</span><span class="p">(</span><span class="n">tmp_tree_val_prob</span><span class="p">,</span><span class="w"> </span><span class="n">CART_val</span><span class="o">$</span><span class="n">PloanYN</span><span class="p">)</span><span class="w">
+      
+      </span><span class="c1"># Confusion matrix for the validation dataset</span><span class="w">
+      </span><span class="n">tmp_tree_val_cm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">CART_val</span><span class="o">$</span><span class="n">PloanYN</span><span class="p">,</span><span class="w"> </span><span class="n">tmp_tree_val_prediction</span><span class="p">)</span><span class="w">
+      
+      </span><span class="c1"># parameters</span><span class="w">
+      </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="n">iter_cnt</span><span class="p">,</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min_criterion</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w">
+      </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="n">iter_cnt</span><span class="p">,</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min_split</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w">
+      </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="n">iter_cnt</span><span class="p">,</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max_depth</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w">
+      </span><span class="c1"># Performances from the confusion matrix</span><span class="w">
+      </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="n">iter_cnt</span><span class="p">,</span><span class="m">4</span><span class="o">:</span><span class="m">9</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">perf_eval</span><span class="p">(</span><span class="n">tmp_tree_val_cm</span><span class="p">)</span><span class="w">
+      </span><span class="c1"># AUROC</span><span class="w">
+      </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="n">iter_cnt</span><span class="p">,</span><span class="m">10</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="n">performance</span><span class="p">(</span><span class="n">tmp_tree_val_rocr</span><span class="p">,</span><span class="w"> </span><span class="s2">"auc"</span><span class="p">)</span><span class="o">@</span><span class="n">y.values</span><span class="p">)</span><span class="w">
+      </span><span class="c1"># Number of leaf nodes</span><span class="w">
+      </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="n">iter_cnt</span><span class="p">,</span><span class="m">11</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">nodes</span><span class="p">(</span><span class="n">tmp_tree</span><span class="p">,</span><span class="w"> </span><span class="n">unique</span><span class="p">(</span><span class="n">where</span><span class="p">(</span><span class="n">tmp_tree</span><span class="p">))))</span><span class="w">
+      </span><span class="n">iter_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iter_cnt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1"># Find the best set of parameters</span><span class="w">
+</span><span class="n">CART_pre_search_result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">CART_pre_search_result</span><span class="p">[,</span><span class="m">10</span><span class="p">],</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">),]</span><span class="w">
+</span><span class="n">CART_pre_search_result</span><span class="w">
+</span><span class="n">best_criterion</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">]</span><span class="w">
+</span><span class="n">best_split</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">]</span><span class="w">
+</span><span class="n">best_depth</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">CART_pre_search_result</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">]</span><span class="w">
+
+</span><span class="c1"># Construct the best tree</span><span class="w">
+</span><span class="n">tree_control</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctree_control</span><span class="p">(</span><span class="n">mincriterion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">best_criterion</span><span class="p">,</span><span class="w"> </span><span class="n">minsplit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">best_split</span><span class="p">,</span><span class="w"> </span><span class="n">maxdepth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">best_depth</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Use the training and validation dataset to train the best tree</span><span class="w">
+</span><span class="n">CART_trn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind</span><span class="p">(</span><span class="n">CART_trn</span><span class="p">,</span><span class="w"> </span><span class="n">CART_val</span><span class="p">)</span><span class="w">
+
+</span><span class="n">CART_pre</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ctree</span><span class="p">(</span><span class="n">PloanYN</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CART_trn</span><span class="p">,</span><span class="w"> </span><span class="n">controls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree_control</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_pre_prediction</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">CART_pre</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CART_tst</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_pre_response</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">treeresponse</span><span class="p">(</span><span class="n">CART_pre</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CART_tst</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Performance of the best tree</span><span class="w">
+</span><span class="n">CART_pre_cm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">CART_tst</span><span class="o">$</span><span class="n">PloanYN</span><span class="p">,</span><span class="w"> </span><span class="n">CART_pre_prediction</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_pre_cm</span><span class="w">
+
+</span><span class="n">Perf_Table</span><span class="p">[</span><span class="m">2</span><span class="p">,]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">perf_eval</span><span class="p">(</span><span class="n">CART_pre_cm</span><span class="p">)</span><span class="w">
+</span><span class="n">Perf_Table</span><span class="w">
+
+</span><span class="c1"># Plot the ROC</span><span class="w">
+</span><span class="n">CART_pre_prob</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="n">unlist</span><span class="p">(</span><span class="n">CART_pre_response</span><span class="p">,</span><span class="w"> </span><span class="n">use.names</span><span class="o">=</span><span class="nb">F</span><span class="p">)[</span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">nrow</span><span class="p">(</span><span class="n">CART_tst</span><span class="p">)</span><span class="o">*</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">)]</span><span class="w">
+</span><span class="n">CART_pre_rocr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">prediction</span><span class="p">(</span><span class="n">CART_pre_prob</span><span class="p">,</span><span class="w"> </span><span class="n">CART_tst</span><span class="o">$</span><span class="n">PloanYN</span><span class="p">)</span><span class="w">
+</span><span class="n">CART_pre_perf</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">performance</span><span class="p">(</span><span class="n">CART_pre_rocr</span><span class="p">,</span><span class="w"> </span><span class="s2">"tpr"</span><span class="p">,</span><span class="s2">"fpr"</span><span class="p">)</span><span class="w"> 
+</span><span class="n">plot</span><span class="p">(</span><span class="n">CART_pre_perf</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Plot the best tree</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">CART_pre</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">CART_pre</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s2">"simple"</span><span class="p">)</span><span class="w">
+
+
+</span></code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#decision-tree" class="page__taxonomy-item" rel="tag">Decision Tree</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#r" class="page__taxonomy-item" rel="tag">R</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#cart" class="page__taxonomy-item" rel="tag">CART</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#decisiontree" class="page__taxonomy-item" rel="tag">DecisionTree</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#r" class="page__taxonomy-item" rel="tag">R</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-02-09T00:00:00+09:00">February 9, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BR%5D+3.+Decision+Tree+with+Confusion+Matrix%20http%3A%2F%2Flocalhost%3A4000%2Fr%2Fdecisiontree%2Fcart%2Fdecision-tree-r%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fr%2Fdecisiontree%2Fcart%2Fdecision-tree-r%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fr%2Fdecisiontree%2Fcart%2Fdecision-tree-r%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/r/logisticregression/confusionmatrix/auroc-r/" class="pagination--pager" title="[R] 2. Logistic Regression with Confusion Matrix
+">이전</a>
+    
+    
+      <a href="/ds/kernel-based-learning1/" class="pagination--pager" title="[Data Science] 1. 커널 기반 학습(Kernel Based Learning)
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/hackerrank/sql-codingtest-1/" rel="permalink">[SQL Hackerrank] Easy
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-3/" rel="permalink">[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ds/ensemble-2/" rel="permalink">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Ensemble
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:96seoyun@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/seoyun2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://www.instagram.com/seoyun._2/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 이서윤(Seoyun Lee). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/r/decisiontree/cart/decision-tree-r/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/r/decisiontree/cart/decision-tree-r"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://seoyun2.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  processEscapes: true
+  },
+  "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+
+  </body>
+</html>
