@@ -1,19 +1,14 @@
 ---
-
 title: "[Kaggle] Porti Seguro's Safe Driver Prediction"
 categories:
-
   - kaggle
-    tags:
+tags:
   - kaggle
-    toc: true
-    toc_sticky: true
-    toc_label: "On This Page"
-    toc_icon: "bookmark"
-    use_math: true
-
----
-
+toc: true
+toc_sticky: true
+toc_label: "On This Page"
+toc_icon: "bookmark"
+use_math: true
 ---
 
 <head>
