@@ -40,8 +40,8 @@
         <span class="nav__sub-title">Coding Test</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Hackerrank" %}
-                        <li><a href="/categories/hackerrank" class="">Hacker Rank ({{category[1].size}})</a></li>
+                    {% if category[0] == "hackerrank" %}
+                        <li><a href="/categories/hackerrank" class="">Hacker Rank SQL({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
