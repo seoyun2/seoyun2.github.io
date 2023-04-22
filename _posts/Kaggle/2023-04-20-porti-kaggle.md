@@ -86,12 +86,13 @@ use_math: true
 
 # Porti Seguro's Safe Driver Prediction
 
+💡 Kaggle <br>
+[Porti Segure's Sage Driver Prediction](https://www.kaggle.com/c/porto-seguro-safe-driver-prediction) <br>
+{: .notice--info}
 
-[Porti Segure's Sage Driver Prediction](https://www.kaggle.com/c/porto-seguro-safe-driver-prediction)
+<br>
 
-
-
-데이터 설명
+## Data Description
 
 * 유사한 그룹에 속하는 특징들은 특징 이름에 해당하는 태그로 표시됩니다 (예 : ind, reg, car, calc).
 
