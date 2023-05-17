@@ -1,10 +1,10 @@
 ---
 title: "view"
 categories:
-  - cs231n
+  - dfsd
 tags:
-  - cs231
-  - image classification
+  - df
+  - sdf
 toc: true
 toc_sticky: true
 toc_label: "On This Page"
