@@ -5,8 +5,20 @@
     <description>매일 공부하고 매일 정리하겠어요.</description>
     <link>http://localhost:4000</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-	<lastBuildDate>Thu, 20 Apr 2023 00:00:00 +0900</lastBuildDate>
+	<lastBuildDate>Tue, 23 May 2023 00:00:00 +0900</lastBuildDate>
 	
+	<item>
+		<title>[Kaggle] Home Credit Default Risk Competition</title>
+        
+        
+            <description>&lt;h1 id=&quot;home-credit-default-risk&quot;&gt;Home Credit Default Risk&lt;/h1&gt;
+</description>
+        
+        <pubDate>Tue, 23 May 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/kaggle/Home-Credit-Default-Risk/</link>
+        <guid isPermaLink="true">http://localhost:4000/kaggle/Home-Credit-Default-Risk/</guid>
+      </item>
+    
 	<item>
 		<title>[Kaggle] Porti Seguro&apos;s Safe Driver Prediction</title>
         
@@ -1796,18 +1808,6 @@ Stacker score [gini]: 0.28532
         <pubDate>Tue, 07 Feb 2023 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/r/logisticregression/confusionmatrix/auroc-r/</link>
         <guid isPermaLink="true">http://localhost:4000/r/logisticregression/confusionmatrix/auroc-r/</guid>
-      </item>
-    
-	<item>
-		<title>[R] 1. Multiple Linear Regression</title>
-        
-        
-            <description>&lt;h1 id=&quot;multiple-linear-regression-practice-with-r&quot;&gt;Multiple Linear Regression Practice with R&lt;/h1&gt;
-</description>
-        
-        <pubDate>Wed, 25 Jan 2023 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/multiplelinearregression/r-mlr/</link>
-        <guid isPermaLink="true">http://localhost:4000/r/multiplelinearregression/r-mlr/</guid>
       </item>
     
   </channel>

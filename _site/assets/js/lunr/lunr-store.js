@@ -148,4 +148,10 @@ var store = [{
         "tags": ["kaggle"],
         "url": "http://localhost:4000/kaggle/porti-kaggle/",
         "teaser": null
+      },{
+        "title": "[Kaggle] Home Credit Default Risk Competition",
+        "excerpt":"Home Credit Default Risk   PREVIEW   Home Credit Default Risk     ","categories": ["kaggle"],
+        "tags": ["kaggle"],
+        "url": "http://localhost:4000/kaggle/Home-Credit-Default-Risk/",
+        "teaser": null
       }]
