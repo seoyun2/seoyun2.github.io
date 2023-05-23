@@ -8,6 +8,32 @@
 	<lastBuildDate>Tue, 23 May 2023 00:00:00 +0900</lastBuildDate>
 	
 	<item>
+		<title>[Visualization] Python Visualization 1</title>
+        
+        
+            <description>&lt;head&gt;
+  &lt;style&gt;
+    table.dataframe {
+      white-space: normal;
+      width: 100%;
+      height: 240px;
+      display: block;
+      overflow: auto;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+      line-height: 20px;
+      text-align: center;
+      border: 0px !important;
+    }
+&lt;/style&gt;&lt;/head&gt;
+</description>
+        
+        <pubDate>Tue, 23 May 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/vs/visualization-1/</link>
+        <guid isPermaLink="true">http://localhost:4000/vs/visualization-1/</guid>
+      </item>
+    
+	<item>
 		<title>[Kaggle] Home Credit Default Risk Competition</title>
         
         
@@ -1796,18 +1822,6 @@ Stacker score [gini]: 0.28532
         <pubDate>Thu, 09 Feb 2023 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/r/decisiontree/cart/decision-tree-r/</link>
         <guid isPermaLink="true">http://localhost:4000/r/decisiontree/cart/decision-tree-r/</guid>
-      </item>
-    
-	<item>
-		<title>[R] 2. Logistic Regression with Confusion Matrix</title>
-        
-        
-            <description>&lt;h1 id=&quot;logistic-regression-practice-with-r&quot;&gt;Logistic Regression Practice with R&lt;/h1&gt;
-</description>
-        
-        <pubDate>Tue, 07 Feb 2023 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/logisticregression/confusionmatrix/auroc-r/</link>
-        <guid isPermaLink="true">http://localhost:4000/r/logisticregression/confusionmatrix/auroc-r/</guid>
       </item>
     
   </channel>

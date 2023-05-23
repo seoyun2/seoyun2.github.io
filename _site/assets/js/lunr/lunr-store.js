@@ -154,4 +154,10 @@ var store = [{
         "tags": ["kaggle"],
         "url": "http://localhost:4000/kaggle/Home-Credit-Default-Risk/",
         "teaser": null
+      },{
+        "title": "[Visualization] Python Visualization 1",
+        "excerpt":"Python Visualization 준비 클라우드 환경에서는 시각화 라이브러리가 기본적으로 제공되어 있다. 아래 코드를 통해 설치여부를 확인할 수 있다. $ pip list | grep matplotlib $ pip list | grep seaborn 혹시 설치가 되어 있지 않다면 아래 명령어를 사용해 설치도 가능하다. $ pip install matplotlib $ pip install seaborn 막대그래프 1. 데이터...","categories": ["vs"],
+        "tags": ["matplotlib","seaborn"],
+        "url": "http://localhost:4000/vs/visualization-1/",
+        "teaser": null
       }]
