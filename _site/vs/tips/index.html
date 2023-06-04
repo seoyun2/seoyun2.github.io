@@ -704,6 +704,8 @@
 
 <p>여러 데이터들 중에서 종업원들의 tip을 정리한 데이터 셋인 <a href="https://github.com/mwaskom/seaborn-data/blob/master/tips.csv">tips</a>를 통해 시각화를 해보자.</p>
 
+<p><br /></p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
 <span class="kn">import</span> <span class="n">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -719,26 +721,26 @@
 <span class="n">df</span><span class="p">.</span><span class="nf">head</span><span class="p">()</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
    total_bill   tip     sex smoker  day    time  size
 0       16.99  1.01  Female     No  Sun  Dinner     2
 1       10.34  1.66    Male     No  Sun  Dinner     3
 2       21.01  3.50    Male     No  Sun  Dinner     3
 3       23.68  3.31    Male     No  Sun  Dinner     2
 4       24.59  3.61  Female     No  Sun  Dinner     4
-</pre>
+</span></pre>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">shape</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
 (244, 7)
-</pre>
+</span></pre>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="nf">describe</span><span class="p">()</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
        total_bill         tip        size
 count  244.000000  244.000000  244.000000
 mean    19.785943    2.998279    2.569672
@@ -748,12 +750,12 @@ min      3.070000    1.000000    1.000000
 50%     17.795000    2.900000    2.000000
 75%     24.127500    3.562500    3.000000
 max     50.810000   10.000000    6.000000
-</pre>
+</span></pre>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="nf">info</span><span class="p">()</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
 &lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 244 entries, 0 to 243
 Data columns (total 7 columns):
@@ -768,13 +770,17 @@ Data columns (total 7 columns):
  6   size        244 non-null    int64   
 dtypes: category(4), float64(2), int64(1)
 memory usage: 7.4 KB
-</pre>
+</span></pre>
+
+<p><br /></p>
 
 <p>tips는 결측치가 없는 데이터인 것을 알 수 있다.</p>
 
 <p>데이터 변수들 중에서 <code class="language-plaintext highlighter-rouge">sex</code>, <code class="language-plaintext highlighter-rouge">smoker</code>, <code class="language-plaintext highlighter-rouge">day</code>, <code class="language-plaintext highlighter-rouge">time</code>이 범주(category)형 데이터고 <code class="language-plaintext highlighter-rouge">tips</code>, <code class="language-plaintext highlighter-rouge">total_bill</code>, <code class="language-plaintext highlighter-rouge">size</code>는 수치형 데이터이지만 <code class="language-plaintext highlighter-rouge">size</code>는 테이블 인원을 의미하니까 범주형 데이터로 봐야한다.</p>
 
 <p>범주형 변수의 카테고리별 개수를 알아보자.</p>
+
+<p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'sex'</span><span class="p">].</span><span class="nf">value_counts</span><span class="p">())</span>
 <span class="nf">print</span><span class="p">(</span><span class="s">"==========================="</span><span class="p">)</span>
@@ -796,7 +802,7 @@ memory usage: 7.4 KB
 <span class="nf">print</span><span class="p">(</span><span class="s">"==========================="</span><span class="p">)</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
 Male      157
 Female     87
 Name: sex, dtype: int64
@@ -823,7 +829,7 @@ Name: day, dtype: int64
 6      4
 Name: size, dtype: int64
 ===========================
-</pre>
+</span></pre>
 
 <h3 id="범주형-데이터">범주형 데이터</h3>
 
@@ -833,18 +839,20 @@ Name: size, dtype: int64
 
 <p>matplotlib에 데이터를 인자로 넣기 위해선 데이터 분할이 필요하다.</p>
 
+<p><br /></p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#df의 첫 5행을 확인해봅시다. 
 </span><span class="n">df</span><span class="p">.</span><span class="nf">head</span><span class="p">()</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
    total_bill   tip     sex smoker  day    time  size
 0       16.99  1.01  Female     No  Sun  Dinner     2
 1       10.34  1.66    Male     No  Sun  Dinner     3
 2       21.01  3.50    Male     No  Sun  Dinner     3
 3       23.68  3.31    Male     No  Sun  Dinner     2
 4       24.59  3.61  Female     No  Sun  Dinner     4
-</pre>
+</span></pre>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grouped</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'tip'</span><span class="p">].</span><span class="nf">groupby</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'sex'</span><span class="p">])</span>
 <span class="nf">print</span><span class="p">(</span><span class="s">'</span><span class="se">\"</span><span class="s">MEAN</span><span class="se">\"</span><span class="s">'</span><span class="p">,</span><span class="n">grouped</span><span class="p">.</span><span class="nf">mean</span><span class="p">())</span>
@@ -852,7 +860,7 @@ Name: size, dtype: int64
 <span class="nf">print</span><span class="p">(</span><span class="s">'</span><span class="se">\"</span><span class="s">SIZE</span><span class="se">\"</span><span class="s">'</span><span class="p">,</span><span class="n">grouped</span><span class="p">.</span><span class="nf">size</span><span class="p">())</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
 "MEAN" sex
 Male      3.089618
 Female    2.833448
@@ -862,9 +870,13 @@ Name: tip, dtype: float64
 Male      157
 Female     87
 Name: tip, dtype: int64
-</pre>
+</span></pre>
+
+<p><br /></p>
 
 <p>성별에 따른 팁 액수의 평균을 막대그래프로 나타내보자.</p>
+
+<p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="n">sex</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">(</span><span class="n">grouped</span><span class="p">.</span><span class="nf">mean</span><span class="p">())</span> <span class="c1">#평균 데이터를 딕셔너리 형태로 변경
@@ -875,10 +887,10 @@ Name: tip, dtype: int64
 <span class="nf">print</span><span class="p">(</span><span class="s">'y :'</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
 x : ['Male', 'Female']
 y : [3.0896178343949043, 2.833448275862069]
-</pre>
+</span></pre>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
@@ -899,7 +911,11 @@ y : [3.0896178343949043, 2.833448275862069]
 
 <p><img src="https://github.com/seoyun2/seoyun2.github.io/assets/86525868/5f824a60-1f56-4058-a9ff-38c8754e09f0" alt="2" /></p>
 
+<p><br /></p>
+
 <p><strong>요일</strong>에 따른 tips의 그래프</p>
+
+<p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
 <span class="n">sns</span><span class="p">.</span><span class="nf">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'day'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'tip'</span><span class="p">)</span>
@@ -943,6 +959,8 @@ y : [3.0896178343949043, 2.833448275862069]
 
 <p>hue인자에 ‘day’를 주어 요일(day)에 따른 tip과 total_bill의 관계를 시각화해 보자.</p>
 
+<p><br /></p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="nf">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
@@ -963,7 +981,7 @@ y : [3.0896178343949043, 2.833448275862069]
 <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">();</span>
 </code></pre></div></div>
 
-<pre>
+<pre><span class="inner-pre" style="font-size: 11px">
 [  0.61608972  -0.7337969   -0.92101788  -2.11618868  -2.28791046
   -3.30115502  -2.61329684  -3.22007936  -2.08458613  -1.9867512
   -2.00553301  -1.91497387  -2.46596359   0.49608087   1.68136644
@@ -974,11 +992,15 @@ y : [3.0896178343949043, 2.833448275862069]
   -5.35921273  -6.10843157  -6.49204003  -6.97525256  -8.56005351
   -8.45579105  -7.94775381  -9.29355695  -9.22066158  -9.73521115
   -8.66395784 -10.53351261 -10.43548585 -10.53588073 -10.86421294]
-</pre>
+</span></pre>
 
 <p><img src="https://github.com/seoyun2/seoyun2.github.io/assets/86525868/43b2efc8-b637-4fad-974b-a9c4b8b3ab06" alt="7" /></p>
 
-<p>Seaborn을 활용하면 다음과 같이 그릴 수 있습니다.</p>
+<p><br /></p>
+
+<p>Seaborn을 활용하면 다음과 같이 그릴 수 있다.</p>
+
+<p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> 
 <span class="n">sns</span><span class="p">.</span><span class="nf">lineplot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -1029,9 +1051,13 @@ y : [3.0896178343949043, 2.833448275862069]
 
 <p><img src="https://github.com/seoyun2/seoyun2.github.io/assets/86525868/43eb9c55-e398-4f7b-b279-e75af44532c2" alt="9" /></p>
 
+<p><br /></p>
+
 <p>tips 데이터를 히스토그램으로 표현해보자.</p>
 
 <p><strong>커널 밀도 그래프 <code class="language-plaintext highlighter-rouge">kind = 'kde</code></strong> <a href="https://darkpgmr.tistory.com/147#:~:text=Kernel%20Density%20Estimation%20(%EC%BB%A4%EB%84%90%20%EB%B0%80%EB%8F%84%20%EC%B6%94%EC%A0%95)%20%EB%B0%A9%EB%B2%95%EC%9D%80%20non%2D,%EC%9D%84%20%EA%B0%9C%EC%84%A0%ED%95%9C%20%EB%B0%A9%EB%B2%95%EC%9D%B4%EB%8B%A4">KDE</a></p>
+
+<p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 
