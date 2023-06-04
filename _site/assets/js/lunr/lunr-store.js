@@ -150,7 +150,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[Kaggle] Home Credit Default Risk Competition",
-        "excerpt":"Home Credit Default Risk   PREVIEW   Home Credit Default Risk     ","categories": ["kaggle"],
+        "excerpt":"Home Credit Default Risk PREVIEW Home Credit Default Risk Home Credit Default Risk Home Credit Default Risk Dataset Description application_{train|test}.csv This is the main table, broken into two files for Train (with TARGET) and Test (without TARGET). Static data for all applications. One row represents one loan in our data...","categories": ["kaggle"],
         "tags": ["kaggle"],
         "url": "http://localhost:4000/kaggle/Home-Credit-Default-Risk/",
         "teaser": null
