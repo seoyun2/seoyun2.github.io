@@ -166,4 +166,10 @@ var store = [{
         "tags": ["matplotlib","seaborn"],
         "url": "http://localhost:4000/vs/visualization-1/",
         "teaser": null
+      },{
+        "title": "[Statistics] 확률변수",
+        "excerpt":"통계 정리 확률변수 우리는 관찰할 수 있는 공간 안에서 어떠한 현상의 관찰 결과를 얻기 위해 시행(실험)을 진행하고 이때의 실험 결과를 수치적으로 표현한 것을 확률변수(random variable)라고 한다. 확률변수는 미리 결정된 값이 아니지만, 관찰될 수 잇는 값들을 미리 생각해 볼 수 있다. 확률변수의 가능성을 표현한 것을 확률분포라고 한다. 확률변수의 분포 형태를 나타낼...","categories": ["st"],
+        "tags": ["time series","statistics"],
+        "url": "http://localhost:4000/st/random-variable/",
+        "teaser": null
       }]

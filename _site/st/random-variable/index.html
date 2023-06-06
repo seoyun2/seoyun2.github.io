@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM - 정리왕이 되고싶은 서윤씨의 BLOG</title>
-<meta name="description" content="Ensemble">
+<!-- begin _includes/seo.html --><title>[Statistics] 확률변수 - 정리왕이 되고싶은 서윤씨의 BLOG</title>
+<meta name="description" content="통계 정리">
 
 
   <meta name="author" content="Seoyun Lee">
@@ -22,30 +22,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정리왕이 되고싶은 서윤씨의 BLOG">
-<meta property="og:title" content="[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM">
-<meta property="og:url" content="http://localhost:4000/ds/ensemble-2/">
+<meta property="og:title" content="[Statistics] 확률변수">
+<meta property="og:url" content="http://localhost:4000/st/random-variable/">
 
 
-  <meta property="og:description" content="Ensemble">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2023-03-24T00:00:00+09:00">
+  <meta property="og:description" content="통계 정리">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2023-06-06T00:00:00+09:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/ds/ensemble-2/">
+
+<link rel="canonical" href="http://localhost:4000/st/random-variable/">
 
 
 
@@ -608,15 +608,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM">
-    <meta itemprop="description" content="Ensemble">
-    <meta itemprop="datePublished" content="2023-03-24T00:00:00+09:00">
+    <meta itemprop="headline" content="[Statistics] 확률변수">
+    <meta itemprop="description" content="통계 정리">
+    <meta itemprop="datePublished" content="2023-06-06T00:00:00+09:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">[Data Science] 앙상블(Ensemble) 2. AdaBoost, GBM
+          <h1 id="page-title" class="page__title" itemprop="headline">[Statistics] 확률변수
 </h1>
           
 
@@ -648,17 +648,24 @@
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-bookmark"></i> On This Page</h4></header>
               <ul class="toc__menu">
-  <li><a href="#ensemble">Ensemble</a>
+  <li><a href="#통계-정리">통계 정리</a>
     <ul>
-      <li><a href="#adaboost">AdaBoost</a>
+      <li><a href="#확률변수">확률변수</a>
         <ul>
-          <li><a href="#weak-model-vs-strong-model">Weak Model vs Strong Model</a></li>
-          <li><a href="#선택확률">선택확률</a></li>
-        </ul>
-      </li>
-      <li><a href="#gbm">GBM</a>
-        <ul>
-          <li><a href="#과적합-방지">과적합 방지</a></li>
+          <li><a href="#이산형-확률분포">이산형 확률분포</a>
+            <ul>
+              <li><a href="#1-베르누이-분포">1. 베르누이 분포</a></li>
+              <li><a href="#2-이항분포">2. 이항분포</a></li>
+              <li><a href="#3-포아송-분포">3. 포아송 분포</a></li>
+              <li><a href="#4-기하분포">4. 기하분포</a></li>
+            </ul>
+          </li>
+          <li><a href="#연속형-확률분포">연속형 확률분포</a>
+            <ul>
+              <li><a href="#1-지수분포">1. 지수분포</a></li>
+              <li><a href="#2-정규분포">2. 정규분포</a></li>
+            </ul>
+          </li>
         </ul>
       </li>
     </ul>
@@ -668,122 +675,136 @@
             </nav>
           </aside>
         
-        <h1 id="ensemble">Ensemble</h1>
+        <h1 id="통계-정리">통계 정리</h1>
 
-<h2 id="adaboost">AdaBoost</h2>
+<h2 id="확률변수">확률변수</h2>
 
-<h3 id="weak-model-vs-strong-model">Weak Model vs Strong Model</h3>
+<p>우리는 관찰할 수 있는 공간 안에서 어떠한 현상의 관찰 결과를 얻기 위해 <strong>시행(실험)</strong>을 진행하고 이때의 실험 결과를 수치적으로 표현한 것을 <strong>확률변수(random variable)</strong>라고 한다.</p>
 
-<p><strong>Strong model</strong>은 계산 복잡도가 높은 모델이나 하이퍼파라미터가 많은 모델로 복잡한 분류 경계면이나 복잡한 회귀직선을 추정해 내는 모델들을 의미한다. <strong>Weak model</strong>은 랜덤 모델(승률이 50:50인 모델)d에 비해 약간의 성능 개선이 있는 모델을 의미한다. Weak model은 Boosting의 일련의 절차를 통해서 성능이 우수한 모델로 향상될 수 있다.</p>
+<p>확률변수는 미리 결정된 값이 아니지만, 관찰될 수 잇는 값들을 미리 생각해 볼 수 있다. 확률변수의 가능성을 표현한 것을 확률분포라고 한다.</p>
 
-<p><strong>AdaBoost</strong>는 베이스 러너로 <strong>Stump Tree</strong>를 사용하는 앙상블 기법이다. <strong>Stump tree</strong>는 <strong>split을 1회 수행한 의사결정나무</strong>로 특정한 축에 수직인 분류경게면을 생성한다. 하나의 직선으로 분류를 하는 로지스틱 회귀분석과 비슷하다고 생각할 수 있지만, 로지스틱보다도 자유도가 낮은 모델이다(로지스틱 회귀분석은 회귀선에 대한 기울기에 대한 제약이 없지만, stump tree는 무조건 축에 수직인 분류 경계면만 생성 가능).</p>
+<p>확률변수의 분포 형태를 나타낼 때는 <strong>확률함수(probability function)</strong>를 사용하는데, 확률변수가 이산형이라면 확률질량함수로 표현하고 연속형이라면 확률밀도함수라고 표현한다.</p>
 
-<p><strong>Boosting의 메인 아이디어</strong>는 <strong>현재 모델이 잘 해결하지 못하는 어려운 케이스에 집중</strong>하는 것이다.</p>
+<p>여러 가지 확률함수들은 확률변수의 전체적인 성격을 설명하는데, 때로는 몇 개의 수치로 확률분포의 성질을 요약하고자 할 때도 있다.</p>
 
-<ol>
-  <li>현재 데이터셋에 대해서 단순한 모델(stump tree) 이용하여 학습</li>
-  <li>학습 오류가 큰 개체의 선택 확률을 증가시키고 학습 오류가 작은 개체의 선택 확률을 감소시킴</li>
-  <li>앞 단계에서 조정된 확률을 기반으로 다음 단계에서 사용될 학습 데이터셋을 구성</li>
-  <li>1단계로 돌아감</li>
-  <li>최종 결과물은 각 모델의 성능 지표를 가중치로 사용하여 결합</li>
-</ol>
+<p>확률분포의 성질을 용약하는 수치들 중 <strong>기댓값(expectation)</strong>은 변수의 위치를 나타내는 중요한 모수로 평균(mean)이라고도 불린다.</p>
 
-<p>이러한 일련의 과정중에서 Bagging과 가장 큰 차이점을 보이는 건 2단계이다. Bagging은 복원추출을 통하여 우리가 가지고 있는 원래의 데이터 갯수만큼의 bootstrap을 생성하고 학습시켜서 개별 결과를 취합하는 방식이라면 Boosting은 <strong>학습 오류가 큰 객체는 다음 모델을 만들 때 더 많이 샘플링 될 수 있도록 선택확률을 증가시키고</strong> 학습오류가 낮은, 현재 모델에 의해 잘 맞춰진 객체는 선택확률을 감소시킨다.</p>
+\[E(X) = 
+\begin{cases}
+\sum_{all x_i}x_if(x_i) &amp;\mbox{X가 이산형인 경우}\\
+\int_{-\infty}^{\infty}xf(x)dx &amp;\mbox{X가 연속형인 경우}
+\end{cases}\]
 
-<p>릴레이로 퀴즈를 맞춰야하는 상황에 비유해보자. 1번 타자가 경제에 대한 문제를 잘 맞춰둔 상황이라면 2번 타자는 경제 문제보다는 물리 문제에 대한 준비를 더 많이하는 것이 유리하다. 즉, <strong>이전 모델이 가지고 있는 약점</strong>을 데이터의 <strong>샘플링 확률에 반영</strong>을 해서 다음 모델이 더 많이 학습할 수 있도록 <strong>확률값을 조정</strong>한다.</p>
+<p><strong>분산(variance)</strong>는 확률변수 $X$의 변동을 나타내는 지표로 평균 $E(X)$로부터 얼마나 흩어져있는지(밀집되어 있는지)를 나타낸다. 확률변수들의 평균 $E(X)$로부터 멀리 떨어져 있는 경향이 많을수록 분산은 증가한다. 분산의 제곱근을 <strong>표준편차(standard deviation)</strong>이라고 한다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441282-ffdc4500-6021-48cd-bf91-7238617b541a.png" alt="18" width="70%" height="70%" class="align-center" /></p>
+\[Var(X)=E[X-E(X)]^2\\
+\sigma_X=\sqrt{Var(X)}\]
 
-<p>Bagging은 bootstrap이 동시다발적으로 생성되고 각 객체가 포함될 확률은 같다. 하지만 Boosting은 이전 모델 학습 결과에 따라 다음 모델에 사용될 객체의 선택 확률이 변한다.</p>
+<p>분산의 정의를 보면 확률변수의 $X$의 단위의 제곱인 것을 볼 수 있다. 만약, $X$의 단위가 cm라면 $var(X)$의 단위는 $\text{cm}^2$이 되기 때문에 실제 문제에 있어서 변수 $X$의 흩어짐을 재는데 어려움이 있다. 이럴 때 분산의 제곱근의 표준편차를 통해 단위를 통일 시키고 변수의 흩어짐을 측정한다.</p>
 
-<h3 id="선택확률">선택확률</h3>
+<p>표준편차와 기댓값을 통해 평균이 0이고 분산이 1인 $z$로 표준화 할 수 있다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441296-d5c6a923-a12c-4b1b-84cd-de3bcbc19465.png" alt="20" width="70%" height="70%" class="align-center" /></p>
+\[z=\frac{X-E(X)}{\sigma_x}\]
 
-<p>각 개체가 다음 단계의 학습 데이터 셋에 선택될 확률은 아래와 같다.</p>
+<p>분산이 하나의 확률변수가 흩어진 정도를 의미했다면, <strong>공분산(covariance)</strong>은 두 확률변수 $X$와 $Y$ 사이의 흩어진 관계를 측정하는 측도로 이해할 수 있다. (공분산은 $X$와 $Y$가 선형적으로 함께 움직이는 정도를 표현한 측도로 이해 가능)</p>
 
-\[D_{t+1}(i)=\frac{D_t(i)\exp(-\alpha_ty_ih_t(x_i))}{Z_t}\]
+\[\begin{matrix}
+Cov(X, Y) &amp;=&amp; E[(X-E[X])(Y-E[Y])]\\
+&amp;=&amp; E(XY)-E(X)E(Y)
+\end{matrix}\]
 
-<p>$D_t(i)$는 $t$시점에서의 선택확률이다. $\alpha_i$는  $0\le\alpha_i\le 0.5$로 양수이다. (랜덤 모델보다 성능이 좋아야 하기 때문에) $y_ih_t(x_i)$는 값이 정분류 되어있다면 +1, 오분류 되어있다면 -1의 값을 갖는다.</p>
+<h3 id="이산형-확률분포">이산형 확률분포</h3>
 
-<p><strong>정분류</strong> 되었을 경우엔 $-\alpha_t y_i h_t(x_i)&lt;0$이기 때문에 (지수함수 형태를 참고) <strong>선택 확률이 감소한다.</strong> 하지만 <strong>오분류</strong>되었을 땐, $-\alpha_t y_i h_t(x_i)&gt;0$이기 때문에 <strong>선택 확률이 증가한다.</strong></p>
+<h4 id="1-베르누이-분포">1. 베르누이 분포</h4>
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441305-d2d8ad83-ed95-4395-9ce9-985c2b6de552.png" alt="21" width="70%" height="70%" class="align-center" /></p>
+<blockquote>
+  <p>베르누이 분포는 <a href="https://ko.wikipedia.org/wiki/확률론">확률론</a>과 <a href="https://ko.wikipedia.org/wiki/통계학">통계학</a>에서 매 시행마다 오직 두 가지의 가능한 결과만 일어난다고 할 때, 이러한 실험을 1회 시행하여 일어난 두 가지 결과에 의해 그 값이 각각 0과 1로 결정되는 확률변수 X에 대해서
+\(P(X=0)=q, \quad P(X=1)=p, \quad 0\le p\le 0, \quad q=1-p\)</p>
 
-<p>그렇게 오분류된 개체들이 2단계에서는 정분류가 되고 그에 따른 선택확률이 다시 조정된다.</p>
+  <p>를 만족하는 확률변수 X가 따르는 <a href="https://ko.wikipedia.org/wiki/확률분포">확률분포</a>를 의미하며, <a href="https://ko.wikipedia.org/wiki/이항_분포">이항 분포</a>의 특수한 사례에 속한다.</p>
+</blockquote>
 
-<p><strong>AdaBoost</strong>는 아주 단순한 모델을 사용하지만 boosting 해나가면서 복잡한 분류 경계면을 만들어낼 수 있는 앙상블 기법이다.</p>
+<p>성공과 실패 딱 두가지의 결과만이 가능한 실험에서 결과가 성공이면 1의 값을 가지고 실패면 0의 값을 가지는 확률변수 $X$를 베르누의 확률변수라고 하고 그 분포를 베르누이 분포라고 한다.</p>
 
-<h2 id="gbm">GBM</h2>
+<h4 id="2-이항분포">2. 이항분포</h4>
 
-<p><strong>GBM</strong>는 Gradient Boosting으로 <strong>Gradient Descent + Boosting</strong> 형태의 앙상블 기법이다.</p>
+<blockquote>
+  <p>이항 분포는 연속된 <em>n</em>번의 독립적 시행에서 각 시행이 확률 p를 가질 때의 <a href="https://ko.wikipedia.org/wiki/이산_확률_분포">이산 확률 분포</a>이다. 이러한 시행은 베르누이 시행이라고 불리기도 한다. 사실, <em>n</em>=1일 때 이항 분포는 <a href="https://ko.wikipedia.org/wiki/베르누이_분포">베르누이 분포</a>이다.</p>
+</blockquote>
 
-<p>이 기법은 <strong>현재 모델이 못 맞춘 부분(잔차)만큼만 맞추는 두번째 모델을 만들어서 결합</strong>하면 좋지 않을까?라는 생각에서 시작된 기법이다. 회귀모형을 예로 들면</p>
+<p><img src="https://github.com/seoyun2/seoyun2.github.io/assets/86525868/afbcb534-c7a6-49b1-b9f9-eccadaf9108e" alt="image" width="50%" height="50%" class="align-center" /></p>
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441309-6491590b-fad7-4d2b-b052-45cf2699b189.png" alt="22" width="70%" height="70%" class="align-center" /></p>
+\[\begin{matrix}
+E(X) &amp;=&amp; np\\
+Var(X) &amp;=&amp; np(1-p)\\
+\sigma^2 &amp;=&amp; \sum_{k=1}^n \sigma^2=np(1-p)
+\end{matrix}\]
 
-<p>실제 데이터인 포인트와 추정한 회귀식인 검정 직선 사이의 차이, <strong>잔차</strong>가 있는 것을 알 수 있다. GBM은 이 잔차에 포커스를 둔 앙상블 기법이다.</p>
+<h4 id="3-포아송-분포">3. 포아송 분포</h4>
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441314-1c2feaf3-8b0b-4494-b16f-be5cb06e03f6.png" alt="23" width="70%" height="70%" class="align-center" /></p>
+<blockquote>
+  <p><strong>푸아송 분포</strong>(Poisson distribution)는 <a href="https://ko.wikipedia.org/wiki/확률론">확률론</a>에서 단위 시간 안에 어떤 사건이 몇 번 발생할 것인지를 표현하는 <a href="https://ko.wikipedia.org/wiki/이산_확률_분포">이산 확률 분포</a>이다.</p>
+</blockquote>
 
-<p><strong>$x$값이 아닌 $y$값을 업데이트</strong>시키는데, 첫번째 모델이 못 맞춘만큼(<strong>정답 - 예측치</strong>)을 두번째 모델의 $y$값을 설정한다. 물론 두 번째 모델도 못 맞추는 부분이 존재할 것이기 때문에 세번째 모델의 $y$값은 정답에서 첫 번째 모델과 두 번째 모델이 못 맞춘만큼을 $y$값으로 설정한다.</p>
+<p>하지만 실생활에선 이항분포의 형태를 띄지만 정말 많이 관찰해야 하나의 사건을 발견하는 상황들이 있다. 어떤 고속도로 구간에서 일어나는 대형사고처럼 지나다니는 차는 많지만, 사고가 날 확률은 적은 경우 우리가 알고 있는 이항분포의 공식을 사용하면 확률을 구하기가 어렵다. 그렇기 때문에 확률분포를 근사적으로 계산할 수 있는 새로운 형태의 분포가 필요했고 포아송 분포가 생겨나게되었다.</p>
 
-<p>필드에 나가서 골프를 친다고 생각하면 과정이 동일하다. 드라이버로 첫 번째 샷을 날린다. 두 번째 샷을 날릴 땐, 첫 번째 샷으로 공을 보낸 지점부터 홀컵까지의 거리를 계산해서 힘과 클럽을 조정하는 것과 같은 방식이다.</p>
+<p>정해진 시간 안에 어떤 사건이 일어날 횟수에 대한 기댓값을 $\lambda$라고 했을 때, 그 사건이 $n$회 일어날 확률은 다음과 같다.</p>
 
-<p><strong>GBM</strong>은 Adaboost와 마찬가지로 개별 모델을 forward 방식으로 학습하고 stump tree를 베이스 러너로 사용해서 이전 단계의 단점을 보완해나가는 것도 동일하다. 하지만 GBM은 <strong>이전 단계의 모델의 단점이 손실 함수(loss Function)의 gradient에 적용</strong>된다.</p>
+<p><img src="https://github.com/seoyun2/seoyun2.github.io/assets/86525868/7e6b66f2-982d-476d-9635-459ccde6ee6b" alt="image" width="50%" height="50%" class="align-center" /></p>
 
-<p>회귀모형의 대표적인 손실 함수 Squared Loss로 과정을 살펴보자.</p>
+\[f(n;\lambda)=\frac{\lambda^ne^{−\lambda}}{n!}\]
 
-\[\min L = \frac{1}{2}\sum_{i=1}^n(y_i-f(\mathbf{x}_i))^2\]
+<h4 id="4-기하분포">4. 기하분포</h4>
 
-<p>Squared Loss를 우리가 찾고자 하는 함수 ($f(\mathbf{x}_i)$)로 미분(= <strong>손실함수의 Gradient</strong>) 하면 아래와 같다.</p>
+<blockquote>
+  <p>성공확률 p인 <a href="https://ko.wikipedia.org/wiki/베르누이_시행">베르누이 시행</a>에 대해, <em>k</em>번 시행 후 첫 번째 성공을 얻을 확률에 대한 분포이다.</p>
+</blockquote>
 
-\[\frac{\partial L}{\partial f(\mathbf{x}_i)}=f(\mathbf{x}_i)-y_i\]
+<p>기하분포는 성공 혹은 실패의 두 가지 경우의 수로 구성된 시행을 연달아 수행 시 처음 성공할 때까지 시도한 횟수 $k$에 대한 분포이다. 확률값 $P(X=k)$는 매 항 계속 곱해나가는 수열의 형태를 가지고 있는 등비(기하)수열이 된다.</p>
 
-<p>회귀모형의 잔차는 $y_i-f(\mathbf{x}_i)$ 로 위의 <strong>손실함수의 Gradient의 음수</strong>와 같다. Gradient descent를 할 때, gradient의 정보만 가지고 있으면 0이 아닐 경우 역방향으로 움직이면 최소화된 함수를 찾아갈 수 있음을 의미한다.</p>
+<p><img src="https://github.com/seoyun2/seoyun2.github.io/assets/86525868/fabb5d48-a0e0-4202-affb-2f09c57fae88" alt="image" width="50%" height="50%" class="align-center" /></p>
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441318-0048425a-2449-4f3c-b2ee-6295662ca28a.png" alt="24" width="70%" height="70%" class="align-center" /></p>
+\[Pr(X=k)=(1-p)^{k-1}p, \quad (k=1, 2, 3, \cdots)\]
 
-<p>GBM은 손실함수의 기울기를 사용하기 때문에 <strong>손실함수에 따라 성능이 달라진다.</strong></p>
+<h3 id="연속형-확률분포">연속형 확률분포</h3>
 
-<ul>
-  <li>회귀모형에 대한 손실 함수</li>
-</ul>
+<h4 id="1-지수분포">1. 지수분포</h4>
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441322-b8e74ab6-f2c3-473e-a61b-8d55a21f7c43.png" alt="25" width="70%" height="70%" class="align-center" /></p>
+<blockquote>
+  <p>지수분포(exponential distribution)는 <a href="https://ko.wikipedia.org/wiki/연속_확률_분포">연속 확률 분포</a>의 일종이다. 사건이 서로 독립적일 때, 일정 시간 동안 발생하는 사건의 횟수가 <a href="https://ko.wikipedia.org/wiki/푸아송_분포">푸아송 분포</a>를 따른다면, 다음 사건이 일어날 때까지 대기 시간은 지수분포를 따른다. 이는 <a href="https://ko.wikipedia.org/wiki/기하분포">기하분포</a>와 유사한 측면이 있다.</p>
+</blockquote>
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441324-15806cc1-d573-4cf9-983e-26e648ca5d9a.png" alt="26" width="70%" height="70%" class="align-center" /></p>
+<p>지수분포는 포아송 분포와 관련이 있다. 포아송분포는 단위 시간동안 어떤 사건이 평균적으로 $\lambda$회 발생한다고 했을 때, 단위시간동안 사건이 $k$번 일어날 확률에 대한 분포를 뜻한다. 처음 이런 사건이 일어날 때까지 걸리는 시간에 대한 분포를 지수분포로 나타낼 수 있다.</p>
 
-<ul>
-  <li>
-    <p>분류모형에 대한 손실 함수</p>
+<p><img src="https://github.com/seoyun2/seoyun2.github.io/assets/86525868/230ecf3c-3498-4e8f-bd4d-588f5d2b0fdd" alt="image" width="50%" height="50%" class="align-center" /></p>
 
-    <p><img src="https://user-images.githubusercontent.com/86525868/227441328-e980bed3-761e-4af8-9a42-c239f4c67309.png" alt="27" width="70%" height="70%" class="align-center" /></p>
+\[f(x;\lambda)=
+\begin{cases}
+\lambda e^{-\lambda x} &amp; x \ge 0\\
+0 &amp; x \lt0
+\end{cases}\]
 
-    <p>$\log$를 씌운 Bernoulli loss보다 $\exp$인 Adaboost loss가 훨씬 더 민감하게 반응한다.</p>
-  </li>
-</ul>
+<h4 id="2-정규분포">2. 정규분포</h4>
 
-<h3 id="과적합-방지">과적합 방지</h3>
+<blockquote>
+  <p>정규분포는 수집된 자료의 분포를 <a href="https://ko.wikipedia.org/wiki/근사">근사</a>하는 데에 자주 사용되며, 이것은 <a href="https://ko.wikipedia.org/wiki/중심극한정리">중심극한정리</a>에 의하여 독립적인 <a href="https://ko.wikipedia.org/wiki/확률변수">확률변수</a>들의 평균은 정규분포에 가까워지는 성질이 있기 때문이다. 정규분포는 2개의 매개 변수 <a href="https://ko.wikipedia.org/wiki/평균_(통계학)">평균</a> $\mu$과 <a href="https://ko.wikipedia.org/wiki/표준편차">표준편차</a> $\sigma$에 대해 모양이 결정되고, 이때의 분포를 $N(\mu, \sigma^2)$로 표기한다. 특히, 평균이 0이고 표준편차가 1인 정규분포 $N(0,1)$을 <strong><a href="https://ko.wikipedia.org/wiki/표준_정규_분포">표준 정규 분포</a></strong>(standard normal distribution)라고 한다.</p>
+</blockquote>
 
-<p>GBM에서 가장 중요한 것은 <strong>과적합 방지이다.</strong></p>
+<p>확률변수 X의 확률밀도함수가</p>
 
-<p>원래 데이터 $y$는 어떠한 함수 $f(x)$에 의해 만들어지는데 자연발생적인 노이즈 $\epsilon$가 반드시 포함된다. $y=f(x)+\epsilon$. 앙상블 과정을 진행하면서 GMB은 첫 번째 모델의 단점을 보완할 때, $y-\hat{f}_1(x)=\hat{f}_2(x)$의 과정을 거치게 되고 이 과정은 <strong>원래 함수의 노이즈도 같이 학습</strong>하겠다는 것을 의미한다. 하지만 노이즈는 자연발생적인 변동성으로 <strong>학습하게되면 과적합된다.</strong></p>
+\[f(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp[-(x-\mu)^2/2\sigma^2]\quad(-\infty\lt x\lt\infty)\]
 
-<p><img src="https://user-images.githubusercontent.com/86525868/227441330-0ad8f1b4-ee9d-4eac-9869-2dc377afc292.png" alt="28" width="70%" height="70%" class="align-center" /></p>
+<p>로 주어지면 X가 <strong>정규분포(normal distribution)</strong>을 따른다고 하고 $X\sim N(\mu, \sigma^2)$로 표기하기로 한다. 정규확률변수는 선형변환을 해도 정규분포를 따른다.</p>
 
-<p>A는 모든 데이터 포인트를 지나는 형태로 과적합된 걸 알 수 있고, B도 영역안에 영역이 존재할 정도로 과적합된 것을 볼 수 있다.</p>
+<p><img src="https://github.com/seoyun2/seoyun2.github.io/assets/86525868/90eafab5-f601-4d24-9c25-6fbf4c6c7393" alt="image" width="50%" height="50%" class="align-center" /></p>
 
-<p>과적합을 방지하기 위한 방법 첫번째는 <strong>Subsampling</strong>이다. <strong>Subsampling</strong>은 <strong>학습 데이터의 일부분만 비복원 추출해 사용</strong>한다. 기울기를 만들 때는 모든 데이터가 사용되지만, 예를 들면 100개의 데이터가 존재할 경우, 100개의 데이터를 통해 기울기를 만들고 80개의 데이터만을 사용해 모델을 학습시킨다. 만들어진 모델에 100개의 데이터를 다시 fitting 시키고 gradient를 구하는 방식을 반복한다.</p>
+<p>–</p>
 
-<p>두번째는 <strong>Shrinkage</strong>이다. 모델들을 결합할 때, <strong>모델 생성 순서에 따라 가중치를 다르게 부여</strong>하는 방식이다. $\hat{y}=f_1(x)+0.9f_2(x)+0.9^2f_3(x)+\cdots$의 형식으로 가중치를 부여한다.</p>
+<p>$Reference$</p>
 
-<p>GBM이 Random Forest와 함께 널리 쓰이는 이유 중 또 하나는 <strong>변수 중요도</strong> 계산이 가능하기 때문이다.</p>
-
-\[Influence_j(T)=\sum_{i=1}^{L-1}(IG_i\times 1(S_i=j))\]
-
-<p>변수 $j$의 single tree $T$에서의 중요도는 $I$번째 split에서 효과가 있었는지, $j$가 split $i$에 사용되는지 안되는지에 따라 계산된다.</p>
-
+<blockquote>
+  <p>수리통계학(송성주, 전명식-2015), 위키피디아</p>
+</blockquote>
 
         
       </section>
@@ -804,23 +825,11 @@
     
       
       
-      <a href="/tags/#adaboost" class="page__taxonomy-item" rel="tag">Adaboost</a><span class="sep">, </span>
+      <a href="/tags/#statistics" class="page__taxonomy-item" rel="tag">statistics</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#boosting" class="page__taxonomy-item" rel="tag">Boosting</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#datascience" class="page__taxonomy-item" rel="tag">DataScience</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#ensemble" class="page__taxonomy-item" rel="tag">Ensemble</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#gbm" class="page__taxonomy-item" rel="tag">GBM</a>
+      <a href="/tags/#time-series" class="page__taxonomy-item" rel="tag">time series</a>
     
     </span>
   </p>
@@ -841,14 +850,14 @@
     
       
       
-      <a href="/categories/#ds" class="page__taxonomy-item" rel="tag">ds</a>
+      <a href="/categories/#st" class="page__taxonomy-item" rel="tag">st</a>
     
     </span>
   </p>
 
 
         
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-03-24T00:00:00+09:00">March 24, 2023</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-06-06T00:00:00+09:00">June 6, 2023</time></p>
 
 
       </footer>
@@ -858,23 +867,22 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=%5BData+Science%5D+%EC%95%99%EC%83%81%EB%B8%94%28Ensemble%29+2.+AdaBoost%2C+GBM%20http%3A%2F%2Flocalhost%3A4000%2Fds%2Fensemble-2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%5BStatistics%5D+%ED%99%95%EB%A5%A0%EB%B3%80%EC%88%98%20http%3A%2F%2Flocalhost%3A4000%2Fst%2Frandom-variable%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fds%2Fensemble-2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fst%2Frandom-variable%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fds%2Fensemble-2%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fst%2Frandom-variable%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/ds/ensemble-1/" class="pagination--pager" title="[Data Science] 앙상블(Ensemble) 1. 배깅(Bagging), 랜덤 포레스트(Random Forest)
+      <a href="/vs/visualization-1/" class="pagination--pager" title="[Visualization] Python Visualization 1
 ">이전</a>
     
     
-      <a href="/ds/ensemble-3/" class="pagination--pager" title="[Data Science] 앙상블(Ensemble) 3. XGBoost, LightGBM
-">다음</a>
+      <a href="#" class="pagination--pager disabled">다음</a>
     
   </nav>
 
@@ -888,46 +896,6 @@
     <div class="page__related">
       <h4 class="page__related-title">참고</h4>
       <div class="grid__wrapper">
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/st/random-variable/" rel="permalink">[Statistics] 확률변수
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          3 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">통계 정리
-</p>
-  </article>
-</div>
-
         
           
 
@@ -956,7 +924,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          4 분 소요
+          3 분 소요
         
       </span>
     
@@ -1038,7 +1006,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          20 분 소요
+          19 분 소요
         
       </span>
     
@@ -1049,6 +1017,57 @@
   
 
 </p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/kaggle/porti-kaggle/" rel="permalink">[Kaggle] Porti Seguro’s Safe Driver Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          15 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  
+
+
+Porti Seguro’s Safe Driver Prediction
+
+Data Description
+
+Porti Segure’s Sage Driver Prediction
+
+
+  
+    유사한 그룹에 속하는 특징들은 특징 이름에 해당하는 태그로 표시됩니다 (예 : ind...</p>
   </article>
 </div>
 
@@ -1119,8 +1138,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "http://localhost:4000/ds/ensemble-2/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/ds/ensemble-2"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      this.page.url = "http://localhost:4000/st/random-variable/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/st/random-variable"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
     };
     (function() { /* DON'T EDIT BELOW THIS LINE */
       var d = document, s = d.createElement('script');

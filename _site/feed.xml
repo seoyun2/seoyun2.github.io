@@ -5,8 +5,20 @@
     <description>매일 공부하고 매일 정리하겠어요.</description>
     <link>http://localhost:4000</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-	<lastBuildDate>Tue, 23 May 2023 00:00:00 +0900</lastBuildDate>
+	<lastBuildDate>Tue, 06 Jun 2023 00:00:00 +0900</lastBuildDate>
 	
+	<item>
+		<title>[Statistics] 확률변수</title>
+        
+        
+            <description>&lt;h1 id=&quot;통계-정리&quot;&gt;통계 정리&lt;/h1&gt;
+</description>
+        
+        <pubDate>Tue, 06 Jun 2023 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/st/random-variable/</link>
+        <guid isPermaLink="true">http://localhost:4000/st/random-variable/</guid>
+      </item>
+    
 	<item>
 		<title>[Visualization] Python Visualization 1</title>
         
@@ -1885,18 +1897,6 @@ Stacker score [gini]: 0.28532
         <pubDate>Sat, 25 Feb 2023 00:00:00 +0900</pubDate>
         <link>http://localhost:4000/ds/density-based-anomaly-detection/</link>
         <guid isPermaLink="true">http://localhost:4000/ds/density-based-anomaly-detection/</guid>
-      </item>
-    
-	<item>
-		<title>[Data Science] 1. 커널 기반 학습(Kernel Based Learning)</title>
-        
-        
-            <description>&lt;h1 id=&quot;1--kernel-based-learning&quot;&gt;1.  Kernel Based Learning&lt;/h1&gt;
-</description>
-        
-        <pubDate>Wed, 15 Feb 2023 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/ds/kernel-based-learning1/</link>
-        <guid isPermaLink="true">http://localhost:4000/ds/kernel-based-learning1/</guid>
       </item>
     
   </channel>
